@@ -17,10 +17,35 @@ QString RecipeParser::getRecipeName(const QString html)
 {
     QString recipeName(getBetween(html, "<h1 class=\"page-title fn\">", "</h1>"));
 
-        recipeName = recipeName.trimmed();
-        recipeName = replaceMutations(recipeName);
+    recipeName = replaceMutations(recipeName);
+    recipeName = recipeName.trimmed();
 
     return recipeName;
+}
+
+/**
+ * @brief RecipeParser::getSummary the summary located beneath the headline
+ * @param html html to parse from
+ * @return summary
+ */
+QString RecipeParser::getSummary(const QString html) {
+    QString summary(getBetween(html, "<div class=\"summary\">"), "</div>");
+
+    summary = replaceMutations(summary);
+    summary = summary.trimmed();
+
+    return summary;
+}
+
+/**
+ * @brief RecipeParser::getMetaInfo info such as prepare- and cooktime
+ * @param html html input to parse from
+ * @return meta information as a list
+ */
+QList<QString> RecipeParser::getMetaInfo(const QString html) {
+    QList<QString> metaInfo;
+    //TODO
+    return metaInfo;
 }
 
 /**

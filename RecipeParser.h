@@ -24,6 +24,8 @@ public:
     bool hasError(const QString html);
     QList<QString> getImageLinks(const QString html);
     int getNumPortions(const QString html);
+    QString getSummary(const QString html);
+    QList<QString> getMetaInfo(const QString html);
 private:
     QString replaceMutations(const QString input);
     QString getBetween(const QString input, QString start, QString end);

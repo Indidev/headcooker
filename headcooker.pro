@@ -17,10 +17,13 @@ QMAKE_CXXFLAGS += -std=c++11
 SOURCES += main.cpp\
         Headcookerwindow.cpp \
     Curler.cpp \
-    RecipeParser.cpp
+    RecipeParser.cpp \
+    RecipeWidget.cpp
 
 HEADERS  += Headcookerwindow.h \
     Curler.h \
-    RecipeParser.h
+    RecipeParser.h \
+    RecipeWidget.h
 
-FORMS    += Headcookerwindow.ui
+FORMS    += Headcookerwindow.ui \
+    RecipeWidget.ui
