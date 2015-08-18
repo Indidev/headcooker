@@ -2,10 +2,13 @@
 #define RECIPEWIDGET_H
 
 #include "xml/XMLTree.h"
+#include "Curler.h"
+#include "RecipeApiParser.h"
 
 #include <QWidget>
 #include <QGroupBox>
 #include <QTableWidget>
+#include <QGraphicsPixmapItem>
 
 #include <iostream>
 using namespace std;
@@ -25,6 +28,8 @@ public:
 
 private:
     Ui::RecipeWidget *ui;
+
+    QPixmap fetchImage(XMLTree &xmlData);
 };
 
 #endif // RECIPEWIDGET_H

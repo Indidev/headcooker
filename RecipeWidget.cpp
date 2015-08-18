@@ -45,10 +45,33 @@ RecipeWidget::RecipeWidget(XMLTree xmlData, QWidget *parent) :
         }
 
         ui->ingredientsLayout->addWidget(ingredientBox);
+
+        QGraphicsPixmapItem *item = new QGraphicsPixmapItem(fetchImage(xmlData));
+        ui->previewPicture->setScene(new QGraphicsScene);
+        ui->previewPicture->scene()->addItem(item);
     }
 }
 
 RecipeWidget::~RecipeWidget()
 {
     delete ui;
+}
+
+QPixmap RecipeWidget::fetchImage(XMLTree &xmlData){
+    if (xmlData.getChild("hasImage").getValue() == "true") {
+        QString url = "http://api.chefkoch.de/v2/recipes/";
+        url += xmlData.getChild("id").getValue();
+        url += "/images/";
+        url += xmlData.getChild("previewImageId").getValue();
+
+        XMLTree imageXML = RecipeApiParser::parseRecipe(Curler::get(url));
+
+        QString imageUrl = imageXML.getChild("urls").getChild("crop-420x280").getChild("cdn").getValue();
+        cout << "image url: " << imageUrl.toStdString() << endl;
+        QPixmap pix;
+        QByteArray byteArray = Curler::get(imageUrl).toAscii();
+        pix.loadFromData(byteArray, "JPG");
+
+        return pix;
+    }
 }

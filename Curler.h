@@ -11,7 +11,7 @@ static string data;
 class Curler
 {
 public:
-    static QString get(const string url);
+    static QString get(const QString url);
 
 private:
     //static int peter = 1;

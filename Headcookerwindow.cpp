@@ -9,7 +9,7 @@ HeadcookerWindow::HeadcookerWindow(QWidget *parent) :
 
 
 
-    QString xml = Curler::get("http://api.chefkoch.de/v2/recipes/1235651228459595");
+    QString xml = Curler::get(QString::fromStdString("http://api.chefkoch.de/v2/recipes/1235651228459595"));
 
     ui->centralWidget->layout()->addWidget(new RecipeWidget(RecipeApiParser::parseRecipe(xml)));
 }

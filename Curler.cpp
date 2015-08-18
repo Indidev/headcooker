@@ -1,13 +1,14 @@
 #include "Curler.h"
 
-QString Curler::get(const string url) {
+QString Curler::get(const QString url) {
+    data = "";
     QString content;
     CURL* curl;
 
     curl_global_init(CURL_GLOBAL_ALL); //pretty obvious
     curl = curl_easy_init();
 
-    curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+    curl_easy_setopt(curl, CURLOPT_URL, url.toStdString().c_str());
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, &writeCallback);
     curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
 
