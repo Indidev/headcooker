@@ -6,6 +6,12 @@ HeadcookerWindow::HeadcookerWindow(QWidget *parent) :
     ui(new Ui::HeadcookerWindow)
 {
     ui->setupUi(this);
+
+
+
+    QString xml = Curler::getHTML("http://api.chefkoch.de/v2/recipes/1235651228459595");
+
+    ui->centralWidget->layout()->addWidget(new RecipeWidget(RecipeApiParser::parseRecipe(xml)));
 }
 
 HeadcookerWindow::~HeadcookerWindow()

@@ -2,6 +2,10 @@
 #define HEADCOOKERWINDOW_H
 
 #include <QMainWindow>
+#include <RecipeWidget.h>
+#include "RecipeApiParser.h"
+#include "xml/XMLTree.h"
+#include "Curler.h"
 
 namespace Ui {
 class HeadcookerWindow;

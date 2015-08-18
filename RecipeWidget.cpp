@@ -8,9 +8,15 @@ RecipeWidget::RecipeWidget(QWidget *parent) :
     ui->setupUi(this);
 }
 
-RecipeWidget::RecipeWidget(XMLTree xmlData, QWidget *parent)
+RecipeWidget::RecipeWidget(XMLTree xmlData, QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::RecipeWidget)
 {
+    ui->setupUi(this);
 
+    ui->recipeName->setText(xmlData.getChild("title").getValue());
+    ui->subtitle->setText(xmlData.getChild("subtitle").getValue());
+    ui->instructions->setText(xmlData.getChild("instructions").getValue());
 }
 
 RecipeWidget::~RecipeWidget()

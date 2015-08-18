@@ -17,12 +17,12 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     HeadcookerWindow w;
-    //w.show();
+    w.show();
 
     test();
 
-    //return a.exec();
-    return 0;
+    return a.exec();
+    //return 0;
 }
 
 void test() {
@@ -68,15 +68,15 @@ void test() {
     XMLTreeObject ingredientGroup = input.getChild("ingredientGroups");
     cout << "Ingredients: \n";
     for ( XMLTreeObject header : ingredientGroup.getChilds()) {
-        cout << header.getChild("header").getFirstValue().toStdString() << endl;
+        cout << header.getChild("header").getValue().toStdString() << endl;
         XMLTreeObject ingredients = header.getChild("ingredients");
         for (XMLTreeObject ingredient : ingredients.getChilds()) {
-            cout << right << setw(10) << ingredient.getChild("amount").getFirstValue().toStdString() +
-                    ingredient.getChild("unit").getFirstValue().toStdString() <<
+            cout << right << setw(10) << ingredient.getChild("amount").getValue().toStdString() +
+                    ingredient.getChild("unit").getValue().toStdString() <<
                     "    " <<
-                    ingredient.getChild("name").getFirstValue().toStdString() <<
-                    ingredient.getChild("usageInfo").getFirstValue().toStdString() << endl;
+                    ingredient.getChild("name").getValue().toStdString() <<
+                    ingredient.getChild("usageInfo").getValue().toStdString() << endl;
         }
     }
-    cout << "instructions:\n" << input.getChild("instructions").getFirstValue().toStdString() << endl;
+    cout << "instructions:\n" << input.getChild("instructions").getValue().toStdString() << endl;
 }

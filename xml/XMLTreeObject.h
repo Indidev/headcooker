@@ -11,7 +11,7 @@ public:
     QList<XMLTreeObject> getChilds();
     XMLTreeObject getChild(QString key);
     QString getKey();
-    QString getFirstValue();
+    QString getValue();
     void addChild(XMLTreeObject child);
     void addChilds(QList<XMLTreeObject> childs);
     void addValue(QString value);

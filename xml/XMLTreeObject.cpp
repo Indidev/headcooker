@@ -37,7 +37,7 @@ QString XMLTreeObject::getKey()
     return key;
 }
 
-QString XMLTreeObject::getFirstValue()
+QString XMLTreeObject::getValue()
 {
     if (values.size() > 0) {
         return values[0];
