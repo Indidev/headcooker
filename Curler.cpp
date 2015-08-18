@@ -1,7 +1,7 @@
 #include "Curler.h"
 
-QString Curler::getHTML(const string url) {
-    QString html;
+QString Curler::get(const string url) {
+    QString content;
     CURL* curl;
 
     curl_global_init(CURL_GLOBAL_ALL); //pretty obvious
@@ -13,12 +13,12 @@ QString Curler::getHTML(const string url) {
 
     curl_easy_perform(curl);
 
-    html = QString::fromStdString(data);
+    content = QString::fromStdString(data);
 
     curl_easy_cleanup(curl);
     curl_global_cleanup();
 
-    return html;
+    return content;
 }
 
 size_t Curler::writeCallback(char* buf, size_t size, size_t nmemb, void* up)

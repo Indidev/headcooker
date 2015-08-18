@@ -1,8 +1,14 @@
 #ifndef RECIPEWIDGET_H
 #define RECIPEWIDGET_H
 
-#include <QWidget>
 #include "xml/XMLTree.h"
+
+#include <QWidget>
+#include <QGroupBox>
+#include <QTableWidget>
+
+#include <iostream>
+using namespace std;
 
 namespace Ui {
 class RecipeWidget;

@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>1084</width>
+    <height>516</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>HeadcookerWindow</string>
+   <string>HeadCooker</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout_2"/>
@@ -21,7 +21,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>400</width>
+     <width>1084</width>
      <height>27</height>
     </rect>
    </property>

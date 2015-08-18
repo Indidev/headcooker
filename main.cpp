@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
 
 void test() {
 
-    QString text = Curler::getHTML("http://api.chefkoch.de/v2/recipes/1235651228459595");
+    QString text = Curler::get("http://api.chefkoch.de/v2/recipes/1235651228459595");
 /*    RecipeParser parser;
 
         if (!parser.hasError(text)) {
