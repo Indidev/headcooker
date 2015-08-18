@@ -8,6 +8,11 @@ RecipeWidget::RecipeWidget(QWidget *parent) :
     ui->setupUi(this);
 }
 
+RecipeWidget::RecipeWidget(XMLTree xmlData, QWidget *parent)
+{
+
+}
+
 RecipeWidget::~RecipeWidget()
 {
     delete ui;

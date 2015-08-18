@@ -2,6 +2,7 @@
 #define RECIPEWIDGET_H
 
 #include <QWidget>
+#include "xml/XMLTree.h"
 
 namespace Ui {
 class RecipeWidget;
@@ -12,7 +13,8 @@ class RecipeWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit RecipeWidget(QWidget *parent = 0);
+    RecipeWidget(QWidget *parent = 0);
+    RecipeWidget(XMLTree xmlData, QWidget *parent = 0);
     ~RecipeWidget();
 
 private:

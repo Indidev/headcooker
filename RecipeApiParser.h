@@ -11,7 +11,8 @@ public:
     RecipeApiParser();
 
     static XMLTree parseRecipe(const QString xml);
-//protected:
+
+protected:
     static QString getString(QString &xml);
 
     static QList<XMLTreeObject> parse(QString &xml);
@@ -21,6 +22,7 @@ public:
     static XMLTreeObject parseSingle(QString &xml);
 
     static void parseArray(QString &xml, XMLTreeObject &element);
+
     static QString stringToLimiter(QString &xml);
 };
 
