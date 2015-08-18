@@ -1,12 +1,14 @@
 #include "Headcookerwindow.h"
 #include <QApplication>
-#include "RecipeParser.h"
-#include "Curler.h"
 
 //testincludes
 #include <iostream>
 #include <QString>
 #include <iomanip>
+#include "RecipeApiParser.h"
+#include "xml/XMLTree.h"
+#include "Curler.h"
+
 using namespace std;
 void test();
 QString getUrl(string url);
@@ -25,8 +27,8 @@ int main(int argc, char *argv[])
 
 void test() {
 
-    QString text = Curler::getHTML("http://www.chefkoch.de/rezepte/197551083658477/Sivi-s-Semmelknoedel.html");
-    RecipeParser parser;
+    QString text = Curler::getHTML("http://api.chefkoch.de/v2/recipes/1235651228459595");
+/*    RecipeParser parser;
 
         if (!parser.hasError(text)) {
         cout << "Recipe Name: " << parser.getRecipeName(text).toStdString() << endl << endl;
@@ -59,4 +61,22 @@ void test() {
     } else {
             cerr << "An error occurred." << endl;
         }
+*/
+
+    XMLTree input = RecipeApiParser::parseRecipe(text);
+
+    XMLTreeObject ingredientGroup = input.getChild("ingredientGroups");
+    cout << "Ingredients: \n";
+    for ( XMLTreeObject header : ingredientGroup.getChilds()) {
+        cout << header.getChild("header").getFirstValue().toStdString() << endl;
+        XMLTreeObject ingredients = header.getChild("ingredients");
+        for (XMLTreeObject ingredient : ingredients.getChilds()) {
+            cout << right << setw(10) << ingredient.getChild("amount").getFirstValue().toStdString() +
+                    ingredient.getChild("unit").getFirstValue().toStdString() <<
+                    "    " <<
+                    ingredient.getChild("name").getFirstValue().toStdString() <<
+                    ingredient.getChild("usageInfo").getFirstValue().toStdString() << endl;
+        }
+    }
+    cout << "instructions:\n" << input.getChild("instructions").getFirstValue().toStdString() << endl;
 }

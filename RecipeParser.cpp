@@ -29,7 +29,7 @@ QString RecipeParser::getRecipeName(const QString html)
  * @return summary
  */
 QString RecipeParser::getSummary(const QString html) {
-    QString summary(getBetween(html, "<div class=\"summary\">"), "</div>");
+    QString summary(getBetween(html, "<div class=\"summary\">", "</div>"));
 
     summary = replaceMutations(summary);
     summary = summary.trimmed();

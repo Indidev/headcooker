@@ -18,12 +18,17 @@ SOURCES += main.cpp\
         Headcookerwindow.cpp \
     Curler.cpp \
     RecipeParser.cpp \
-    RecipeWidget.cpp
+    RecipeWidget.cpp \
+    RecipeApiParser.cpp \
+    xml/XMLTreeObject.cpp
 
 HEADERS  += Headcookerwindow.h \
     Curler.h \
-    RecipeParser.h \
-    RecipeWidget.h
+    RecipeWidget.h \
+    RecipeApiParser.h \
+    xml/XMLTree.h \
+    xml/XMLTreeObject.h \
+    RecipeHTMLParser.h
 
 FORMS    += Headcookerwindow.ui \
     RecipeWidget.ui
