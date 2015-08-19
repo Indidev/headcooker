@@ -6,7 +6,7 @@
 #include <iostream>
 using namespace std;
 
-static char *rawBuffer = 0;
+static char *buffer = 0;
 static int bufferSize;
 
 class Curler
@@ -19,6 +19,11 @@ public:
 private:
     static size_t writeCallback(char* buf, size_t size, size_t nmemb, void* up);
     static void get(const QString url);
+
+    struct Memdata {
+        char *tmpBuffer;
+        size_t size;
+    };
 };
 
 #endif // CURLER_H

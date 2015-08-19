@@ -47,11 +47,11 @@ RecipeWidget::RecipeWidget(XMLTree xmlData, QWidget *parent) :
 
     ui->previewPicture->setPixmap(fetchImage(xmlData));
 
+
+    //Tags
     if (ui->tagWidget->layout()) {
         delete ui->tagWidget->layout();
     }
-
-    //Tags
 
     FlowLayout *flowLayout = new FlowLayout;
     ui->tagWidget->setLayout(flowLayout);
@@ -80,15 +80,8 @@ QPixmap RecipeWidget::fetchImage(XMLTree &xmlData){
         XMLTree imageXML = RecipeApiParser::parseRecipe(Curler::getQString(url));
 
         QString imageUrl = imageXML.getChild("urls").getChild("crop-420x280").getChild("cdn").getValue();
-        cout << "image url: " << imageUrl.toStdString() << endl;
 
-        int bufferSize;
-
-        const uchar* orgData = (const uchar*)Curler::getCStr(imageUrl, bufferSize);
-
-        pix.loadFromData(orgData, bufferSize, "JPG");
-        pix.loadFromData(Curler::getQByteArray(imageUrl), "jpg");
-
+        pix.loadFromData(Curler::getQByteArray(imageUrl), "JPG");
     }
     return pix;
 }
