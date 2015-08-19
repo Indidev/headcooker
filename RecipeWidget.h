@@ -9,8 +9,12 @@
 #include <QGroupBox>
 #include <QTableWidget>
 #include <QGraphicsPixmapItem>
+#include <QPushButton>
+#include "FlowLayout.h"
+#include <QFile>
 
 #include <iostream>
+#include <fstream>
 using namespace std;
 
 namespace Ui {

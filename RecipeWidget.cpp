@@ -21,10 +21,9 @@ RecipeWidget::RecipeWidget(XMLTree xmlData, QWidget *parent) :
     XMLTreeObject ingredientGroup = xmlData.getChild("ingredientGroups");
 
     //Ingredients
-    for ( XMLTreeObject header : ingredientGroup.getChilds()) {
+    for (XMLTreeObject header : ingredientGroup.getChilds()) {
         QGroupBox *ingredientBox = new QGroupBox(header.getChild("header").getValue());
 
-        QTableWidget* tableWidget = new QTableWidget(header.getChild("ingredients").getChilds().size(), 2);
         QGridLayout *layout = new QGridLayout;
         ingredientBox->setLayout(layout);
         XMLTreeObject ingredients = header.getChild("ingredients");
@@ -43,12 +42,25 @@ RecipeWidget::RecipeWidget(XMLTree xmlData, QWidget *parent) :
             //cout << amount.toStdString() << " " << name.toStdString() << endl;
             i++;
         }
-
         ui->ingredientsLayout->addWidget(ingredientBox);
+    }
 
-        QGraphicsPixmapItem *item = new QGraphicsPixmapItem(fetchImage(xmlData));
-        ui->previewPicture->setScene(new QGraphicsScene);
-        ui->previewPicture->scene()->addItem(item);
+    ui->previewPicture->setPixmap(fetchImage(xmlData));
+
+    if (ui->tagWidget->layout()) {
+        delete ui->tagWidget->layout();
+    }
+
+    //Tags
+
+    FlowLayout *flowLayout = new FlowLayout;
+    ui->tagWidget->setLayout(flowLayout);
+    for (QString tag : xmlData.getChild("tags").getValues()) {
+        QLabel *tagLabel = new QLabel(tag);
+        tagLabel->setProperty("frameShape", QFrame::Box);
+        tagLabel->setProperty("frameShadow", QFrame::Sunken);
+        tagLabel->setProperty("lineWidth", 1);
+        flowLayout->addWidget(tagLabel);
     }
 }
 
@@ -58,20 +70,25 @@ RecipeWidget::~RecipeWidget()
 }
 
 QPixmap RecipeWidget::fetchImage(XMLTree &xmlData){
+    QPixmap pix(420, 280);
     if (xmlData.getChild("hasImage").getValue() == "true") {
         QString url = "http://api.chefkoch.de/v2/recipes/";
         url += xmlData.getChild("id").getValue();
         url += "/images/";
         url += xmlData.getChild("previewImageId").getValue();
 
-        XMLTree imageXML = RecipeApiParser::parseRecipe(Curler::get(url));
+        XMLTree imageXML = RecipeApiParser::parseRecipe(Curler::getQString(url));
 
         QString imageUrl = imageXML.getChild("urls").getChild("crop-420x280").getChild("cdn").getValue();
         cout << "image url: " << imageUrl.toStdString() << endl;
-        QPixmap pix;
-        QByteArray byteArray = Curler::get(imageUrl).toAscii();
-        pix.loadFromData(byteArray, "JPG");
 
-        return pix;
+        int bufferSize;
+
+        const uchar* orgData = (const uchar*)Curler::getCStr(imageUrl, bufferSize);
+
+        pix.loadFromData(orgData, bufferSize, "JPG");
+        pix.loadFromData(Curler::getQByteArray(imageUrl), "jpg");
+
     }
+    return pix;
 }

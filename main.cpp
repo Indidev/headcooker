@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
     HeadcookerWindow w;
     w.show();
 
-    test();
+    //test();
 
     return a.exec();
     //return 0;
@@ -27,7 +27,8 @@ int main(int argc, char *argv[])
 
 void test() {
 
-    QString text = Curler::get("http://api.chefkoch.de/v2/recipes/1235651228459595");
+    //QString text = Curler::get("http://api.chefkoch.de/v2/recipes/1235651228459595");
+    QString url = Curler::getQString("http://api.chefkoch.de/v2/recipes/814121185712740");
 /*    RecipeParser parser;
 
         if (!parser.hasError(text)) {
@@ -63,7 +64,7 @@ void test() {
         }
 */
 
-    XMLTree input = RecipeApiParser::parseRecipe(text);
+    XMLTree input = RecipeApiParser::parseRecipe(url);
 
     XMLTreeObject ingredientGroup = input.getChild("ingredientGroups");
     cout << "Ingredients: \n";

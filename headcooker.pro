@@ -10,6 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = headcooker
 TEMPLATE = app
+LIBS += -lcurl
 
 QMAKE_CXXFLAGS += -std=c++11
 
@@ -17,10 +18,10 @@ QMAKE_CXXFLAGS += -std=c++11
 SOURCES += main.cpp\
         Headcookerwindow.cpp \
     Curler.cpp \
-    RecipeParser.cpp \
     RecipeWidget.cpp \
     RecipeApiParser.cpp \
-    xml/XMLTreeObject.cpp
+    xml/XMLTreeObject.cpp \
+    FlowLayout.cpp
 
 HEADERS  += Headcookerwindow.h \
     Curler.h \
@@ -28,7 +29,8 @@ HEADERS  += Headcookerwindow.h \
     RecipeApiParser.h \
     xml/XMLTree.h \
     xml/XMLTreeObject.h \
-    RecipeHTMLParser.h
+    RecipeHTMLParser.h \
+    FlowLayout.h
 
 FORMS    += Headcookerwindow.ui \
     RecipeWidget.ui

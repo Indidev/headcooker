@@ -6,16 +6,19 @@
 #include <iostream>
 using namespace std;
 
-static string data;
+static char *rawBuffer = 0;
+static int bufferSize;
 
 class Curler
 {
 public:
-    static QString get(const QString url);
+    static QByteArray getQByteArray(const QString url);
+    static QString getQString(const QString url);
+    static const char *getCStr(const QString url, int &size);
 
 private:
-    //static int peter = 1;
     static size_t writeCallback(char* buf, size_t size, size_t nmemb, void* up);
+    static void get(const QString url);
 };
 
 #endif // CURLER_H
