@@ -32,7 +32,7 @@ RecipeWidget::RecipeWidget(XMLTree xmlData, QWidget *parent) :
             QString a = ingredient.getChild("amount").getValue();
             QString u = ingredient.getChild("unit").getValue();
 
-            if (a.toInt() == 0)
+            if (a.toFloat() == 0)
                 a = "";
 
             QLabel *amount = new QLabel(a + " " + u);
@@ -42,6 +42,31 @@ RecipeWidget::RecipeWidget(XMLTree xmlData, QWidget *parent) :
             //cout << amount.toStdString() << " " << name.toStdString() << endl;
             i++;
         }
+
+        //Metainformations
+        ui->preparationTimeLabel->setText("ca. " + xmlData.getChild("preparationTime").getValue() + " Min.");
+        QString difficulty;
+        switch(xmlData.getChild("difficulty").getValue().toInt()) {
+            case 1:
+                difficulty = "simpel";
+                break;
+            case 2:
+                difficulty = "normal";
+                break;
+            case 3:
+                difficulty = "schwer";
+                break;
+            default:
+                difficulty = "n/a";
+        }
+        ui->difficultyLabel->setText(difficulty);
+
+        QString calories("keine Angabe");
+        if (xmlData.getChild("calories").getValue().toInt() != 0)
+            calories = xmlData.getChild("calories").getValue();
+
+        ui->caloriesLabel->setText(calories);
+
         ui->ingredientsLayout->addWidget(ingredientBox);
     }
 
