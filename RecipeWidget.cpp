@@ -95,6 +95,7 @@ RecipeWidget::~RecipeWidget()
 }
 
 QPixmap RecipeWidget::fetchImage(XMLTree &xmlData){
+    Curler curler;
     QPixmap pix(420, 280);
     if (xmlData.getChild("hasImage").getValue() == "true") {
         QString url = "http://api.chefkoch.de/v2/recipes/";
@@ -102,11 +103,11 @@ QPixmap RecipeWidget::fetchImage(XMLTree &xmlData){
         url += "/images/";
         url += xmlData.getChild("previewImageId").getValue();
 
-        XMLTree imageXML = RecipeApiParser::parseRecipe(Curler::getQString(url));
+        XMLTree imageXML = RecipeApiParser::parseRecipe(curler.getQString(url));
 
         QString imageUrl = imageXML.getChild("urls").getChild("crop-420x280").getChild("cdn").getValue();
 
-        pix.loadFromData(Curler::getQByteArray(imageUrl), "JPG");
+        pix.loadFromData(curler.getQByteArray(imageUrl), "JPG");
     }
     return pix;
 }

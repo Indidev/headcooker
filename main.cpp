@@ -11,24 +11,24 @@
 
 using namespace std;
 void test();
-QString getUrl(string url);
 
 int main(int argc, char *argv[])
 {
+    //test();
     QApplication a(argc, argv);
     HeadcookerWindow w;
     w.show();
 
-    //test();
 
     return a.exec();
     //return 0;
 }
 
 void test() {
+    Curler curler;
 
     //QString text = Curler::get("http://api.chefkoch.de/v2/recipes/1235651228459595");
-    QString url = Curler::getQString("http://api.chefkoch.de/v2/recipes/814121185712740");
+    QString url = curler.getQString("http://api.chefkoch.de/v2/recipes/814121185712740");
 /*    RecipeParser parser;
 
         if (!parser.hasError(text)) {
