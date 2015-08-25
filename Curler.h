@@ -6,9 +6,6 @@
 #include <iostream>
 using namespace std;
 
-static char *buffer = 0;
-static int bufferSize;
-
 class Curler
 {
 public:
