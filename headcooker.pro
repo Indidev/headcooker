@@ -11,6 +11,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = headcooker
 TEMPLATE = app
 LIBS += -lcurl
+LIBS += -lsqlite3
 
 QMAKE_CXXFLAGS += -std=c++11
 

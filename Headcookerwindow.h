@@ -2,7 +2,9 @@
 #define HEADCOOKERWINDOW_H
 
 #include <QMainWindow>
-#include <RecipeWidget.h>
+#include "RecipeWidget.h"
+#include <sqlite3.h>
+
 #include "Recipe.h"
 
 namespace Ui {
@@ -17,6 +19,8 @@ public:
     explicit HeadcookerWindow(QWidget *parent = 0);
     ~HeadcookerWindow();
 
+protected:
+    void testDB();
 private:
     Ui::HeadcookerWindow *ui;
 };

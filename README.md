@@ -19,6 +19,7 @@ I'll check this later
 
 #### QT5 ####
 HeadCooker depents on QT5 so make sure QT5 is installed:
+
 **Linux:** (run as root or via sudo)
 ```
 apt-get install qt5-default qt5-qmake
@@ -27,6 +28,18 @@ apt-get install qt5-default qt5-qmake
 **Windows:**
 
 Check http://www.qt.io/download/
+
+#### SQLite3 ####
+SQLite is required for storing the recipes on your local computer.
+
+**Linux:** (run as root or via sudo)
+```
+apt-get install libsqlite3-dev
+```
+
+**Windows:**
+
+I'll check this later...
 
 ### Installation ###
 
