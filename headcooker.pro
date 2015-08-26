@@ -23,7 +23,9 @@ SOURCES += main.cpp\
     RecipeApiParser.cpp \
     xml/XMLTreeObject.cpp \
     FlowLayout.cpp \
-    Recipe.cpp
+    Recipe.cpp \
+    database/DataRow.cpp \
+    database/Database.cpp
 
 HEADERS  += Headcookerwindow.h \
     Curler.h \
@@ -32,7 +34,9 @@ HEADERS  += Headcookerwindow.h \
     xml/XMLTree.h \
     xml/XMLTreeObject.h \
     FlowLayout.h \
-    Recipe.h
+    Recipe.h \
+    database/DataRow.h \
+    database/Database.h
 
 FORMS    += Headcookerwindow.ui \
     RecipeWidget.ui

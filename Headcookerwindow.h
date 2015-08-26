@@ -6,6 +6,7 @@
 #include <sqlite3.h>
 
 #include "Recipe.h"
+#include "database/Database.h"
 
 namespace Ui {
 class HeadcookerWindow;
