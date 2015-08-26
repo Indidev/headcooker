@@ -4,11 +4,11 @@ A c++ GUI-based tool for managing chefkoch.de recipes.
 ## Overview ##
 
  * [Compiling and dependencies](#compiling-and-dependencies)
- ** [Dependencies](#dependencies)
- *** [libCurl](#libcurl)
- *** [QT5](#qt5)
- *** [SQLite3](#sqlite3)
- ** [Compilation](#compilation)
+   * [Dependencies](#dependencies)
+     * [libCurl](#libcurl)
+     * [QT5](#qt5)
+     * [SQLite3](#sqlite3)
+   * [Compilation](#compilation)
 
 
 ## Compilation and dependencies ##
