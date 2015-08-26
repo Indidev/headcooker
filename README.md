@@ -1,7 +1,17 @@
 # HeadCooker
 A c++ GUI-based tool for managing chefkoch.de recipes.
 
-## Compiling and dependencies ##
+## Overview ##
+
+ * [Compiling and dependencies](#compiling-and-dependencies)
+ ** [Dependencies](#dependencies)
+ *** [libCurl](#libcurl)
+ *** [QT5](#qt5)
+ *** [SQLite3](#sqlite3)
+ ** [Compilation](#compilation)
+
+
+## Compilation and dependencies ##
 
 ### Dependencies ###
 
@@ -41,7 +51,7 @@ apt-get install libsqlite3-dev
 
 I'll check this later...
 
-### Installation ###
+### Compilation ###
 
 Run following in your HeadCooker directory:
 ```
