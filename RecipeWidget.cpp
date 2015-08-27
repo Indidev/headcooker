@@ -13,12 +13,12 @@ RecipeWidget::RecipeWidget(QString id, QWidget *parent) :
 
     //Ingredients
     for (auto& group : recipe->getIngredientGroups()) {
-        QGroupBox *ingredientBox = new QGroupBox(group.first);
+        QGroupBox *ingredientBox = new QGroupBox(group.key);
 
         QGridLayout *layout = new QGridLayout;
         ingredientBox->setLayout(layout);
         int i = 0;
-        for (Recipe::Ingredient ingredient : group.second) {
+        for (DataTypes::Ingredient ingredient : group.value) {
             QString a = QString::number(ingredient.amount);
             QString u(ingredient.unit);
 

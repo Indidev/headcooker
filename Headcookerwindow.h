@@ -7,6 +7,7 @@
 
 #include "Recipe.h"
 #include "database/Database.h"
+#include <unordered_map>
 
 namespace Ui {
 class HeadcookerWindow;

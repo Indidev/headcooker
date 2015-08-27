@@ -7,8 +7,11 @@
 #include <sqlite3.h>
 #include <iostream>
 
+#include<../UnorderedMap.h>
+
 #include "DataRow.h"
 #include "../Recipe.h"
+#include "../DataTypes.h"
 
 using std::cerr;
 using std::endl;
@@ -16,6 +19,7 @@ using std::endl;
 static const QString DB_PATH = "test.db";
 
 class Recipe;
+struct Ingredient;
 
 class Database
 {
@@ -31,6 +35,17 @@ public:
     bool hasRecipe(QString onlineID);
     bool hasRecipe(int id);
     bool saveRecipe(const Recipe &recipe);
+    bool getRecipe(QString id, QList<DataRow> &row);
+    bool getRecipe(int id, QList<DataRow> &row);
+    QString getNameFromID(QString tablename, int id);
+    QString getDifficulty(int id);
+    QString getUserName(int id);
+    QString getIngredientName(int id);
+    QString getGroupName(int id);
+    QString getUnitName(int id);
+    QList<QString> getKeys(int recipeID);
+    QString getUsageInfo(int id);
+    UnorderedMap<QString, QList<DataTypes::Ingredient> > getIngredients(int recipeID);
 protected:
     Database(QString databasePath);
     ~Database();

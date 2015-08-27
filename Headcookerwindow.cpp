@@ -9,12 +9,7 @@ HeadcookerWindow::HeadcookerWindow(QWidget *parent) :
 
     QString id("2138001343651445");
     //id = "424521133318549";
-    id = "1235651228459595";
-
-
-    //QString xml = curler.getQString("http://api.chefkoch.de/v2/recipes/1235651228459595");
-    //QString xml = curler.getQString("http://api.chefkoch.de/v2/recipes/814121185712740");
-    //QString xml = curler.getQString("http://api.chefkoch.de/v2/recipes/197551083658477");
+    //id = "1235651228459595";
 
     RecipeWidget *rw = new RecipeWidget(id);
 
@@ -37,4 +32,14 @@ void HeadcookerWindow::testDB() {
     cout << "id for max: " << database.getUserID("max") << endl;
 
     cout <<"tag id for meat: " << database.getTagID("meat") << endl;
+
+    map <QString, int> m;
+
+    m["d"] = 4;
+    m["b"] = 2;
+    m["c"] = 3;
+    m["a"] = 1;
+
+    for (auto& elem : m)
+        cout << elem.first.toStdString() << endl;
 }

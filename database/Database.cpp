@@ -131,9 +131,9 @@ bool Database::addRecipe(const Recipe &recipe) {
     //insert ingredients
     if (noErr) {
         for (auto& group : recipe.ingredientGroups) {
-            int groupID = getIngredientGroupID(group.first);
+            int groupID = getIngredientGroupID(group.key);
 
-            for (Recipe::Ingredient ingredient : group.second) {
+            for (DataTypes::Ingredient ingredient : group.value) {
                 int ingredientID = getIngredientID(ingredient.name);
                 int unitID = getUnitID(ingredient.unit);
                 int usageID = getUsageID(ingredient.usageInfo);
@@ -156,6 +156,107 @@ bool Database::addRecipe(const Recipe &recipe) {
     }
 
     return noErr;
+}
+
+bool Database::getRecipe(QString id, QList<DataRow> &row) {
+    QString sql = "SELECT * FROM RECIPE WHERE ONLINE_ID ='" + id + "';";
+
+    return execSQL(sql, &row);
+}
+
+bool Database::getRecipe(int id, QList<DataRow> &row) {
+    QString sql = "SELECT * FROM RECIPE WHERE ID =" + QString::number(id) + ";";
+
+    return execSQL(sql, &row);
+}
+
+QString Database::getUserName(int id) {
+    return getNameFromID("USER", id);
+}
+
+QString Database::getDifficulty(int id) {
+    return getNameFromID("DIFFICULTY", id);
+}
+
+QString Database::getIngredientName(int id) {
+    return getNameFromID("INGREDIENT", id);
+}
+
+QString Database::getGroupName(int id) {
+    return getNameFromID("INGREDIENT_GROUP", id);
+}
+
+QString Database::getUnitName(int id) {
+    return getNameFromID("UNIT", id);
+}
+
+QString Database::getUsageInfo(int id) {
+    return getNameFromID("USAGE_INFO", id);
+}
+
+QList<QString> Database::getKeys(int recipeID) {
+    QString sql = "SELECT NAME" \
+            "FROM RECIPE_TAGS " \
+            "JOIN TAG" \
+            "ON TAG.ID = TAG_ID" \
+            "WHERE RECIPE_ID = " + QString::number(recipeID) + ";";
+
+    QList<QString> keys;
+    QList<DataRow> rows;
+
+    if (execSQL(sql, &rows)) {
+        for (DataRow row : rows) {
+            keys.append(row.get("name"));
+        }
+    }
+
+    return keys;
+}
+
+UnorderedMap<QString, QList<DataTypes::Ingredient> > Database::getIngredients(int recipeID) {
+    QString sql = "SELECT " \
+                "INGREDIENT_GROUP.NAME AS 'GROUP'," \
+                "AMOUNT," \
+                "Unit.NAME AS 'UNIT'," \
+                "INGREDIENT.NAME AS 'NAME'," \
+                "USAGE_INFO.NAME as 'USAGE_INFO'" \
+            "FROM INGREDIENT_LIST" \
+                "JOIN INGREDIENT" \
+                "ON INGREDIENT.ID = ING_ID" \
+                "JOIN UNIT" \
+                "ON UNIT.ID = UNIT_ID" \
+                "JOIN INGREDIENT_GROUP" \
+                "ON INGREDIENT_GROUP.ID = GROUP_ID" \
+                "JOIN USAGE_INFO" \
+                "ON USAGE_INFO.ID = USAGE_ID" \
+            "WHERE RECIPE_ID = " + QString::number(recipeID) + ";";
+    UnorderedMap<QString, QList<DataTypes::Ingredient>> ingredients;
+
+    QList<DataRow> rows;
+
+    if (execSQL(sql, &rows)) {
+        for (DataRow row : rows) {
+            QList<DataTypes::Ingredient> &group = ingredients[row.get("group")];
+            group.append(DataTypes::Ingredient{
+                             row.get("amount").toFloat(),
+                             row.get("unit"),
+                             row.get("name"),
+                             row.get("usage_info")});
+        }
+    }
+
+    return ingredients;
+}
+
+QString Database::getNameFromID(QString tablename, int id) {
+    QString sql = "SELECT NAME FROM " + tablename + " WHERE ID = " + QString::number(id) + ";";
+
+    QList<DataRow> row;
+
+    if (execSQL(sql, &row) && row.size() > 0)
+        return row[0].get("name");
+    else
+        return "";
 }
 
 int Database::getSingleItemID(QString tablename, QString name) {

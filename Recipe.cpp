@@ -68,10 +68,7 @@ QList<QPair<QString, QString>> Recipe::getMetaInfo()
         metaInfo.append(QPair<QString, QString>{"Ruhezeit: ", getTime(restingTime)});
 
     {
-        QString name = "Schwierigkeitsgrad: ";
-        //TODO fetch names from database
-        QString value = difficulty == 1?"simpel":difficulty == 2?"normal":difficulty == 3?"schwer":"n/a";
-        metaInfo.append(QPair<QString, QString>{name, value});
+        metaInfo.append(QPair<QString, QString>{"Schwierigkeitsgrad: ", difficultyStr});
     }
 
     {
@@ -87,7 +84,7 @@ QList<QPair<QString, QString>> Recipe::getMetaInfo()
     return metaInfo;
 }
 
-QList<QPair<QString, QList<Recipe::Ingredient>>> Recipe::getIngredientGroups()
+UnorderedMap<QString, QList<DataTypes::Ingredient> > Recipe::getIngredientGroups()
 {
     return ingredientGroups;
 }
@@ -157,7 +154,7 @@ void Recipe::loadFromURL(QString id)
         //ingredients
         for (XMLTreeObject header : xmlData.getChild("ingredientGroups").getChilds()) {
             QString headerName = header.getChild("header").getValue();
-            QList<Ingredient> ingredients;
+            QList<DataTypes::Ingredient> ingredients;
 
             for (XMLTreeObject ingredient : header.getChild("ingredients").getChilds()) {
                 float a = ingredient.getChild("amount").getValue().toFloat();
@@ -165,9 +162,9 @@ void Recipe::loadFromURL(QString id)
                 QString n = ingredient.getChild("name").getValue();
                 QString uI = ingredient.getChild("usageInfo").getValue();
 
-                ingredients.push_back(Ingredient{a, u, n, uI});
+                ingredients.push_back(DataTypes::Ingredient{a, u, n, uI});
             }
-            ingredientGroups.push_back(QPair<QString, QList<Ingredient>>{headerName, ingredients});
+            ingredientGroups[headerName] = ingredients;
         }
 
         //Metainfo
@@ -178,6 +175,7 @@ void Recipe::loadFromURL(QString id)
         cookingTime = xmlData.getChild("cookingTime").getValue().toInt();
         restingTime = xmlData.getChild("restingTime").getValue().toInt();
         difficulty = xmlData.getChild("difficulty").getValue().toInt();
+        difficultyStr = Database::DB().getDifficulty(difficulty);
     }
 
 }

@@ -6,11 +6,13 @@
 #include <QList>
 #include <QPair>
 #include <QPixmap>
+#include <UnorderedMap.h>
 
 //HeadCooker Headers
 #include "Curler.h"
 #include "RecipeApiParser.h"
 #include "database/Database.h"
+#include "DataTypes.h"
 
 static const QString API_URL = "http://api.chefkoch.de/v2/recipes/";
 class Database;
@@ -19,14 +21,6 @@ class Recipe
 {
     friend class Database;
 public:
-
-    struct Ingredient {
-        float amount;
-        QString unit;
-        QString name;
-        QString usageInfo;
-    };
-
     Recipe(QString id);
     ~Recipe();
 
@@ -42,7 +36,7 @@ public:
     float getRating();
 
     QList<QPair<QString, QString>> getMetaInfo();
-    QList<QPair<QString, QList<Ingredient>>> getIngredientGroups();
+    UnorderedMap<QString, QList<DataTypes::Ingredient>> getIngredientGroups();
 
     bool save();
 protected:
@@ -69,8 +63,9 @@ protected:
     int cookingTime;
     int restingTime;
     int difficulty;
+    QString difficultyStr;
 
-    QList<QPair<QString, QList<Ingredient>>> ingredientGroups;
+    UnorderedMap<QString, QList<DataTypes::Ingredient>> ingredientGroups;
 
     QPixmap picture;
 
