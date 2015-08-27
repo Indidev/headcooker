@@ -15,5 +15,5 @@ QString DataRow::get(QString key)
         if (elem.key.toLower() == key.toLower())
             return elem.value;
     }
-    return NULL;
+    return "";
 }

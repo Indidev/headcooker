@@ -38,8 +38,7 @@ HEADERS  += Headcookerwindow.h \
     Recipe.h \
     database/DataRow.h \
     database/Database.h \
-    DataTypes.h \
-    UnorderedMap.h
+    DataTypes.h
 
 FORMS    += Headcookerwindow.ui \
     RecipeWidget.ui

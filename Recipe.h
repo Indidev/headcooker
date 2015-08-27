@@ -6,7 +6,6 @@
 #include <QList>
 #include <QPair>
 #include <QPixmap>
-#include <UnorderedMap.h>
 
 //HeadCooker Headers
 #include "Curler.h"
@@ -36,13 +35,10 @@ public:
     float getRating();
 
     QList<QPair<QString, QString>> getMetaInfo();
-    UnorderedMap<QString, QList<DataTypes::Ingredient>> getIngredientGroups();
+    DataTypes::IngredientGroups getIngredientGroups();
 
     bool save();
 protected:
-
-    float rating;
-    float servings;
 
     bool hasImage;
 
@@ -57,7 +53,10 @@ protected:
 
     QList<QString> keyWords;
 
-    //metainfo
+    //metainfo    
+    float rating;
+    float servings;
+
     int preparationTime;
     int kCalories;
     int cookingTime;
@@ -65,13 +64,15 @@ protected:
     int difficulty;
     QString difficultyStr;
 
-    UnorderedMap<QString, QList<DataTypes::Ingredient>> ingredientGroups;
+    DataTypes::IngredientGroups ingredientGroups;
 
     QPixmap picture;
 
 
     bool isInDatabase(QString id);
     void loadFromDatabase(QString id);
+    void loadFromDatabase(int id);
+    void loadFromDatabase(DataRow &row);
     void loadFromURL(QString id);
     void fetchImage(QString imageID, Curler &curler);
     QString getTime(int minutes);

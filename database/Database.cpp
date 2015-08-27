@@ -130,10 +130,10 @@ bool Database::addRecipe(const Recipe &recipe) {
 
     //insert ingredients
     if (noErr) {
-        for (auto& group : recipe.ingredientGroups) {
-            int groupID = getIngredientGroupID(group.key);
+        for (DataTypes::IngredientList group : recipe.ingredientGroups.groups) {
+            int groupID = getIngredientGroupID(group.header);
 
-            for (DataTypes::Ingredient ingredient : group.value) {
+            for (DataTypes::Ingredient ingredient : group.ingredients) {
                 int ingredientID = getIngredientID(ingredient.name);
                 int unitID = getUnitID(ingredient.unit);
                 int usageID = getUsageID(ingredient.usageInfo);
@@ -175,7 +175,10 @@ QString Database::getUserName(int id) {
 }
 
 QString Database::getDifficulty(int id) {
-    return getNameFromID("DIFFICULTY", id);
+    if (id > 3 || id < 1)
+        return getNameFromID("DIFFICULTY", 0);
+    else
+        return getNameFromID("DIFFICULTY", id);
 }
 
 QString Database::getIngredientName(int id) {
@@ -194,11 +197,11 @@ QString Database::getUsageInfo(int id) {
     return getNameFromID("USAGE_INFO", id);
 }
 
-QList<QString> Database::getKeys(int recipeID) {
-    QString sql = "SELECT NAME" \
+QList<QString> Database::getTags(int recipeID) {
+    QString sql = "SELECT NAME " \
             "FROM RECIPE_TAGS " \
-            "JOIN TAG" \
-            "ON TAG.ID = TAG_ID" \
+            "JOIN TAG " \
+            "ON TAG.ID = TAG_ID " \
             "WHERE RECIPE_ID = " + QString::number(recipeID) + ";";
 
     QList<QString> keys;
@@ -213,35 +216,45 @@ QList<QString> Database::getKeys(int recipeID) {
     return keys;
 }
 
-UnorderedMap<QString, QList<DataTypes::Ingredient> > Database::getIngredients(int recipeID) {
+DataTypes::IngredientGroups Database::getIngredients(int recipeID) {
     QString sql = "SELECT " \
                 "INGREDIENT_GROUP.NAME AS 'GROUP'," \
                 "AMOUNT," \
                 "Unit.NAME AS 'UNIT'," \
                 "INGREDIENT.NAME AS 'NAME'," \
-                "USAGE_INFO.NAME as 'USAGE_INFO'" \
-            "FROM INGREDIENT_LIST" \
-                "JOIN INGREDIENT" \
-                "ON INGREDIENT.ID = ING_ID" \
-                "JOIN UNIT" \
-                "ON UNIT.ID = UNIT_ID" \
-                "JOIN INGREDIENT_GROUP" \
-                "ON INGREDIENT_GROUP.ID = GROUP_ID" \
-                "JOIN USAGE_INFO" \
-                "ON USAGE_INFO.ID = USAGE_ID" \
+                "USAGE_INFO.NAME as 'USAGE_INFO' " \
+            "FROM INGREDIENT_LIST " \
+                "JOIN INGREDIENT " \
+                "ON INGREDIENT.ID = ING_ID " \
+                "JOIN UNIT " \
+                "ON UNIT.ID = UNIT_ID " \
+                "JOIN INGREDIENT_GROUP " \
+                "ON INGREDIENT_GROUP.ID = GROUP_ID " \
+                "JOIN USAGE_INFO " \
+                "ON USAGE_INFO.ID = USAGE_ID " \
             "WHERE RECIPE_ID = " + QString::number(recipeID) + ";";
-    UnorderedMap<QString, QList<DataTypes::Ingredient>> ingredients;
+    DataTypes::IngredientGroups ingredients;
 
     QList<DataRow> rows;
 
     if (execSQL(sql, &rows)) {
-        for (DataRow row : rows) {
-            QList<DataTypes::Ingredient> &group = ingredients[row.get("group")];
-            group.append(DataTypes::Ingredient{
+        for (DataRow &row : rows) {
+            QString groupName = row.get("group");
+            float amount = row.get("amount").toFloat();
+            QString unit = row.get("unit");
+            QString name = row.get("name");
+            QString usage = row.get("usage_info");
+
+            DataTypes::Ingredient ingredient{amount, unit, name, usage};
+            ingredients.add(groupName, ingredient);
+
+
+            //group.append(DataTypes::Ingredient{amount, unit, name, usage});
+            /*group.append(DataTypes::Ingredient{
                              row.get("amount").toFloat(),
                              row.get("unit"),
                              row.get("name"),
-                             row.get("usage_info")});
+                             row.get("usage_info")});*/
         }
     }
 
@@ -303,8 +316,8 @@ int Database::callback(void *data, int argc, char **values, char **colNames){
 
     DataRow row;
     for (int i = 0; i < argc; i++) {
-        QString key = QString::fromLatin1(colNames[i]);
-        QString value = QString::fromLatin1(values[i]);
+        QString key = QString::fromLocal8Bit(colNames[i]);
+        QString value = QString::fromLocal8Bit(values[i]);
         row.add(key, value);
     }
 

@@ -7,8 +7,6 @@
 #include <sqlite3.h>
 #include <iostream>
 
-#include<../UnorderedMap.h>
-
 #include "DataRow.h"
 #include "../Recipe.h"
 #include "../DataTypes.h"
@@ -43,9 +41,9 @@ public:
     QString getIngredientName(int id);
     QString getGroupName(int id);
     QString getUnitName(int id);
-    QList<QString> getKeys(int recipeID);
+    QList<QString> getTags(int recipeID);
     QString getUsageInfo(int id);
-    UnorderedMap<QString, QList<DataTypes::Ingredient> > getIngredients(int recipeID);
+    DataTypes::IngredientGroups getIngredients(int recipeID);
 protected:
     Database(QString databasePath);
     ~Database();

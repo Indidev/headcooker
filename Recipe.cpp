@@ -2,6 +2,7 @@
 
 Recipe::Recipe(QString id)
 {
+    picture = QPixmap(420, 280);
     if (isInDatabase(id)) {
         loadFromDatabase(id);
     } else {
@@ -84,7 +85,7 @@ QList<QPair<QString, QString>> Recipe::getMetaInfo()
     return metaInfo;
 }
 
-UnorderedMap<QString, QList<DataTypes::Ingredient> > Recipe::getIngredientGroups()
+DataTypes::IngredientGroups Recipe::getIngredientGroups()
 {
     return ingredientGroups;
 }
@@ -108,8 +109,40 @@ QString Recipe::getTime(int minutes) {
 }
 
 void Recipe::loadFromDatabase(QString id) {
-    (void) id;
-    //TODO: impement this
+    QList<DataRow> row;
+    if (Database::DB().getRecipe(id, row))
+        loadFromDatabase(row[0]);
+}
+
+void Recipe::loadFromDatabase(int id) {
+    QList<DataRow> row;
+    if (Database::DB().getRecipe(id, row))
+        loadFromDatabase(row[0]);
+}
+
+void Recipe::loadFromDatabase(DataRow &row) {
+    databaseID = row.get("id").toInt();
+    recipeID = row.get("online_id");
+    title = row.get("title");
+    subtitle = row.get("subtitle");
+    imagePath = row.get("img_path");
+    hasImage = !imagePath.isEmpty();
+    instructions = row.get("instruction");
+    preparationTime = row.get("preparation_time").toInt();
+    cookingTime = row.get("cooking_time").toInt();
+    restingTime = row.get("resting_time").toInt();
+    difficulty = row.get("difficulty_id").toFloat();
+    rating = row.get("rating").toFloat();
+    owner = Database::DB().getUserName(row.get("owner_id").toInt());
+
+    //load keywords
+    keyWords = Database::DB().getTags(databaseID);
+
+    //load ingredients
+    ingredientGroups = Database::DB().getIngredients(databaseID);
+
+    if(hasImage)
+        hasImage = picture.load(imagePath);
 }
 
 void Recipe::loadFromURL(QString id)
@@ -164,7 +197,7 @@ void Recipe::loadFromURL(QString id)
 
                 ingredients.push_back(DataTypes::Ingredient{a, u, n, uI});
             }
-            ingredientGroups[headerName] = ingredients;
+            ingredientGroups.add(headerName, ingredients);
         }
 
         //Metainfo
@@ -181,7 +214,6 @@ void Recipe::loadFromURL(QString id)
 }
 
 void Recipe::fetchImage(QString imageID, Curler &curler){
-    picture = QPixmap(420, 280);
 
     QString url = API_URL;
     url += recipeID;
@@ -196,9 +228,7 @@ void Recipe::fetchImage(QString imageID, Curler &curler){
 }
 
 bool Recipe::isInDatabase(QString id) {
-    (void) id;
-    //TODO: remove this if database is implemented
-    return false;
+    return Database::DB().hasRecipe(id);
 }
 
 bool Recipe::save() {
