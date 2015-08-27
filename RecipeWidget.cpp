@@ -1,12 +1,47 @@
 #include "RecipeWidget.h"
 #include "ui_RecipeWidget.h"
 
-RecipeWidget::RecipeWidget(QString id, QWidget *parent) :
+RecipeWidget::RecipeWidget(QString id, HeadcookerWindow *win, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::RecipeWidget)
 {
     recipe = new Recipe(id);
+    init(win);
+}
+
+RecipeWidget::RecipeWidget(int id, HeadcookerWindow *win, QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::RecipeWidget)
+{
+    recipe = new Recipe(id);
+    init(win);
+}
+
+RecipeWidget::RecipeWidget(Recipe &recipe, HeadcookerWindow *win, QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::RecipeWidget)
+{
+    this->recipe = &recipe;
+    init(win);
+}
+
+RecipeWidget::~RecipeWidget()
+{
+    delete recipe;
+    delete ui;
+}
+
+Recipe *RecipeWidget::getRecipe()
+{
+    return recipe;
+}
+
+void RecipeWidget::init(HeadcookerWindow *win)
+{
     ui->setupUi(this);
+
+    connect(ui->backButton, SIGNAL(clicked()), win, SLOT(showRecipeChooser()));
+
     ui->recipeName->setText(recipe->getTitle());
     ui->subtitle->setText(recipe->getSubtitle());
     ui->instructions->setText(recipe->getInstructions());
@@ -69,15 +104,4 @@ RecipeWidget::RecipeWidget(QString id, QWidget *parent) :
         tagLabel->setProperty("lineWidth", 1);
         tagLayout->addWidget(tagLabel);
     }
-}
-
-RecipeWidget::~RecipeWidget()
-{
-    delete recipe;
-    delete ui;
-}
-
-Recipe *RecipeWidget::getRecipe()
-{
-    return recipe;
 }

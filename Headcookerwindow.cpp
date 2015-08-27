@@ -8,12 +8,14 @@ HeadcookerWindow::HeadcookerWindow(QWidget *parent) :
     ui->setupUi(this);
 
     QString id("2138001343651445");
-    //id = "424521133318549";
-    //id = "1235651228459595";
+    id = "424521133318549";
+    id = "1235651228459595";
 
-    RecipeWidget *rw = new RecipeWidget(id);
+    //RecipeWidget *rw = new RecipeWidget(id);
+    //ui->centralWidget->layout()->addWidget(rw);
+    curWidget = new RecipeChooser(this);
+    ui->centralWidget->layout()->addWidget(curWidget);
 
-    ui->centralWidget->layout()->addWidget(rw);
     testDB();
 }
 
@@ -23,23 +25,29 @@ HeadcookerWindow::~HeadcookerWindow()
 }
 
 void HeadcookerWindow::testDB() {
-    Database &database = Database::DB();
+    //nothing to test at the moment
+}
 
-    cout << "id for hans: " << database.getUserID("hans") << endl;
-    cout << "id for peter: " << database.getUserID("peter") << endl;
-    cout << "id for hans: " << database.getUserID("hans") << endl;
-    cout << "id for lara: " << database.getUserID("lara") << endl;
-    cout << "id for max: " << database.getUserID("max") << endl;
+void HeadcookerWindow::clickedID(QString id) {
+    showRecipe(id.toInt());
+}
 
-    cout <<"tag id for meat: " << database.getTagID("meat") << endl;
+void HeadcookerWindow::clear() {
+    curWidget->setVisible(false);
+    ui->centralWidget->layout()->removeWidget(curWidget);
+    curWidget->deleteLater();
+}
 
-    map <QString, int> m;
+void HeadcookerWindow::showRecipe(int id) {
+    setWidget(new RecipeWidget(id, this));
+}
 
-    m["d"] = 4;
-    m["b"] = 2;
-    m["c"] = 3;
-    m["a"] = 1;
+void HeadcookerWindow::showRecipeChooser() {
+    setWidget(new RecipeChooser(this));
+}
 
-    for (auto& elem : m)
-        cout << elem.first.toStdString() << endl;
+void HeadcookerWindow::setWidget(QWidget * widget) {
+    clear();
+    curWidget = widget;
+    ui->centralWidget->layout()->addWidget(curWidget);
 }

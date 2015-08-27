@@ -2,13 +2,14 @@
 #define RECIPEWIDGET_H
 
 #include "Recipe.h"
+#include "FlowLayout.h"
+#include "Headcookerwindow.h"
 
 #include <QWidget>
 #include <QGroupBox>
 #include <QTableWidget>
 #include <QGraphicsPixmapItem>
 #include <QPushButton>
-#include "FlowLayout.h"
 #include <QFile>
 
 #include <iostream>
@@ -19,19 +20,24 @@ namespace Ui {
 class RecipeWidget;
 }
 
+class HeadcookerWindow;
+
 class RecipeWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    RecipeWidget(QString id, QWidget *parent = 0);
+    RecipeWidget(QString id, HeadcookerWindow *win, QWidget *parent = 0);
+    RecipeWidget(int id, HeadcookerWindow *win, QWidget *parent = 0);
+    RecipeWidget(Recipe &recipe, HeadcookerWindow *win, QWidget *parent = 0);
     ~RecipeWidget();
-
     Recipe *getRecipe();
 
-private:
+protected:
     Ui::RecipeWidget *ui;
     Recipe *recipe;
+
+    void init(HeadcookerWindow *win);
 };
 
 #endif // RECIPEWIDGET_H

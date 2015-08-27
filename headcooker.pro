@@ -26,7 +26,8 @@ SOURCES += main.cpp\
     Recipe.cpp \
     database/DataRow.cpp \
     database/Database.cpp \
-    DataTypes.cpp
+    DataTypes.cpp \
+    RecipeChooser.cpp
 
 HEADERS  += Headcookerwindow.h \
     Curler.h \
@@ -38,7 +39,9 @@ HEADERS  += Headcookerwindow.h \
     Recipe.h \
     database/DataRow.h \
     database/Database.h \
-    DataTypes.h
+    DataTypes.h \
+    RecipeChooser.h
 
 FORMS    += Headcookerwindow.ui \
-    RecipeWidget.ui
+    RecipeWidget.ui \
+    RecipeChooser.ui

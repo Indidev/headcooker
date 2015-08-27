@@ -10,6 +10,13 @@ Recipe::Recipe(QString id)
     }
 }
 
+Recipe::Recipe(int id)
+{
+    picture = QPixmap(420, 280);
+    if (isInDatabase(id))
+        loadFromDatabase(id);
+}
+
 Recipe::~Recipe()
 {
     save();
@@ -143,6 +150,8 @@ void Recipe::loadFromDatabase(DataRow &row) {
 
     if(hasImage)
         hasImage = picture.load(imagePath);
+
+    difficultyStr = Database::DB().getDifficulty(difficulty);
 }
 
 void Recipe::loadFromURL(QString id)
@@ -228,6 +237,10 @@ void Recipe::fetchImage(QString imageID, Curler &curler){
 }
 
 bool Recipe::isInDatabase(QString id) {
+    return Database::DB().hasRecipe(id);
+}
+
+bool Recipe::isInDatabase(int id) {
     return Database::DB().hasRecipe(id);
 }
 

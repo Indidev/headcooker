@@ -21,6 +21,7 @@ class Recipe
     friend class Database;
 public:
     Recipe(QString id);
+    Recipe(int id);
     ~Recipe();
 
     QString getTitle();
@@ -70,6 +71,7 @@ protected:
 
 
     bool isInDatabase(QString id);
+    bool isInDatabase(int id);
     void loadFromDatabase(QString id);
     void loadFromDatabase(int id);
     void loadFromDatabase(DataRow &row);

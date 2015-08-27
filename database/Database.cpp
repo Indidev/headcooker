@@ -159,13 +159,19 @@ bool Database::addRecipe(const Recipe &recipe) {
 }
 
 bool Database::getRecipe(QString id, QList<DataRow> &row) {
-    QString sql = "SELECT * FROM RECIPE WHERE ONLINE_ID ='" + id + "';";
+    QString sql = "SELECT * FROM RECIPE WHERE ONLINE_ID ='" + id + "' OR ID = " + id +  ";";
 
     return execSQL(sql, &row);
 }
 
 bool Database::getRecipe(int id, QList<DataRow> &row) {
     QString sql = "SELECT * FROM RECIPE WHERE ID =" + QString::number(id) + ";";
+
+    return execSQL(sql, &row);
+}
+
+bool Database::listOfRecipes(QList<DataRow> &row) {
+    QString sql = "SELECT ID, TITLE FROM RECIPE;";
 
     return execSQL(sql, &row);
 }

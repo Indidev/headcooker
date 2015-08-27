@@ -44,6 +44,7 @@ public:
     QList<QString> getTags(int recipeID);
     QString getUsageInfo(int id);
     DataTypes::IngredientGroups getIngredients(int recipeID);
+    bool listOfRecipes(QList<DataRow> &row);
 protected:
     Database(QString databasePath);
     ~Database();
