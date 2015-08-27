@@ -27,6 +27,8 @@ public:
     RecipeWidget(QString id, QWidget *parent = 0);
     ~RecipeWidget();
 
+    Recipe *getRecipe();
+
 private:
     Ui::RecipeWidget *ui;
     Recipe *recipe;

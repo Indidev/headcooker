@@ -1,5 +1,7 @@
 #include "Database.h"
 
+Database *Database::instance = NULL;
+
 Database::Database(QString databasePath)
 {
     this->databasePath = databasePath;
@@ -24,6 +26,14 @@ Database::~Database()
     sqlite3_close(db);
 }
 
+Database &Database::DB()
+{
+    if (!Database::instance)
+        instance = new Database(DB_PATH);
+
+    return *instance;
+}
+
 int Database::getUserID(QString username) {
     return getSingleItemID("USER", username);
 }
@@ -44,9 +54,108 @@ int Database::getUnitID(QString unitName) {
     return getSingleItemID("UNIT", unitName);
 }
 
+int Database::getUsageID(QString usage) {
+    return getSingleItemID("USAGE_INFO", usage);
+}
+
 bool Database::hasRecipe(QString onlineID)
 {
+    QString sql = "SELECT * FROM RECIPE WHERE ONLINE_ID = '" + onlineID + "';";
+    QList<DataRow> row;
 
+    if (!execSQL(sql, &row))
+        return false;
+    else
+        return row.size() > 0;
+}
+
+bool Database::hasRecipe(int id) {
+    QString sql = "SELECT * FROM RECIPE WHERE ID = " + QString::number(id) + ";";
+    QList<DataRow> row;
+
+    if (!execSQL(sql, &row))
+        return false;
+    else
+        return row.size() > 0;
+}
+
+bool Database::saveRecipe(const Recipe &recipe) {
+    if (hasRecipe(recipe.recipeID)) {
+        return updateRecipe(recipe);
+    } else {
+       return addRecipe(recipe);
+    }
+}
+
+bool Database::updateRecipe(const Recipe &recipe) {
+    (void) recipe;
+    return false;
+}
+
+bool Database::addRecipe(const Recipe &recipe) {
+    QString sql = "INSERT INTO RECIPE(ONLINE_ID, TITLE, SUBTITLE, INSTRUCTION, SERVINGS, RATING, IMG_PATH, PREPARATION_TIME, COOKING_TIME, RESTING_TIME, DIFFICULTY_ID, USER_ID)" \
+            "VALUES(" \
+            "'" + recipe.recipeID + "'," \
+            "'" + recipe.title + "'," \
+            "'" + recipe.subtitle + "'," \
+            "'" + recipe.instructions + "'," \
+            "" + QString::number(recipe.servings) + "," \
+            "" + QString::number(recipe.rating) + "," \
+            "'" + recipe.imagePath + "'," \
+            "" + QString::number(recipe.preparationTime) + "," \
+            "" + QString::number(recipe.cookingTime) + "," \
+            "" + QString::number(recipe.restingTime) + "," \
+            "" + QString::number(recipe.difficulty) + "," \
+            "" + QString::number(getUserID(recipe.owner)) + "" \
+            ");";
+    sql += "SELECT ID FROM RECIPE WHERE ONLINE_ID = '" + recipe.recipeID + "';";
+
+    QList<DataRow> row;
+
+    bool noErr = execSQL(sql, &row) && row[0].get("id").toInt() > 0;
+    int id;
+
+    //insert tags
+    if (noErr) {
+        id = row[0].get("id").toInt();
+        for (QString tag : recipe.keyWords) {
+            QString sql = "INSERT INTO RECIPE_TAGS(TAG_ID, RECIPE_ID)" \
+                    "VALUES(" + QString::number(getTagID(tag)) + "," + QString::number(id) + ");";
+            noErr = execSQL(sql);
+
+            if (!noErr)
+                break;
+        }
+    }
+
+    //insert ingredients
+    if (noErr) {
+        for (auto& group : recipe.ingredientGroups) {
+            int groupID = getIngredientGroupID(group.first);
+
+            for (Recipe::Ingredient ingredient : group.second) {
+                int ingredientID = getIngredientID(ingredient.name);
+                int unitID = getUnitID(ingredient.unit);
+                int usageID = getUsageID(ingredient.usageInfo);
+
+                QString sql = "INSERT INTO INGREDIENT_LIST(AMOUNT, RECIPE_ID, ING_ID, GROUP_ID, UNIT_ID, USAGE_ID)" \
+                        "VALUES(" +
+                        QString::number(ingredient.amount) + "," +
+                        QString::number(id) + "," +
+                        QString::number(ingredientID) + "," +
+                        QString::number(groupID) + "," +
+                        QString::number(unitID) + "," +
+                        QString::number(usageID) + ");";
+                noErr = execSQL(sql);
+                if (!noErr)
+                    break;
+            }
+            if (!noErr)
+                break;
+        }
+    }
+
+    return noErr;
 }
 
 int Database::getSingleItemID(QString tablename, QString name) {
@@ -151,13 +260,15 @@ void Database::initDB() {
             "FOREIGN KEY(DIFFICULTY_ID) REFERENCES DIFFICULTY(ID)," \
             "FOREIGN KEY(USER_ID) REFERENCES USER(ID) );";
 
-    sql += "CREATE TABLE IngredientList(" \
+    sql += "CREATE TABLE Ingredient_List(" \
             "ID INTEGER PRIMARY KEY," \
             "Amount INTEGER," \
+            "RECIPE_ID INTEGER NOT NULL," \
             "ING_ID INTEGER NOT NULL," \
             "Group_ID INTEGER NOT NULL," \
             "UNIT_ID INTEGER NOT NULL," \
             "USAGE_ID INTEGER NOT NULL," \
+            "FOREIGN KEY(RECIPE_ID) REFERENCES RECIPE(ID)," \
             "FOREIGN KEY(Ing_ID) REFERENCES Ingredient(ID)," \
             "FOREIGN KEY(Group_ID) REFERENCES Ingredient_Group(ID)," \
             "FOREIGN KEY(Unit_ID) REFERENCES Unit(ID)," \

@@ -8,14 +8,17 @@ HeadcookerWindow::HeadcookerWindow(QWidget *parent) :
     ui->setupUi(this);
 
     QString id("2138001343651445");
-    id = "424521133318549";
+    //id = "424521133318549";
+    id = "1235651228459595";
 
 
     //QString xml = curler.getQString("http://api.chefkoch.de/v2/recipes/1235651228459595");
     //QString xml = curler.getQString("http://api.chefkoch.de/v2/recipes/814121185712740");
     //QString xml = curler.getQString("http://api.chefkoch.de/v2/recipes/197551083658477");
 
-    ui->centralWidget->layout()->addWidget(new RecipeWidget(id));
+    RecipeWidget *rw = new RecipeWidget(id);
+
+    ui->centralWidget->layout()->addWidget(rw);
     testDB();
 }
 
@@ -25,7 +28,7 @@ HeadcookerWindow::~HeadcookerWindow()
 }
 
 void HeadcookerWindow::testDB() {
-    Database database("test.db");
+    Database &database = Database::DB();
 
     cout << "id for hans: " << database.getUserID("hans") << endl;
     cout << "id for peter: " << database.getUserID("peter") << endl;

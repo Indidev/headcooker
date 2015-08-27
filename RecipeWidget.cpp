@@ -73,5 +73,11 @@ RecipeWidget::RecipeWidget(QString id, QWidget *parent) :
 
 RecipeWidget::~RecipeWidget()
 {
+    delete recipe;
     delete ui;
+}
+
+Recipe *RecipeWidget::getRecipe()
+{
+    return recipe;
 }

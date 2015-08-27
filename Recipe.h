@@ -10,11 +10,14 @@
 //HeadCooker Headers
 #include "Curler.h"
 #include "RecipeApiParser.h"
+#include "database/Database.h"
 
 static const QString API_URL = "http://api.chefkoch.de/v2/recipes/";
+class Database;
 
 class Recipe
 {
+    friend class Database;
 public:
 
     struct Ingredient {
@@ -25,6 +28,7 @@ public:
     };
 
     Recipe(QString id);
+    ~Recipe();
 
     QString getTitle();
     QString getSubtitle();
@@ -40,7 +44,7 @@ public:
     QList<QPair<QString, QString>> getMetaInfo();
     QList<QPair<QString, QList<Ingredient>>> getIngredientGroups();
 
-
+    bool save();
 protected:
 
     float rating;
@@ -48,12 +52,14 @@ protected:
 
     bool hasImage;
 
+    int databaseID;
     QString recipeID;
     QString ownerID;
     QString owner;
     QString title;
     QString subtitle;
     QString instructions;
+    QString imagePath;
 
     QList<QString> keyWords;
 

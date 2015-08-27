@@ -9,6 +9,11 @@ Recipe::Recipe(QString id)
     }
 }
 
+Recipe::~Recipe()
+{
+    save();
+}
+
 QString Recipe::getTitle()
 {
     return title;
@@ -114,6 +119,7 @@ void Recipe::loadFromURL(QString id)
 {
     //TODO add errorhandling
 
+    databaseID = -1;
     //load xml
     Curler curler;
 
@@ -195,4 +201,15 @@ bool Recipe::isInDatabase(QString id) {
     (void) id;
     //TODO: remove this if database is implemented
     return false;
+}
+
+bool Recipe::save() {
+    Database &db = Database::DB();
+
+    if (recipeID > 0 && hasImage) {
+        imagePath = "img/recipe/" + recipeID + ".jpg";
+        picture.save(imagePath, "jpg");
+    }
+
+    return db.saveRecipe(*this);
 }
