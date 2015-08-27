@@ -93,6 +93,9 @@ bool Database::updateRecipe(const Recipe &recipe) {
 }
 
 bool Database::addRecipe(const Recipe &recipe) {
+    if (recipe.title.isEmpty())
+        return false;
+
     QString sql = "INSERT INTO RECIPE(ONLINE_ID, TITLE, SUBTITLE, INSTRUCTION, SERVINGS, RATING, IMG_PATH, PREPARATION_TIME, COOKING_TIME, RESTING_TIME, DIFFICULTY_ID, USER_ID)" \
             "VALUES(" \
             "'" + recipe.recipeID + "'," \
@@ -171,7 +174,7 @@ bool Database::getRecipe(int id, QList<DataRow> &row) {
 }
 
 bool Database::listOfRecipes(QList<DataRow> &row) {
-    QString sql = "SELECT ID, TITLE FROM RECIPE;";
+    QString sql = "SELECT ID, TITLE FROM RECIPE ORDER BY TITLE ASC;";
 
     return execSQL(sql, &row);
 }
