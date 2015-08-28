@@ -1,7 +1,7 @@
 #ifndef RECIPEWIDGET_H
 #define RECIPEWIDGET_H
 
-#include "Recipe.h"
+#include "../backend/Recipe.h"
 #include "FlowLayout.h"
 #include "Headcookerwindow.h"
 

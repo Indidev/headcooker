@@ -6,8 +6,8 @@
 #include <QLabel>
 #include <QPushButton>
 
-#include "database/Database.h"
-#include "database/DataRow.h"
+#include "../backend/database/Database.h"
+#include "../backend/database/DataRow.h"
 #include "Headcookerwindow.h"
 #include <iostream>
 

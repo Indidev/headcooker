@@ -17,31 +17,31 @@ QMAKE_CXXFLAGS += -std=c++11
 
 
 SOURCES += main.cpp\
-        Headcookerwindow.cpp \
-    Curler.cpp \
-    RecipeWidget.cpp \
-    RecipeApiParser.cpp \
-    xml/XMLTreeObject.cpp \
-    FlowLayout.cpp \
-    Recipe.cpp \
-    database/DataRow.cpp \
-    database/Database.cpp \
-    DataTypes.cpp \
-    RecipeChooser.cpp
+    frontend/Headcookerwindow.cpp \
+    frontend/RecipeWidget.cpp \
+    frontend/FlowLayout.cpp \
+    frontend/RecipeChooser.cpp \
+    backend/Curler.cpp \
+    backend/RecipeApiParser.cpp \
+    backend/xml/XMLTreeObject.cpp \
+    backend/Recipe.cpp \
+    backend/database/DataRow.cpp \
+    backend/database/Database.cpp \
+    backend/DataTypes.cpp
 
-HEADERS  += Headcookerwindow.h \
-    Curler.h \
-    RecipeWidget.h \
-    RecipeApiParser.h \
-    xml/XMLTree.h \
-    xml/XMLTreeObject.h \
-    FlowLayout.h \
-    Recipe.h \
-    database/DataRow.h \
-    database/Database.h \
-    DataTypes.h \
-    RecipeChooser.h
+HEADERS  += frontend/Headcookerwindow.h \
+    frontend/RecipeWidget.h \
+    frontend/FlowLayout.h \
+    frontend/RecipeChooser.h \
+    backend/Curler.h \
+    backend/RecipeApiParser.h \
+    backend/xml/XMLTree.h \
+    backend/xml/XMLTreeObject.h \
+    backend/Recipe.h \
+    backend/database/DataRow.h \
+    backend/database/Database.h \
+    backend/DataTypes.h
 
-FORMS    += Headcookerwindow.ui \
-    RecipeWidget.ui \
-    RecipeChooser.ui
+FORMS    += frontend/Headcookerwindow.ui \
+    frontend/RecipeWidget.ui \
+    frontend/RecipeChooser.ui

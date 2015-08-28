@@ -5,8 +5,8 @@
 #include "RecipeWidget.h"
 #include <sqlite3.h>
 
-#include "Recipe.h"
-#include "database/Database.h"
+#include "../backend/Recipe.h"
+#include "../backend/database/Database.h"
 #include "RecipeChooser.h"
 
 #include <unordered_map>
