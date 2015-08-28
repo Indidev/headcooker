@@ -40,6 +40,17 @@ void RecipeWidget::init(HeadcookerWindow *win)
 {
     ui->setupUi(this);
 
+    QFile styleFile("css/style.css");
+    if (styleFile.exists()) {
+        styleFile.open(QFile::ReadOnly);
+        QString style(styleFile.readAll());
+
+        this->setStyleSheet(style);
+
+    } else {
+        cerr << "File " << styleFile.fileName().toStdString() << " does not exit." << endl;
+    }
+
     connect(ui->backButton, SIGNAL(clicked()), win, SLOT(showRecipeChooser()));
 
     ui->recipeName->setText(recipe->getTitle());
@@ -104,6 +115,16 @@ void RecipeWidget::init(HeadcookerWindow *win)
     addAddTagButton();
 }
 
+void RecipeWidget::addAddTagButton() {
+
+    addTagButton = new QPushButton("+");
+    tagLayout->addWidget(addTagButton);
+
+    addTagButton->setStyleSheet("font-weight: bold; color: #FFF; background-color: #5D8812; border: none; padding-left: 20; padding-right: 20; border-radius: 5");
+
+    connect(addTagButton, SIGNAL(clicked()), this, SLOT(displayTagInput()));
+}
+
 void RecipeWidget::displayTagInput() {
     tagLayout->removeWidget(addTagButton);
     addTagButton->deleteLater();
@@ -116,28 +137,22 @@ void RecipeWidget::displayTagInput() {
     connect(addTagInput, SIGNAL(returnPressed()), this, SLOT(addNewTag()));
 }
 
-void RecipeWidget::addAddTagButton() {
-
-    addTagButton = new QPushButton("+");
-    tagLayout->addWidget(addTagButton);
-
-    addTagButton->setStyleSheet("font-weight: bold; color: #FFF; background-color: #5D8812; border: none; padding-left: 20; padding-right: 20; border-radius: 5");
-
-    connect(addTagButton, SIGNAL(clicked()), this, SLOT(displayTagInput()));
-}
-
 void RecipeWidget::addNewTag() {
     QString tag = addTagInput->text();
     tagLayout->removeWidget(addTagInput);
     addTagInput->deleteLater();
-    if (recipe->addTag(tag))
+    if (!tag.isEmpty() && recipe->addTag(tag))
         addTag(tag);
     addAddTagButton();
 }
 
 void RecipeWidget::addTag(QString tagname)
 {
-    QLabel *tagLabel = new QLabel(tagname);
-    tagLabel->setStyleSheet("color: #FFF; background-color: #90B262; border-radius: 5; padding-left: 5; padding-right: 5;");
-    tagLayout->addWidget(tagLabel);
+    //QLabel *tagLabel = new QLabel(tagname);
+    //tagLabel->setStyleSheet("color: #FFF; background-color: #90B262; border-radius: 5; padding-left: 5; padding-right: 5;");
+    //tagLayout->addWidget(tagLabel);
+
+    QPushButton *tag = new QPushButton(tagname);
+    tag->setObjectName("tag");
+    tagLayout->addWidget(tag);
 }

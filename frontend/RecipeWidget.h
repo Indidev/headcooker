@@ -13,6 +13,7 @@
 #include <QLineEdit>
 #include <QFile>
 #include <QTimer>
+#include <QString>
 
 #include <iostream>
 #include <fstream>

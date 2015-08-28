@@ -46,22 +46,44 @@ FORMS    += frontend/Headcookerwindow.ui \
     frontend/RecipeWidget.ui \
     frontend/RecipeChooser.ui
 
-defineTest(copyImage) {
-    files = $$1
+# Define copy command for linux and windows
+QMAKE_COPY = cp -f
+Win32:QMAKE_COPY = copy /y
 
-    for(FILE, files) {
-        DDIR = $$OUT_PWD/img/
-        SDIR = $$PWD/
+# cp(src, dest) returns the copy command
+defineReplace(cp) {
+    SDIR = $$PWD/$$1
+    DDIR = $$OUT_PWD/$$2
 
-        # Replace slashes in paths with backslashes for Windows
-        win32:FILE ~= s,/,\\,g
-        win32:DDIR ~= s,/,\\,g
-        win32:SDIR ~= s,/,\\,g
+    # Replace slashes in paths with backslashes for Windows
+    win32:DDIR ~= s,/,\\,g
+    win32:SDIR ~= s,/,\\,g
 
-        QMAKE_POST_LINK += $$QMAKE_COPY $$quote($$SDIR$$FILE) $$quote($$DDIR) $$escape_expand(\\n\\t)
-    }
-
-    export(QMAKE_POST_LINK)
+    return($$QMAKE_COPY $$SDIR $$DDIR;)
 }
 
-copyImage(img/*)
+#Directorys to create
+DIRS = css \
+       img/recipe
+
+#Loop over all given directories and append
+#the build directory to make absolute paths
+for(DIR, DIRS) {
+
+     #append directorys to base dir
+     mkcommands += $$OUT_PWD/$$DIR
+}
+
+#make a custom createDir variable with
+#the command mkdir path1 path2 path3 ...
+createDirs.commands = $(MKDIR) $$mkcommands
+
+cpFiles.commands += $$cp(css/*, css/)
+cpFiles.commands += $$cp(img/*, img/)
+
+#Add dependencies to first
+first.depends += createDirs
+first.depends += cpFiles
+
+#add dependencies to makefile
+QMAKE_EXTRA_TARGETS += first createDirs cpFiles
