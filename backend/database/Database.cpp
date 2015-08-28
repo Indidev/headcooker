@@ -88,8 +88,17 @@ bool Database::saveRecipe(const Recipe &recipe) {
 }
 
 bool Database::updateRecipe(const Recipe &recipe) {
-    (void) recipe;
-    return false;
+    //addTags
+    bool success = true;
+    for (QString tag : recipe.addedTags) {
+        QString sql = "INSERT INTO RECIPE_TAGS(TAG_ID, RECIPE_ID)" \
+                "VALUES(" + QString::number(getTagID(tag)) + "," + QString::number(recipe.databaseID) + ");";
+        success = execSQL(sql);
+
+        if (!success)
+            break;
+    }
+    return success;
 }
 
 bool Database::addRecipe(const Recipe &recipe) {
@@ -115,24 +124,24 @@ bool Database::addRecipe(const Recipe &recipe) {
 
     QList<DataRow> row;
 
-    bool noErr = execSQL(sql, &row) && row[0].get("id").toInt() > 0;
+    bool success = execSQL(sql, &row) && row[0].get("id").toInt() > 0;
     int id;
 
     //insert tags
-    if (noErr) {
+    if (success) {
         id = row[0].get("id").toInt();
-        for (QString tag : recipe.keyWords) {
+        for (QString tag : recipe.tags) {
             QString sql = "INSERT INTO RECIPE_TAGS(TAG_ID, RECIPE_ID)" \
                     "VALUES(" + QString::number(getTagID(tag)) + "," + QString::number(id) + ");";
-            noErr = execSQL(sql);
+            success = execSQL(sql);
 
-            if (!noErr)
+            if (!success)
                 break;
         }
     }
 
     //insert ingredients
-    if (noErr) {
+    if (success) {
         for (DataTypes::IngredientList group : recipe.ingredientGroups.groups) {
             int groupID = getIngredientGroupID(group.header);
 
@@ -149,16 +158,16 @@ bool Database::addRecipe(const Recipe &recipe) {
                         QString::number(groupID) + "," +
                         QString::number(unitID) + "," +
                         QString::number(usageID) + ");";
-                noErr = execSQL(sql);
-                if (!noErr)
+                success = execSQL(sql);
+                if (!success)
                     break;
             }
-            if (!noErr)
+            if (!success)
                 break;
         }
     }
 
-    return noErr;
+    return success;
 }
 
 bool Database::getRecipe(QString id, QList<DataRow> &row) {

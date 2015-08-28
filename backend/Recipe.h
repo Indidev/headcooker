@@ -6,6 +6,7 @@
 #include <QList>
 #include <QPair>
 #include <QPixmap>
+#include <QBitmap>
 
 //HeadCooker Headers
 #include "Curler.h"
@@ -28,7 +29,7 @@ public:
     QString getSubtitle();
     QString getOwner();
     QString getInstructions();
-    QList<QString> getKeyWords();
+    QList<QString> getTags();
 
     QPixmap getImage();
 
@@ -39,6 +40,8 @@ public:
     DataTypes::IngredientGroups getIngredientGroups();
 
     bool save();
+    bool hasTag(QString tagname);
+    bool addTag(QString tagname);
 protected:
 
     bool hasImage;
@@ -52,7 +55,8 @@ protected:
     QString instructions;
     QString imagePath;
 
-    QList<QString> keyWords;
+    QList<QString> tags;
+    QList<QString> addedTags;
 
     //metainfo    
     float rating;
@@ -78,6 +82,7 @@ protected:
     void loadFromURL(QString id);
     void fetchImage(QString imageID, Curler &curler);
     QString getTime(int minutes);
+    void maskImage();
 };
 
 #endif // RECIPE_H

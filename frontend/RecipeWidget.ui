@@ -74,6 +74,9 @@
            <height>280</height>
           </size>
          </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -246,7 +249,8 @@
              <bool>false</bool>
             </property>
             <property name="styleSheet">
-             <string notr="true"/>
+             <string notr="true">border: 1px solid black;
+border-radius:5;</string>
             </property>
             <property name="frameShape">
              <enum>QFrame::Box</enum>

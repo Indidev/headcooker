@@ -95,13 +95,49 @@ void RecipeWidget::init(HeadcookerWindow *win)
         delete ui->tagWidget->layout();
     }
 
-    FlowLayout *tagLayout = new FlowLayout;
+    tagLayout = new FlowLayout;
     ui->tagWidget->setLayout(tagLayout);
-    for (QString tag : recipe->getKeyWords()) {
-        QLabel *tagLabel = new QLabel(tag);
-        tagLabel->setProperty("frameShape", QFrame::Box);
-        tagLabel->setProperty("frameShadow", QFrame::Sunken);
-        tagLabel->setProperty("lineWidth", 1);
-        tagLayout->addWidget(tagLabel);
+    for (QString tag : recipe->getTags()) {
+       addTag(tag);
     }
+
+    addAddTagButton();
+}
+
+void RecipeWidget::displayTagInput() {
+    tagLayout->removeWidget(addTagButton);
+    addTagButton->deleteLater();
+
+    addTagInput = new QLineEdit();
+    addTagInput->setStyleSheet("border: none; width: 70; padding-left: 5; padding-right: 5; border-radius: 5;");
+    tagLayout->addWidget(addTagInput);
+    QTimer::singleShot(0, addTagInput, SLOT(setFocus()));
+
+    connect(addTagInput, SIGNAL(returnPressed()), this, SLOT(addNewTag()));
+}
+
+void RecipeWidget::addAddTagButton() {
+
+    addTagButton = new QPushButton("+");
+    tagLayout->addWidget(addTagButton);
+
+    addTagButton->setStyleSheet("font-weight: bold; color: #FFF; background-color: #5D8812; border: none; padding-left: 20; padding-right: 20; border-radius: 5");
+
+    connect(addTagButton, SIGNAL(clicked()), this, SLOT(displayTagInput()));
+}
+
+void RecipeWidget::addNewTag() {
+    QString tag = addTagInput->text();
+    tagLayout->removeWidget(addTagInput);
+    addTagInput->deleteLater();
+    if (recipe->addTag(tag))
+        addTag(tag);
+    addAddTagButton();
+}
+
+void RecipeWidget::addTag(QString tagname)
+{
+    QLabel *tagLabel = new QLabel(tagname);
+    tagLabel->setStyleSheet("color: #FFF; background-color: #90B262; border-radius: 5; padding-left: 5; padding-right: 5;");
+    tagLayout->addWidget(tagLabel);
 }

@@ -10,7 +10,9 @@
 #include <QTableWidget>
 #include <QGraphicsPixmapItem>
 #include <QPushButton>
+#include <QLineEdit>
 #include <QFile>
+#include <QTimer>
 
 #include <iostream>
 #include <fstream>
@@ -33,11 +35,20 @@ public:
     ~RecipeWidget();
     Recipe *getRecipe();
 
+public slots:
+    void displayTagInput();
+    void addNewTag();
 protected:
     Ui::RecipeWidget *ui;
     Recipe *recipe;
 
+    FlowLayout *tagLayout;
+    QPushButton *addTagButton;
+    QLineEdit *addTagInput;
+    void addTag(QString tagname);
+
     void init(HeadcookerWindow *win);
+    void addAddTagButton();
 };
 
 #endif // RECIPEWIDGET_H

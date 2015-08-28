@@ -42,14 +42,20 @@ QString Recipe::getInstructions()
     return instructions;
 }
 
-QList<QString> Recipe::getKeyWords()
+QList<QString> Recipe::getTags()
 {
-    return keyWords;
+    return tags;
 }
 
 QPixmap Recipe::getImage()
 {
     return picture;
+}
+
+void Recipe::maskImage() {
+    QBitmap mask(420, 280);
+    mask.load("img/image_mask.png", "png");
+    picture.setMask(mask);
 }
 
 float Recipe::getServings()
@@ -143,7 +149,7 @@ void Recipe::loadFromDatabase(DataRow &row) {
     owner = Database::DB().getUserName(row.get("owner_id").toInt());
 
     //load keywords
-    keyWords = Database::DB().getTags(databaseID);
+    tags = Database::DB().getTags(databaseID);
 
     //load ingredients
     ingredientGroups = Database::DB().getIngredients(databaseID);
@@ -152,6 +158,8 @@ void Recipe::loadFromDatabase(DataRow &row) {
         hasImage = picture.load(imagePath);
 
     difficultyStr = Database::DB().getDifficulty(difficulty);
+
+    maskImage();
 }
 
 void Recipe::loadFromURL(QString id)
@@ -183,7 +191,7 @@ void Recipe::loadFromURL(QString id)
 
         //tags
         for (QString tag : xmlData.getChild("tags").getValues()) {
-            keyWords.append(tag);
+            tags.append(tag);
         }
 
         //image
@@ -218,6 +226,8 @@ void Recipe::loadFromURL(QString id)
         restingTime = xmlData.getChild("restingTime").getValue().toInt();
         difficulty = xmlData.getChild("difficulty").getValue().toInt();
         difficultyStr = Database::DB().getDifficulty(difficulty);
+
+        maskImage();
     }
 
 }
@@ -242,6 +252,17 @@ bool Recipe::isInDatabase(QString id) {
 
 bool Recipe::isInDatabase(int id) {
     return Database::DB().hasRecipe(id);
+}
+
+bool Recipe::hasTag(QString tagname) {
+    return tags.contains(tagname) || addedTags.contains(tagname);
+}
+
+bool Recipe::addTag(QString tagname) {
+    if (hasTag(tagname))
+        return false;
+    addedTags.push_back(tagname);
+    return true;
 }
 
 bool Recipe::save() {

@@ -45,3 +45,23 @@ HEADERS  += frontend/Headcookerwindow.h \
 FORMS    += frontend/Headcookerwindow.ui \
     frontend/RecipeWidget.ui \
     frontend/RecipeChooser.ui
+
+defineTest(copyImage) {
+    files = $$1
+
+    for(FILE, files) {
+        DDIR = $$OUT_PWD/img/
+        SDIR = $$PWD/
+
+        # Replace slashes in paths with backslashes for Windows
+        win32:FILE ~= s,/,\\,g
+        win32:DDIR ~= s,/,\\,g
+        win32:SDIR ~= s,/,\\,g
+
+        QMAKE_POST_LINK += $$QMAKE_COPY $$quote($$SDIR$$FILE) $$quote($$DDIR) $$escape_expand(\\n\\t)
+    }
+
+    export(QMAKE_POST_LINK)
+}
+
+copyImage(img/*)
