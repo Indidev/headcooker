@@ -141,7 +141,7 @@ void RecipeWidget::addNewTag() {
     QString tag = addTagInput->text();
     tagLayout->removeWidget(addTagInput);
     addTagInput->deleteLater();
-    if (!tag.isEmpty() && recipe->addTag(tag))
+    if (!tag.trimmed().isEmpty() && recipe->addTag(tag))
         addTag(tag);
     addAddTagButton();
 }

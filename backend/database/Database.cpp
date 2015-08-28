@@ -92,7 +92,7 @@ bool Database::updateRecipe(const Recipe &recipe) {
     bool success = true;
     for (QString tag : recipe.addedTags) {
         QString sql = "INSERT INTO RECIPE_TAGS(TAG_ID, RECIPE_ID)" \
-                "VALUES(" + QString::number(getTagID(tag)) + "," + QString::number(recipe.databaseID) + ");";
+                "VALUES(" + QString::number(getTagID(tag.trimmed())) + "," + QString::number(recipe.databaseID) + ");";
         success = execSQL(sql);
 
         if (!success)

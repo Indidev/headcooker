@@ -259,9 +259,9 @@ bool Recipe::hasTag(QString tagname) {
 }
 
 bool Recipe::addTag(QString tagname) {
-    if (hasTag(tagname))
+    if (hasTag(tagname.trimmed()))
         return false;
-    addedTags.push_back(tagname);
+    addedTags.push_back(tagname.trimmed());
     return true;
 }
 
