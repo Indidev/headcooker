@@ -146,6 +146,7 @@ void Recipe::loadFromDatabase(DataRow &row) {
     restingTime = row.get("resting_time").toInt();
     difficulty = row.get("difficulty_id").toFloat();
     rating = row.get("rating").toFloat();
+    kCalories = row.get("kcal").toInt();
     owner = Database::DB().getUserName(row.get("owner_id").toInt());
 
     //load keywords

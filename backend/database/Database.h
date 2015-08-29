@@ -64,6 +64,7 @@ protected:
     bool execSQL(QString sql, QList<DataRow> *rows = NULL);
     bool updateRecipe(const Recipe &recipe);
     bool addRecipe(const Recipe &recipe);
+    QString escape(QString input);
 };
 
 #endif // DATABASE_H

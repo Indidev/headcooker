@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1055</width>
-    <height>718</height>
+    <height>461</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -83,7 +83,26 @@
         </widget>
        </item>
        <item>
+        <widget class="QWidget" name="spacerWidget" native="true">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>15</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QGroupBox" name="tagWidget">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
          <property name="title">
           <string>Schlagworte</string>
          </property>
@@ -100,7 +119,7 @@
          <property name="sizeHint" stdset="0">
           <size>
            <width>20</width>
-           <height>0</height>
+           <height>40</height>
           </size>
          </property>
         </spacer>

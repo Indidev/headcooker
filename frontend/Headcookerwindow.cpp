@@ -25,7 +25,6 @@ HeadcookerWindow::~HeadcookerWindow()
 }
 
 void HeadcookerWindow::testDB() {
-    //nothing to test at the moment
 }
 
 void HeadcookerWindow::clickedID(QString id) {

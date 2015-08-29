@@ -22,14 +22,16 @@ RecipeChooser::~RecipeChooser()
 
 void RecipeChooser::addRecipe() {
     QString input = ui->input->text();
+    QRegExp regex("\\D+");
 
-    QStringList items = input.split("/");
+    QStringList items = input.split(regex, QString::SkipEmptyParts);
 
     for (QString item : items) {
         bool ok;
         item.toLong(&ok);
         if (ok) {
-            Recipe tmpR(item); //auto-save if outside of scope
+            Recipe tmpR(item);
+            tmpR.save();
             break;
         }
     }

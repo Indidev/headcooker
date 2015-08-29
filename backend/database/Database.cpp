@@ -60,7 +60,7 @@ int Database::getUsageID(QString usage) {
 
 bool Database::hasRecipe(QString onlineID)
 {
-    QString sql = "SELECT * FROM RECIPE WHERE ONLINE_ID = '" + onlineID + "';";
+    QString sql = "SELECT * FROM RECIPE WHERE ONLINE_ID = '" + escape(onlineID) + "';";
     QList<DataRow> row;
 
     if (!execSQL(sql, &row))
@@ -105,20 +105,21 @@ bool Database::addRecipe(const Recipe &recipe) {
     if (recipe.title.isEmpty())
         return false;
 
-    QString sql = "INSERT INTO RECIPE(ONLINE_ID, TITLE, SUBTITLE, INSTRUCTION, SERVINGS, RATING, IMG_PATH, PREPARATION_TIME, COOKING_TIME, RESTING_TIME, DIFFICULTY_ID, USER_ID)" \
+    QString sql = "INSERT INTO RECIPE(ONLINE_ID, TITLE, SUBTITLE, INSTRUCTION, SERVINGS, RATING, IMG_PATH, PREPARATION_TIME, COOKING_TIME, RESTING_TIME, KCAL, DIFFICULTY_ID, USER_ID)" \
             "VALUES(" \
-            "'" + recipe.recipeID + "'," \
-            "'" + recipe.title + "'," \
-            "'" + recipe.subtitle + "'," \
-            "'" + recipe.instructions + "'," \
+            "'" + escape(recipe.recipeID) + "'," \
+            "'" + escape(recipe.title) + "'," \
+            "'" + escape(recipe.subtitle) + "'," \
+            "'" + escape(recipe.instructions) + "'," \
             "" + QString::number(recipe.servings) + "," \
             "" + QString::number(recipe.rating) + "," \
-            "'" + recipe.imagePath + "'," \
+            "'" + escape(recipe.imagePath) + "'," \
             "" + QString::number(recipe.preparationTime) + "," \
             "" + QString::number(recipe.cookingTime) + "," \
             "" + QString::number(recipe.restingTime) + "," \
+            "" + QString::number(recipe.kCalories) + "," \
             "" + QString::number(recipe.difficulty) + "," \
-            "" + QString::number(getUserID(recipe.owner)) + "" \
+            "" + QString::number(getUserID(escape(recipe.owner))) + "" \
             ");";
     sql += "SELECT ID FROM RECIPE WHERE ONLINE_ID = '" + recipe.recipeID + "';";
 
@@ -266,7 +267,6 @@ DataTypes::IngredientGroups Database::getIngredients(int recipeID) {
             DataTypes::Ingredient ingredient{amount, unit, name, usage};
             ingredients.add(groupName, ingredient);
 
-
             //group.append(DataTypes::Ingredient{amount, unit, name, usage});
             /*group.append(DataTypes::Ingredient{
                              row.get("amount").toFloat(),
@@ -291,7 +291,7 @@ QString Database::getNameFromID(QString tablename, int id) {
 }
 
 int Database::getSingleItemID(QString tablename, QString name) {
-    QString sql = "SELECT ID FROM " + tablename + " WHERE NAME = '" + name + "';";
+    QString sql = "SELECT ID FROM " + tablename + " WHERE NAME = '" + escape(name) + "';";
 
     QList<DataRow> rows;
 
@@ -387,6 +387,7 @@ void Database::initDB() {
             "PREPARATION_TIME INTEGER, " \
             "COOKING_TIME INTEGER, "\
             "RESTING_TIME INTEGER, "\
+            "KCAL INTEGER, " \
             "DIFFICULTY_ID INTEGER, "\
             "USER_ID INTEGER NOT NULL, "\
             "FOREIGN KEY(DIFFICULTY_ID) REFERENCES DIFFICULTY(ID)," \
@@ -431,6 +432,10 @@ void Database::printErr()
 {
     cerr << errMsg << endl;
     sqlite3_free(errMsg);
+}
+
+QString Database::escape(QString input) {
+    return input.replace("'", "''");
 }
 
 
