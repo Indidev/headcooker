@@ -307,8 +307,8 @@ int Database::getSingleItemID(QString tablename, QString name) {
 
 int Database::insertSingleItem(QString tablename, QString name) {
     QString sql = "INSERT INTO " + tablename.toUpper() + "(NAME)" \
-            "VALUES('" + name + "');" \
-            "SELECT ID FROM " + tablename.toUpper() + " WHERE NAME = '" + name + "';";
+            "VALUES('" + escape(name) + "');" \
+            "SELECT ID FROM " + tablename.toUpper() + " WHERE NAME = '" + escape(name) + "';";
 
     QList<DataRow> row;
 
