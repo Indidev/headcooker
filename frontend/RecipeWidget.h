@@ -14,6 +14,8 @@
 #include <QFile>
 #include <QTimer>
 #include <QString>
+#include <QCursor>
+#include <QScrollBar>
 
 #include <iostream>
 #include <fstream>

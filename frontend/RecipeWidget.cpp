@@ -51,6 +51,9 @@ void RecipeWidget::init(HeadcookerWindow *win)
         cerr << "File " << styleFile.fileName().toStdString() << " does not exit." << endl;
     }
 
+    ui->instructions->setObjectName("instructions");
+    ui->instructions->verticalScrollBar()->setObjectName("scrollbar");
+
     connect(ui->backButton, SIGNAL(clicked()), win, SLOT(showRecipeChooser()));
 
     ui->recipeName->setText(recipe->getTitle());
@@ -119,8 +122,8 @@ void RecipeWidget::addAddTagButton() {
 
     addTagButton = new QPushButton("+");
     tagLayout->addWidget(addTagButton);
-
-    addTagButton->setStyleSheet("font-weight: bold; color: #FFF; background-color: #5D8812; border: none; padding-left: 20; padding-right: 20; border-radius: 5");
+    addTagButton->setObjectName("addTag");
+    addTagButton->setCursor(Qt::PointingHandCursor);
 
     connect(addTagButton, SIGNAL(clicked()), this, SLOT(displayTagInput()));
 }
@@ -130,7 +133,7 @@ void RecipeWidget::displayTagInput() {
     addTagButton->deleteLater();
 
     addTagInput = new QLineEdit();
-    addTagInput->setStyleSheet("border: none; width: 70; padding-left: 5; padding-right: 5; border-radius: 5;");
+    addTagInput->setObjectName("tagEdit");
     tagLayout->addWidget(addTagInput);
     QTimer::singleShot(0, addTagInput, SLOT(setFocus()));
 
@@ -148,10 +151,6 @@ void RecipeWidget::addNewTag() {
 
 void RecipeWidget::addTag(QString tagname)
 {
-    //QLabel *tagLabel = new QLabel(tagname);
-    //tagLabel->setStyleSheet("color: #FFF; background-color: #90B262; border-radius: 5; padding-left: 5; padding-right: 5;");
-    //tagLayout->addWidget(tagLabel);
-
     QPushButton *tag = new QPushButton(tagname);
     tag->setObjectName("tag");
     tagLayout->addWidget(tag);
