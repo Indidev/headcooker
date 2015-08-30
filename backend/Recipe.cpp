@@ -2,7 +2,8 @@
 
 Recipe::Recipe(QString id)
 {
-    picture = QPixmap(420, 280);
+    init();
+
     if (isInDatabase(id)) {
         loadFromDatabase(id);
     } else {
@@ -12,7 +13,8 @@ Recipe::Recipe(QString id)
 
 Recipe::Recipe(int id)
 {
-    picture = QPixmap(420, 280);
+    init();
+
     if (isInDatabase(id))
         loadFromDatabase(id);
 }
@@ -20,6 +22,12 @@ Recipe::Recipe(int id)
 Recipe::~Recipe()
 {
     save();
+}
+
+void Recipe::init() {
+    picture = QPixmap(420, 280);
+    mask = QBitmap(420, 280);
+    mask.load("img/image_mask.png", "png");
 }
 
 QString Recipe::getTitle()
@@ -49,13 +57,9 @@ QList<QString> Recipe::getTags()
 
 QPixmap Recipe::getImage()
 {
-    return picture;
-}
-
-void Recipe::maskImage() {
-    QBitmap mask(420, 280);
-    mask.load("img/image_mask.png", "png");
-    picture.setMask(mask);
+    QPixmap pic(picture); //create copy of image
+    pic.setMask(mask);
+    return pic;
 }
 
 float Recipe::getServings()
@@ -159,8 +163,6 @@ void Recipe::loadFromDatabase(DataRow &row) {
         hasImage = picture.load(imagePath);
 
     difficultyStr = Database::DB().getDifficulty(difficulty);
-
-    maskImage();
 }
 
 void Recipe::loadFromURL(QString id)
@@ -227,8 +229,6 @@ void Recipe::loadFromURL(QString id)
         restingTime = xmlData.getChild("restingTime").getValue().toInt();
         difficulty = xmlData.getChild("difficulty").getValue().toInt();
         difficultyStr = Database::DB().getDifficulty(difficulty);
-
-        maskImage();
     }
 
 }

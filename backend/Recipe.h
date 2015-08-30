@@ -74,6 +74,7 @@ protected:
     DataTypes::IngredientGroups ingredientGroups;
 
     QPixmap picture;
+    QBitmap mask;
 
 
     bool isInDatabase(QString id);
@@ -84,7 +85,7 @@ protected:
     void loadFromURL(QString id);
     void fetchImage(QString imageID, Curler &curler);
     QString getTime(int minutes);
-    void maskImage();
+    void init();
 };
 
 #endif // RECIPE_H
