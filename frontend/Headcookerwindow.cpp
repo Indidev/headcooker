@@ -39,11 +39,17 @@ void HeadcookerWindow::clear() {
 }
 
 void HeadcookerWindow::showRecipe(int id) {
-    setWidget(new RecipeWidget(id, this));
+    RecipeWidget *rw = new RecipeWidget(id, this);
+    connect(rw, SIGNAL(clickedFilter(QString)), this, SLOT(showRecipeChooser(QString)));
+    setWidget(rw);
 }
 
 void HeadcookerWindow::showRecipeChooser() {
     setWidget(new RecipeChooser(this));
+}
+
+void HeadcookerWindow::showRecipeChooser(QString filter) {
+    setWidget(new RecipeChooser(this, filter));
 }
 
 void HeadcookerWindow::setWidget(QWidget * widget) {

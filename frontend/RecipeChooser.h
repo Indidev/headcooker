@@ -23,13 +23,15 @@ class RecipeChooser : public QWidget
 
 public:
     explicit RecipeChooser(HeadcookerWindow *hw, QWidget *parent = 0);
+    explicit RecipeChooser(HeadcookerWindow *hw, QString filter, QWidget *parent = 0);
     ~RecipeChooser();
     void updateList();
 
 public slots:
     void addRecipe();
     void setFilter();
-private:
+protected:
+    void init(HeadcookerWindow *hw);
     QString filter;
     Ui::RecipeChooser *ui;
     HeadcookerWindow *hw;

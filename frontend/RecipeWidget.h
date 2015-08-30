@@ -64,6 +64,9 @@ protected:
     void init(HeadcookerWindow *win);
     void addAddTagButton();
     void deleteTag(QString tag);
+
+signals:
+    void clickedFilter(QString);
 };
 
 #endif // RECIPEWIDGET_H

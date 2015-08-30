@@ -5,6 +5,20 @@ RecipeChooser::RecipeChooser(HeadcookerWindow *hw, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::RecipeChooser)
 {
+    init(hw);
+}
+
+RecipeChooser::RecipeChooser(HeadcookerWindow *hw, QString filter, QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::RecipeChooser)
+{
+    this->filter = filter;
+    init(hw);
+    ui->filterEdit->setText(filter);
+}
+
+void RecipeChooser::init(HeadcookerWindow *hw)
+{
     this->hw = hw;
     ui->setupUi(this);
 

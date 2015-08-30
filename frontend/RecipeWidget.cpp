@@ -186,9 +186,7 @@ void RecipeWidget::rightClick(QString tag) {
 }
 
 void RecipeWidget::leftClick(QString tag) {
-    cout << "leftClicked: " << tag.toStdString() << endl;
-
-    //TODO do something here...
+    emit clickedFilter(tag);
 }
 
 void RecipeWidget::deleteTag(QString tag) {

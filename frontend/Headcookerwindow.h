@@ -29,6 +29,7 @@ public:
 public slots:
     void clickedID(QString id);
     void showRecipeChooser();
+    void showRecipeChooser(QString filter);
     void moveWindow(int x, int y);
 protected:
     void testDB();
