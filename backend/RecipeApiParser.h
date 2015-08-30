@@ -24,6 +24,8 @@ protected:
     static void parseArray(QString &xml, XMLTreeObject &element);
 
     static QString stringToLimiter(QString &xml);
+    int indexOf(QString &xml, QChar needle, int from = 0, Qt::CaseSensitivity cs = Qt::CaseSensitive);
+    static QString escape(QString xml);
 };
 
 #endif // RECIPEAPIPARSER_H
