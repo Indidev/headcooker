@@ -163,12 +163,44 @@ void RecipeWidget::addTag(QString tagname)
 
     QObject::connect(tag, SIGNAL(leftClicked()), &leftClickMapper, SLOT(map()));
     QObject::connect(tag, SIGNAL(rightClicked()), &rightClickMapper, SLOT(map()));
+
+    tags.append(tag);
 }
 
 void RecipeWidget::rightClick(QString tag) {
-    cout << "rightClicked: " << tag.toStdString() << endl;
+    QPoint pos = QCursor::pos();
+
+    QMenu menu;
+
+    menu.addAction("delete");
+    //menu.addAction("test");
+
+    QAction* selection = menu.exec(pos);
+
+    if (selection) {
+        QString selectionStr = selection->toolTip();
+        if (selectionStr == "delete") {
+            deleteTag(tag);
+        }
+    }
 }
 
 void RecipeWidget::leftClick(QString tag) {
     cout << "leftClicked: " << tag.toStdString() << endl;
+
+    //TODO do something here...
+}
+
+void RecipeWidget::deleteTag(QString tag) {
+    if (recipe->removeTag(tag)) {
+        for (QPushButton* tagB : tags) {
+            if (tagB->text() == tag) {
+                tagB->deleteLater();
+                tagLayout->removeWidget(tagB);
+                tags.removeOne(tagB);
+                break;
+            }
+        }
+
+    }
 }

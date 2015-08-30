@@ -17,6 +17,7 @@
 #include <QCursor>
 #include <QScrollBar>
 #include <QSignalMapper>
+#include <QMenu>
 
 #include <iostream>
 #include <fstream>
@@ -50,6 +51,8 @@ protected:
     Ui::RecipeWidget *ui;
     Recipe *recipe;
 
+    QList<QPushButton*> tags;
+
     FlowLayout *tagLayout;
     QPushButton *addTagButton;
     QLineEdit *addTagInput;
@@ -60,6 +63,7 @@ protected:
 
     void init(HeadcookerWindow *win);
     void addAddTagButton();
+    void deleteTag(QString tag);
 };
 
 #endif // RECIPEWIDGET_H

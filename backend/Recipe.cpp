@@ -263,7 +263,19 @@ bool Recipe::addTag(QString tagname) {
     if (hasTag(tagname.trimmed()))
         return false;
     addedTags.push_back(tagname.trimmed());
+    removedTags.removeOne(tagname);
     return true;
+}
+
+bool Recipe::removeTag(QString tagname)
+{
+    if (addedTags.removeOne(tagname)) {
+        return true;
+    } else if (tags.removeOne(tagname)) {
+        removedTags.append(tagname);
+        return true;
+    }
+    return false;
 }
 
 bool Recipe::save() {

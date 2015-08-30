@@ -42,6 +42,7 @@ public:
     bool save();
     bool hasTag(QString tagname);
     bool addTag(QString tagname);
+    bool removeTag(QString tagname);
 protected:
 
     bool hasImage;
@@ -57,6 +58,7 @@ protected:
 
     QList<QString> tags;
     QList<QString> addedTags;
+    QList<QString> removedTags;
 
     //metainfo    
     float rating;

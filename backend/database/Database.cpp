@@ -98,6 +98,31 @@ bool Database::updateRecipe(const Recipe &recipe) {
         if (!success)
             break;
     }
+
+    //removeTags
+
+    if (success) {
+        for (QString tag : recipe.removedTags) {
+            int tagID = getTagID(tag.trimmed());
+
+            QList<DataRow> row;
+            QString sql = "DELETE FROM RECIPE_TAGS WHERE " \
+                    "TAG_ID = " + QString::number(tagID) + " AND " \
+                    "RECIPE_ID = " + QString::number(recipe.databaseID) + ";";
+            sql += "SELECT COUNT(ID) AS NUM FROM RECIPE_TAGS WHERE TAG_ID = " + QString::number(tagID) + ";";
+
+            success = execSQL(sql, &row);
+
+            //check if tag can be removed out of the database
+            if (success) {
+                if (row[0].get("NUM").toInt() == 0) {
+                    sql = "DELETE FROM TAG WHERE ID = " + QString::number(tagID) + ";";
+
+                    success = execSQL(sql);
+                }
+            }
+        }
+    }
     return success;
 }
 
