@@ -116,6 +116,9 @@ void RecipeWidget::init(HeadcookerWindow *win)
     }
 
     addAddTagButton();
+
+    connect(&leftClickMapper, SIGNAL(mapped(QString)), this, SLOT(leftClick(QString)));
+    connect(&rightClickMapper, SIGNAL(mapped(QString)), this, SLOT(rightClick(QString)));
 }
 
 void RecipeWidget::addAddTagButton() {
@@ -151,7 +154,21 @@ void RecipeWidget::addNewTag() {
 
 void RecipeWidget::addTag(QString tagname)
 {
-    QPushButton *tag = new QPushButton(tagname);
+    ExtendedButton *tag = new ExtendedButton(tagname);
     tag->setObjectName("tag");
     tagLayout->addWidget(tag);
+
+    leftClickMapper.setMapping(tag, tagname);
+    rightClickMapper.setMapping(tag, tagname);
+
+    QObject::connect(tag, SIGNAL(leftClicked()), &leftClickMapper, SLOT(map()));
+    QObject::connect(tag, SIGNAL(rightClicked()), &rightClickMapper, SLOT(map()));
+}
+
+void RecipeWidget::rightClick(QString tag) {
+    cout << "rightClicked: " << tag.toStdString() << endl;
+}
+
+void RecipeWidget::leftClick(QString tag) {
+    cout << "leftClicked: " << tag.toStdString() << endl;
 }

@@ -16,9 +16,12 @@
 #include <QString>
 #include <QCursor>
 #include <QScrollBar>
+#include <QSignalMapper>
 
 #include <iostream>
 #include <fstream>
+
+#include "ExtendedButton.h"
 using namespace std;
 
 namespace Ui {
@@ -41,6 +44,8 @@ public:
 public slots:
     void displayTagInput();
     void addNewTag();
+    void rightClick(QString tag);
+    void leftClick(QString tag);
 protected:
     Ui::RecipeWidget *ui;
     Recipe *recipe;
@@ -48,6 +53,9 @@ protected:
     FlowLayout *tagLayout;
     QPushButton *addTagButton;
     QLineEdit *addTagInput;
+    QSignalMapper leftClickMapper;
+    QSignalMapper rightClickMapper;
+
     void addTag(QString tagname);
 
     void init(HeadcookerWindow *win);

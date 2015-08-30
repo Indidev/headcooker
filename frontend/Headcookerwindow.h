@@ -29,10 +29,12 @@ public:
 public slots:
     void clickedID(QString id);
     void showRecipeChooser();
+    void moveWindow(int x, int y);
 protected:
     void testDB();
     void clear();
     void setWidget(QWidget *widget);
+
 private:
     Ui::HeadcookerWindow *ui;
 

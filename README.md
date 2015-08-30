@@ -1,5 +1,5 @@
 # HeadCooker
-A c++ GUI-based tool for managing chefkoch.de recipes.
+A C++ GUI-based tool for managing chefkoch.de recipes.
 
 ![HeadCooker](http://indidude.de/stuff/headcooker.gif)
 

@@ -7,16 +7,12 @@ HeadcookerWindow::HeadcookerWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QString id("2138001343651445");
-    id = "424521133318549";
-    id = "1235651228459595";
-
-    //RecipeWidget *rw = new RecipeWidget(id);
-    //ui->centralWidget->layout()->addWidget(rw);
     curWidget = new RecipeChooser(this);
     ui->centralWidget->layout()->addWidget(curWidget);
 
     testDB();
+
+    //this->setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
 }
 
 HeadcookerWindow::~HeadcookerWindow()
@@ -26,6 +22,11 @@ HeadcookerWindow::~HeadcookerWindow()
 
 void HeadcookerWindow::testDB() {
 }
+
+void HeadcookerWindow::moveWindow(int x, int y) {
+    QRect geom = this->geometry();
+    this->setGeometry(geom.x() + x, geom.y() + y, geom.width(), geom.height());
+};
 
 void HeadcookerWindow::clickedID(QString id) {
     showRecipe(id.toInt());
