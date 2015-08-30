@@ -242,16 +242,18 @@ QString Database::getUsageInfo(int id) {
 }
 
 bool Database::recipesContaining(QString needle, QList<DataRow> &rows) {
+    QString tmpNeedle = escape(needle);
     QString sql = "SELECT R.* " \
             "FROM RECIPE AS R " \
                 "JOIN RECIPE_TAGS as RT ON RT.RECIPE_ID = R.ID " \
                 "JOIN TAG ON TAG.ID = RT.TAG_ID " \
                 "JOIN INGREDIENT_LIST as IL ON IL.RECIPE_ID = R.ID " \
                 "JOIN INGREDIENT as I ON I.ID = IL.ING_ID " \
-            "WHERE TAG.NAME LIKE '%" + needle + "%' " \
-                "OR I.NAME LIKE '%" + needle + "%' " \
-                "OR TITLE LIKE '%" + needle + "%' " \
-            "GROUP BY R.ID;";
+            "WHERE TAG.NAME LIKE '%" + tmpNeedle + "%' " \
+                "OR I.NAME LIKE '%" + tmpNeedle + "%' " \
+                "OR TITLE LIKE '%" + tmpNeedle + "%' " \
+            "GROUP BY R.ID "\
+            "ORDER BY TITLE ASC;";
 
     return execSQL(sql, &rows);
 }

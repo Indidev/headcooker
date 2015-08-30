@@ -13,6 +13,7 @@ RecipeChooser::RecipeChooser(HeadcookerWindow *hw, QWidget *parent) :
     updateList();
 
     connect(ui->input, SIGNAL(returnPressed()), this, SLOT(addRecipe()));
+    connect(ui->filterEdit, SIGNAL(returnPressed()), this, SLOT(setFilter()));
 }
 
 RecipeChooser::~RecipeChooser()
@@ -39,14 +40,24 @@ void RecipeChooser::addRecipe() {
     updateList();
 }
 
+void RecipeChooser::setFilter() {
+    filter = ui->filterEdit->text();
+    cout << filter.toStdString() << endl;
+    updateList();
+}
+
 void RecipeChooser::updateList() {
     for (QPushButton * w: ui->scrollArea->findChildren<QPushButton*>()) {
-        w->hide();
-        delete w;
+        ui->itemLayout->removeWidget(w);
+        w->setVisible(false);
+        w->deleteLater();
     }
     //ui->itemLayout
     QList<DataRow> rows;
-    if (Database::DB().listOfRecipes(rows)) {
+    bool success = filter.isEmpty()
+            ?Database::DB().listOfRecipes(rows)
+            :Database::DB().recipesContaining(filter, rows);
+    if (success) {
         for (DataRow row : rows) {
             QPushButton *item = new QPushButton(row.get("title"));
             ui->itemLayout->addWidget(item);

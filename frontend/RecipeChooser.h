@@ -28,7 +28,9 @@ public:
 
 public slots:
     void addRecipe();
+    void setFilter();
 private:
+    QString filter;
     Ui::RecipeChooser *ui;
     HeadcookerWindow *hw;
 
