@@ -241,6 +241,21 @@ QString Database::getUsageInfo(int id) {
     return getNameFromID("USAGE_INFO", id);
 }
 
+bool Database::recipesContaining(QString needle, QList<DataRow> &rows) {
+    QString sql = "SELECT R.* " \
+            "FROM RECIPE AS R " \
+                "JOIN RECIPE_TAGS as RT ON RT.RECIPE_ID = R.ID " \
+                "JOIN TAG ON TAG.ID = RT.TAG_ID " \
+                "JOIN INGREDIENT_LIST as IL ON IL.RECIPE_ID = R.ID " \
+                "JOIN INGREDIENT as I ON I.ID = IL.ING_ID " \
+            "WHERE TAG.NAME LIKE '%" + needle + "%' " \
+                "OR I.NAME LIKE '%" + needle + "%' " \
+                "OR TITLE LIKE '%" + needle + "%' " \
+            "GROUP BY R.ID;";
+
+    return execSQL(sql, &rows);
+}
+
 QList<QString> Database::getTags(int recipeID) {
     QString sql = "SELECT NAME " \
             "FROM RECIPE_TAGS " \
@@ -303,6 +318,8 @@ DataTypes::IngredientGroups Database::getIngredients(int recipeID) {
 
     return ingredients;
 }
+
+
 
 QString Database::getNameFromID(QString tablename, int id) {
     QString sql = "SELECT NAME FROM " + tablename + " WHERE ID = " + QString::number(id) + ";";

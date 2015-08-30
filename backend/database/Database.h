@@ -45,6 +45,7 @@ public:
     QString getUsageInfo(int id);
     DataTypes::IngredientGroups getIngredients(int recipeID);
     bool listOfRecipes(QList<DataRow> &row);
+    bool recipesContaining(QString needle, QList<DataRow> &rows);
 protected:
     Database(QString databasePath);
     ~Database();
