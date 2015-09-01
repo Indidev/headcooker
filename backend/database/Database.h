@@ -46,6 +46,8 @@ public:
     DataTypes::IngredientGroups getIngredients(int recipeID);
     bool listOfRecipes(QList<DataRow> &row);
     bool recipesContaining(QString needle, QList<DataRow> &rows);
+    bool deleteRecipe(const Recipe &recipe);
+    bool deleteRecipe(int id);
 protected:
     Database(QString databasePath);
     ~Database();

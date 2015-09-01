@@ -17,6 +17,10 @@ Database::Database(QString databasePath)
         exit(1);
     }
 
+    QString sqlPragma = "PRAGMA Foreign_key = ON"; //activate cascade deletion
+
+    execSQL(sqlPragma);
+
     if (!isInitiated)
         initDB();
 }
@@ -124,6 +128,15 @@ bool Database::updateRecipe(const Recipe &recipe) {
         }
     }
     return success;
+}
+
+bool Database::deleteRecipe(const Recipe &recipe) {
+    return deleteRecipe(recipe.databaseID);
+}
+
+bool Database::deleteRecipe(int id) {
+    QString sql = "DELETE FORM RECIPE WHERE ID = " + QString::number(id) + ";";
+    return execSQL(sql);
 }
 
 bool Database::addRecipe(const Recipe &recipe) {
@@ -434,8 +447,8 @@ void Database::initDB() {
             "KCAL INTEGER, " \
             "DIFFICULTY_ID INTEGER, "\
             "USER_ID INTEGER NOT NULL, "\
-            "FOREIGN KEY(DIFFICULTY_ID) REFERENCES DIFFICULTY(ID)," \
-            "FOREIGN KEY(USER_ID) REFERENCES USER(ID) );";
+            "FOREIGN KEY(DIFFICULTY_ID) REFERENCES DIFFICULTY(ID) ON DELETE CASCADE," \
+            "FOREIGN KEY(USER_ID) REFERENCES USER(ID) ON DELETE CASCADE );";
 
     sql += "CREATE TABLE Ingredient_List(" \
             "ID INTEGER PRIMARY KEY," \
@@ -445,18 +458,18 @@ void Database::initDB() {
             "Group_ID INTEGER NOT NULL," \
             "UNIT_ID INTEGER NOT NULL," \
             "USAGE_ID INTEGER NOT NULL," \
-            "FOREIGN KEY(RECIPE_ID) REFERENCES RECIPE(ID)," \
-            "FOREIGN KEY(Ing_ID) REFERENCES Ingredient(ID)," \
-            "FOREIGN KEY(Group_ID) REFERENCES Ingredient_Group(ID)," \
-            "FOREIGN KEY(Unit_ID) REFERENCES Unit(ID)," \
-            "FOREIGN KEY(Usage_ID) REFERENCES USAGE_INFO(ID) );";
+            "FOREIGN KEY(RECIPE_ID) REFERENCES RECIPE(ID) ON DELETE CASCADE," \
+            "FOREIGN KEY(Ing_ID) REFERENCES Ingredient(ID) ON DELETE CASCADE," \
+            "FOREIGN KEY(Group_ID) REFERENCES Ingredient_Group(ID) ON DELETE CASCADE," \
+            "FOREIGN KEY(Unit_ID) REFERENCES Unit(ID) ON DELETE CASCADE," \
+            "FOREIGN KEY(Usage_ID) REFERENCES USAGE_INFO(ID) ON DELETE CASCADE );";
 
     sql += "CREATE TABLE RECIPE_TAGS(" \
             "ID INTEGER PRIMARY KEY," \
             "TAG_ID INTEGER NOT NULL," \
             "RECIPE_ID INTEGER NOT NULL," \
-            "FOREIGN KEY(TAG_ID) REFERENCES TAG(ID)," \
-            "FOREIGN KEY(RECIPE_ID) REFERENCES RECIPE(ID) );";
+            "FOREIGN KEY(TAG_ID) REFERENCES TAG(ID) ON DELETE CASCADE," \
+            "FOREIGN KEY(RECIPE_ID) REFERENCES RECIPE(ID) ON DELETE CASCADE);";
 
     sql = sql.toUpper();
 
