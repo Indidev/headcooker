@@ -12,17 +12,25 @@ ExtendedButton::ExtendedButton(const QString &text, QWidget *parent) : QPushButt
 
 void ExtendedButton::mousePressEvent(QMouseEvent *event)
 {
-    //TODO extend this, should also consider mouse release
-    emit clicked();
-    if (event->button() == Qt::RightButton)
-        emit rightClicked();
-    else if (event->button() == Qt::LeftButton)
-        emit leftClicked();
-    else if (event->button() == Qt::MiddleButton)
-        emit middleClicked();
+    (void) event; //ignore event
 }
 
 void ExtendedButton::mouseMoveEvent(QMouseEvent *event)
 {
+    (void) event; //ignore event
     emit hover();
+}
+
+void ExtendedButton::mouseReleaseEvent(QMouseEvent *event)
+{
+    if (rect().contains(event->pos())) {
+        if (event->button() == Qt::RightButton)
+            emit rightClicked();
+        else if(event->button() == Qt::LeftButton)
+            emit leftClicked();
+        else if (event->button() == Qt::MiddleButton)
+            emit middleClicked();
+
+        emit clicked();
+    }
 }

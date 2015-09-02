@@ -5,6 +5,9 @@
 #include <QWidget>
 #include <QMouseEvent>
 
+#include <iostream>
+using namespace std;
+
 class ExtendedButton : public QPushButton
 {
     Q_OBJECT
@@ -16,6 +19,7 @@ private slots:
     void mousePressEvent(QMouseEvent *event);
 
     void mouseMoveEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
 signals:
     void leftClicked();
     void rightClicked();
