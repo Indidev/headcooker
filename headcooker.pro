@@ -28,7 +28,8 @@ SOURCES += main.cpp\
     backend/database/DataRow.cpp \
     backend/database/Database.cpp \
     backend/DataTypes.cpp \
-    frontend/ExtendedButton.cpp
+    frontend/ExtendedButton.cpp \
+    frontend/ExtendedLineEdit.cpp
 
 HEADERS  += frontend/Headcookerwindow.h \
     frontend/RecipeWidget.h \
@@ -42,7 +43,8 @@ HEADERS  += frontend/Headcookerwindow.h \
     backend/database/DataRow.h \
     backend/database/Database.h \
     backend/DataTypes.h \
-    frontend/ExtendedButton.h
+    frontend/ExtendedButton.h \
+    frontend/ExtendedLineEdit.h
 
 FORMS    += frontend/Headcookerwindow.ui \
     frontend/RecipeWidget.ui \

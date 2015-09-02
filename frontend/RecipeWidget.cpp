@@ -135,12 +135,19 @@ void RecipeWidget::displayTagInput() {
     tagLayout->removeWidget(addTagButton);
     addTagButton->deleteLater();
 
-    addTagInput = new QLineEdit();
+    addTagInput = new ExtendedLineEdit();
     addTagInput->setObjectName("tagEdit");
     tagLayout->addWidget(addTagInput);
     QTimer::singleShot(0, addTagInput, SLOT(setFocus()));
 
     connect(addTagInput, SIGNAL(returnPressed()), this, SLOT(addNewTag()));
+    connect(addTagInput, SIGNAL(escPressed()), this, SLOT(cancelAddTag()));
+}
+
+void RecipeWidget::cancelAddTag() {
+    tagLayout->removeWidget(addTagInput);
+    addTagInput->deleteLater();
+    addAddTagButton();
 }
 
 void RecipeWidget::addNewTag() {

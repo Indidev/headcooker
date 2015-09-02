@@ -23,6 +23,7 @@
 #include <fstream>
 
 #include "ExtendedButton.h"
+#include "ExtendedLineEdit.h"
 using namespace std;
 
 namespace Ui {
@@ -47,6 +48,7 @@ public slots:
     void addNewTag();
     void rightClick(QString tag);
     void leftClick(QString tag);
+    void cancelAddTag();
 protected:
     Ui::RecipeWidget *ui;
     Recipe *recipe;
@@ -55,7 +57,7 @@ protected:
 
     FlowLayout *tagLayout;
     QPushButton *addTagButton;
-    QLineEdit *addTagInput;
+    ExtendedLineEdit *addTagInput;
     QSignalMapper leftClickMapper;
     QSignalMapper rightClickMapper;
 
