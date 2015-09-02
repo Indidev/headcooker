@@ -222,7 +222,7 @@ bool Database::getRecipe(int id, QList<DataRow> &row) {
 }
 
 bool Database::listOfRecipes(QList<DataRow> &row) {
-    QString sql = "SELECT ID, TITLE FROM RECIPE ORDER BY TITLE ASC;";
+    QString sql = "SELECT ID, TITLE, IMG_PATH FROM RECIPE ORDER BY TITLE ASC;";
 
     return execSQL(sql, &row);
 }

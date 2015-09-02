@@ -5,9 +5,14 @@
 #include <QSignalMapper>
 #include <QLabel>
 #include <QPushButton>
+#include <QPixmap>
+#include <QBitmap>
+#include <QMap>
+#include <QPoint>
 
 #include "../backend/database/Database.h"
 #include "../backend/database/DataRow.h"
+#include "ExtendedButton.h"
 #include "Headcookerwindow.h"
 #include <iostream>
 
@@ -30,13 +35,18 @@ public:
 public slots:
     void addRecipe();
     void setFilter();
+    void hoverButton(QString id);
 protected:
     void init(HeadcookerWindow *hw);
     QString filter;
+    QString curPreviewImg;
     Ui::RecipeChooser *ui;
     HeadcookerWindow *hw;
 
     QSignalMapper buttonToIDMapper;
+    QSignalMapper previewMapper;
+
+    QMap<QString, QPixmap> previewPictures;
 };
 
 #endif // RECIPECHOOSER_H

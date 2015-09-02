@@ -23,6 +23,7 @@ void RecipeChooser::init(HeadcookerWindow *hw)
     ui->setupUi(this);
 
     connect(&buttonToIDMapper, SIGNAL(mapped(QString)), hw, SLOT(clickedID(QString)));
+    connect(&previewMapper, SIGNAL(mapped(QString)), this, SLOT(hoverButton(QString)));
 
     updateList();
 
@@ -56,7 +57,6 @@ void RecipeChooser::addRecipe() {
 
 void RecipeChooser::setFilter() {
     filter = ui->filterEdit->text();
-    cout << filter.toStdString() << endl;
     updateList();
 }
 
@@ -66,6 +66,8 @@ void RecipeChooser::updateList() {
         w->setVisible(false);
         w->deleteLater();
     }
+    previewPictures.clear();
+
     //ui->itemLayout
     QList<DataRow> rows;
     bool success = filter.isEmpty()
@@ -73,11 +75,32 @@ void RecipeChooser::updateList() {
             :Database::DB().recipesContaining(filter, rows);
     if (success) {
         for (DataRow row : rows) {
-            QPushButton *item = new QPushButton(row.get("title"));
+            ExtendedButton *item = new ExtendedButton(row.get("title"));
             ui->itemLayout->addWidget(item);
+            QString id = row.get("id");
 
-            buttonToIDMapper.setMapping(item, row.get("id"));
-            QObject::connect(item, SIGNAL(clicked()), &buttonToIDMapper, SLOT(map()));
+            buttonToIDMapper.setMapping(item, id);
+            QObject::connect(item, SIGNAL(leftClicked()), &buttonToIDMapper, SLOT(map()));
+
+            QPixmap previewImg(420, 280);
+            previewImg.load(row.get("img_path"));
+            QBitmap mask(420, 280);
+            mask.load("img/image_mask.png", "png");
+            previewImg.setMask(mask);
+
+            previewPictures[id] = previewImg.scaledToWidth(210);
+            previewMapper.setMapping(item, id);
+            QObject::connect(item, SIGNAL(hover()), &previewMapper, SLOT(map()));
+
+        }
+    }
+}
+
+void RecipeChooser::hoverButton(QString id) {
+    if (previewPictures.contains(id)) {
+        if (curPreviewImg != id) {
+            ui->previewImage->setPixmap(previewPictures[id]);
+            curPreviewImg = id;
         }
     }
 }
