@@ -35,6 +35,11 @@ void RecipeChooser::init(HeadcookerWindow *hw)
 
     connect(ui->input, SIGNAL(returnPressed()), this, SLOT(addRecipe()));
     connect(ui->filterEdit, SIGNAL(returnPressed()), this, SLOT(setFilter()));
+
+    ui->filterEdit->setObjectName("inputArea");
+    ui->input->setObjectName("inputArea");
+    ui->scrollArea->setObjectName("scrollArea");
+    ui->scrollArea->verticalScrollBar()->setObjectName("scrollbar");
 }
 
 RecipeChooser::~RecipeChooser()
@@ -82,6 +87,8 @@ void RecipeChooser::updateList() {
     if (success) {
         for (DataRow row : rows) {
             ExtendedButton *item = new ExtendedButton(row.get("title"));
+            item->setObjectName("recipeItem");
+
             ui->itemLayout->addWidget(item);
             QString id = row.get("id");
 

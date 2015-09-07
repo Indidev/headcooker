@@ -1,4 +1,4 @@
-QPushButton#tag {
+#tag {
 	color: #FFFFFF;
 	background-color: #90B262;
 	border: none;
@@ -6,11 +6,11 @@ QPushButton#tag {
 	padding-right: 5;
 	border-radius: 5;
 }
-QPushButton#tag:hover {
+#tag:hover {
 background-color: #B2B2B2;
 }
 
-QPushButton#addTag {
+#addTag {
 	font-weight: bold;
 	color: #FFFFFF;
 	background-color: #5D8812;
@@ -20,7 +20,7 @@ QPushButton#addTag {
 	border-radius: 5;
 }
 
-QLineEdit#tagEdit {
+#tagEdit {
 	border: none;
 	border-radius: 5;
 	width: 70;
@@ -28,33 +28,33 @@ QLineEdit#tagEdit {
 	padding-right: 5;
 }
 
-QTextBrowser#instructions {
+#instructions {
 	border: 1px solid #9B9D9E;
 	border-radius: 5;
 }
 
-QScrollBar#scrollbar:vertical {
+#scrollbar:vertical {
 	border: none;
 	border-radius: 5;
 	background-color: transparent;
 	width: 13px;
 }
 
-QScrollBar::handle#scrollbar:vertical {
+::handle#scrollbar:vertical {
 	background-color: #B2B2B2;
 	border-radius: 3px;
 	margin: 3px;
 }
 
-QScrollBar::handle#scrollbar:vertical:hover:!pressed {
+::handle#scrollbar:vertical:hover:!pressed {
 	background-color: #9B9D9E;
 }
 
-QScrollBar::handle#scrollbar:vertical:pressed {
+::handle#scrollbar:vertical:pressed {
 	background-color: #1D93D0;
 }
 
-QScrollBar::add-line#scrollbar:vertical {
+::add-line#scrollbar:vertical {
     border: none;
     background: transparent;
     height: 0px;
@@ -62,7 +62,7 @@ QScrollBar::add-line#scrollbar:vertical {
     subcontrol-origin: margin;
 }
 
-QScrollBar::sub-line#scrollbar:vertical {
+::sub-line#scrollbar:vertical {
     border: none;
     background: transparent;
     height: 0px;

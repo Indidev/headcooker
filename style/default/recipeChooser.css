@@ -1,0 +1,61 @@
+#recipeItem {
+	color: #FFFFFF;
+	background-color: #90B262;
+	border: none;
+	padding-left: 5;
+	padding-right: 5;
+	border-radius: 5;	
+}
+
+#recipeItem:hover {
+	background-color: #B2B2B2;
+}
+
+#inputArea {
+	border: solid 1px #9B9D9E;
+	background-color: rgba(0,0,0,20);
+	border-radius: 5;
+	padding-left: 5;
+	padding-right: 5;
+}
+
+#scrollArea {
+	border: none;
+}
+
+#scrollbar:vertical {
+	border: none;
+	border-radius: 5;
+	background-color: transparent;
+	width: 13px;
+}
+
+::handle#scrollbar:vertical {
+	background-color: #B2B2B2;
+	border-radius: 3px;
+	margin: 3px;
+}
+
+::handle#scrollbar:vertical:hover:!pressed {
+	background-color: #9B9D9E;
+}
+
+::handle#scrollbar:vertical:pressed {
+	background-color: #1D93D0;
+}
+
+::add-line#scrollbar:vertical {
+    border: none;
+    background: transparent;
+    height: 0px;
+    subcontrol-position: top;
+    subcontrol-origin: margin;
+}
+
+::sub-line#scrollbar:vertical {
+    border: none;
+    background: transparent;
+    height: 0px;
+    subcontrol-position: bottom;
+    subcontrol-origin: margin;
+}
