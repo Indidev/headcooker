@@ -7,7 +7,18 @@
 	border-radius: 5;
 }
 #tag:hover {
-background-color: #B2B2B2;
+	background-color: #B2B2B2;
+}
+
+#backButton {
+	color: #FFFFFF;
+	background-color: #7FAC45;
+	border-radius: 5;
+	padding-left: 5;
+	padding-right: 5;
+}
+#backButton:hover {
+	background-color: #B2B2B2;
 }
 
 #addTag {
@@ -22,10 +33,11 @@ background-color: #B2B2B2;
 
 #tagEdit {
 	border: none;
+	background-color: rgba(0,0,0,20);
 	border-radius: 5;
-	width: 70;
 	padding-left: 5;
 	padding-right: 5;
+	width: 70;
 }
 
 #instructions {

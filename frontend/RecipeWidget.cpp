@@ -48,6 +48,7 @@ void RecipeWidget::init(HeadcookerWindow *win)
 
     ui->instructions->setObjectName("instructions");
     ui->instructions->verticalScrollBar()->setObjectName("scrollbar");
+    ui->backButton->setObjectName("backButton");
 
     connect(ui->backButton, SIGNAL(clicked()), win, SLOT(showRecipeChooser()));
 
