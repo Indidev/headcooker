@@ -22,6 +22,12 @@ void RecipeChooser::init(HeadcookerWindow *hw)
     this->hw = hw;
     ui->setupUi(this);
 
+    QString style = Options::style("recipeChooser");
+
+    if (!style.isEmpty()) {
+        this->setStyleSheet(style);
+    }
+
     connect(&buttonToIDMapper, SIGNAL(mapped(QString)), hw, SLOT(clickedID(QString)));
     connect(&previewMapper, SIGNAL(mapped(QString)), this, SLOT(hoverButton(QString)));
 

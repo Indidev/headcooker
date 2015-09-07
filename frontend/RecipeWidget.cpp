@@ -40,15 +40,10 @@ void RecipeWidget::init(HeadcookerWindow *win)
 {
     ui->setupUi(this);
 
-    QFile styleFile("css/style.css");
-    if (styleFile.exists()) {
-        styleFile.open(QFile::ReadOnly);
-        QString style(styleFile.readAll());
+    QString style = Options::style("recipe");
 
+    if (!style.isEmpty()) {
         this->setStyleSheet(style);
-
-    } else {
-        cerr << "File " << styleFile.fileName().toStdString() << " does not exit." << endl;
     }
 
     ui->instructions->setObjectName("instructions");

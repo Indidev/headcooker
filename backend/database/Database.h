@@ -35,6 +35,9 @@ public:
     bool saveRecipe(const Recipe &recipe);
     bool getRecipe(QString id, QList<DataRow> &row);
     bool getRecipe(int id, QList<DataRow> &row);
+    DataRow getOptions();
+    bool saveOptions(DataRow);
+
     QString getNameFromID(QString tablename, int id);
     QString getDifficulty(int id);
     QString getUserName(int id);

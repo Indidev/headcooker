@@ -2,6 +2,8 @@
 #define RECIPEWIDGET_H
 
 #include "../backend/Recipe.h"
+#include "../backend/Options.h"
+
 #include "FlowLayout.h"
 #include "Headcookerwindow.h"
 

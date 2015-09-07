@@ -29,7 +29,8 @@ SOURCES += main.cpp\
     backend/database/Database.cpp \
     backend/DataTypes.cpp \
     frontend/ExtendedButton.cpp \
-    frontend/ExtendedLineEdit.cpp
+    frontend/ExtendedLineEdit.cpp \
+    backend/Options.cpp
 
 HEADERS  += frontend/Headcookerwindow.h \
     frontend/RecipeWidget.h \
@@ -44,14 +45,15 @@ HEADERS  += frontend/Headcookerwindow.h \
     backend/database/Database.h \
     backend/DataTypes.h \
     frontend/ExtendedButton.h \
-    frontend/ExtendedLineEdit.h
+    frontend/ExtendedLineEdit.h \
+    backend/Options.h
 
 FORMS    += frontend/Headcookerwindow.ui \
     frontend/RecipeWidget.ui \
     frontend/RecipeChooser.ui
 
 # Define copy command for linux and windows
-QMAKE_COPY = cp -f
+QMAKE_COPY = cp -rf
 Win32:QMAKE_COPY = copy /y
 
 # cp(src, dest) returns the copy command
@@ -67,7 +69,7 @@ defineReplace(cp) {
 }
 
 #Directorys to create
-DIRS = css \
+DIRS = style \
        img/recipe
 
 #Loop over all given directories and append
@@ -82,7 +84,7 @@ for(DIR, DIRS) {
 #the command mkdir path1 path2 path3 ...
 createDirs.commands = $(MKDIR) $$mkcommands
 
-cpFiles.commands += $$cp(css/*, css/)
+cpFiles.commands += $$cp(style/*, style/)
 cpFiles.commands += $$cp(img/*, img/)
 
 #Add dependencies to first

@@ -9,6 +9,8 @@ class DataRow
 public:
     DataRow();
     void add(QString key, QString value);
+    void add(QString key, int value);
+    void add(QString key, float value);
     QString get(QString key);
 
 protected:

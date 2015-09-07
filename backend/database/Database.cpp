@@ -221,6 +221,23 @@ bool Database::getRecipe(int id, QList<DataRow> &row) {
     return execSQL(sql, &row);
 }
 
+DataRow Database::getOptions()
+{
+    QString sql = "SELECT * FROM OPTIONS";
+
+    QList<DataRow> rows;
+
+    if (execSQL(sql, &rows))
+        return rows[0];
+    else
+        return DataRow();
+}
+
+bool Database::saveOptions(DataRow)
+{
+
+}
+
 bool Database::listOfRecipes(QList<DataRow> &row) {
     QString sql = "SELECT ID, TITLE, IMG_PATH FROM RECIPE ORDER BY TITLE ASC;";
 
@@ -464,6 +481,10 @@ void Database::initDB() {
             "FOREIGN KEY(Unit_ID) REFERENCES Unit(ID) ON DELETE CASCADE," \
             "FOREIGN KEY(Usage_ID) REFERENCES USAGE_INFO(ID) ON DELETE CASCADE );";
 
+    sql += "CREATE TABLE OPTIONS(" \
+            "CUR_STYLE TEXT" \
+            ");";
+
     sql += "CREATE TABLE RECIPE_TAGS(" \
             "ID INTEGER PRIMARY KEY," \
             "TAG_ID INTEGER NOT NULL," \
@@ -480,7 +501,10 @@ void Database::initDB() {
             "INSERT INTO DIFFICULTY(ID, NAME)" \
             "VALUES(2, 'normal');" \
             "INSERT INTO DIFFICULTY(ID, NAME)" \
-           "VALUES(3, 'pfiffig');";
+            "VALUES(3, 'pfiffig');";
+
+    sql += "INSERT INTO OPTIONS(CUR_STYLE)" \
+            "VALUES(NULL);";
 
     execSQL(sql);
 }
