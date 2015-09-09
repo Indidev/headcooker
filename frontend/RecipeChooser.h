@@ -36,6 +36,7 @@ public slots:
     void addRecipe();
     void setFilter();
     void hoverButton(QString id);
+    void updateStylesheet();
 protected:
     void init(HeadcookerWindow *hw);
     QString filter;

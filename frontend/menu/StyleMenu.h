@@ -1,23 +1,24 @@
 #ifndef STYLEMENU_H
 #define STYLEMENU_H
 
-#include <QWidget>
 #include <QPushButton>
 #include <QScrollBar>
 
+#include "MenuWidget.h"
+#include <QWidget>
 #include "../../backend/Options.h"
 
 namespace Ui {
 class StyleMenu;
 }
 
-class StyleMenu : public QWidget
+class StyleMenu : public MenuWidget
 {
     Q_OBJECT
-
 public:
-    explicit StyleMenu(QWidget *parent = 0);
+    StyleMenu(QWidget *parent = 0);
     ~StyleMenu();
+    void saveChanges();
 
 public slots:
     void updateStylesheet();

@@ -25,7 +25,6 @@ HeadcookerWindow::~HeadcookerWindow()
 void HeadcookerWindow::menuAction(QAction * action) {
     if (action == ui->style_menu_Action) {
         OptionsMenu menu(this);
-        menu.setWidget(new StyleMenu);
         menu.exec();
     }
 }

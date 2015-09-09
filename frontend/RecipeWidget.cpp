@@ -40,11 +40,7 @@ void RecipeWidget::init(HeadcookerWindow *win)
 {
     ui->setupUi(this);
 
-    QString style = Options::style("recipe");
-
-    if (!style.isEmpty()) {
-        this->setStyleSheet(style);
-    }
+    updateStylesheet();
 
     ui->instructions->setObjectName("instructions");
     ui->instructions->verticalScrollBar()->setObjectName("scrollbar");
@@ -115,6 +111,8 @@ void RecipeWidget::init(HeadcookerWindow *win)
 
     connect(&leftClickMapper, SIGNAL(mapped(QString)), this, SLOT(leftClick(QString)));
     connect(&rightClickMapper, SIGNAL(mapped(QString)), this, SLOT(rightClick(QString)));
+
+    connect(Options::ptr(), SIGNAL(updated()), this, SLOT(updateStylesheet()));
 }
 
 void RecipeWidget::addAddTagButton() {
@@ -203,5 +201,14 @@ void RecipeWidget::deleteTag(QString tag) {
             }
         }
 
+    }
+}
+
+void RecipeWidget::updateStylesheet() {
+
+    QString style = Options::style("recipe");
+
+    if (!style.isEmpty()) {
+        this->setStyleSheet(style);
     }
 }

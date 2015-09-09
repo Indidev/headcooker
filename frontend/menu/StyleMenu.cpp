@@ -2,7 +2,7 @@
 #include "ui_StyleMenu.h"
 
 StyleMenu::StyleMenu(QWidget *parent) :
-    QWidget(parent),
+    MenuWidget(parent),
     ui(new Ui::StyleMenu)
 {
     ui->setupUi(this);
@@ -38,6 +38,11 @@ StyleMenu::StyleMenu(QWidget *parent) :
 StyleMenu::~StyleMenu()
 {
     delete ui;
+}
+
+void StyleMenu::saveChanges()
+{
+    Options::setCurStyle(ui->styleBox->currentText());
 }
 
 void StyleMenu::updateStylesheet() {

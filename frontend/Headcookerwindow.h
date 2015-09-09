@@ -9,7 +9,6 @@
 #include "../backend/Recipe.h"
 #include "../backend/database/Database.h"
 #include "menu/OptionsMenu.h"
-#include "menu/StyleMenu.h"
 #include "RecipeChooser.h"
 
 #include <unordered_map>

@@ -51,6 +51,10 @@ public:
     bool recipesContaining(QString needle, QList<DataRow> &rows);
     bool deleteRecipe(const Recipe &recipe);
     bool deleteRecipe(int id);
+    QString getOption(QString key);
+    bool updateOption(QString key, QString value);
+    bool updateOption(QString key, int value);
+    bool updateOption(QString key, float value);
 protected:
     Database(QString databasePath);
     ~Database();

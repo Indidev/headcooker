@@ -6,6 +6,13 @@ OptionsMenu::OptionsMenu(QWidget *parent) :
     ui(new Ui::OptionsMenu)
 {
     ui->setupUi(this);
+
+    MenuWidget *tmpTab = new StyleMenu(this);
+    newLayout(ui->styleTab)->addWidget(tmpTab);
+    tabs.push_back(tmpTab);
+
+    connect(ui->applyButton, SIGNAL(clicked()), this, SLOT(accept()));
+    connect(ui->cancelButton, SIGNAL(clicked()), this, SLOT(reject()));
 }
 
 OptionsMenu::~OptionsMenu()
@@ -13,6 +20,20 @@ OptionsMenu::~OptionsMenu()
     delete ui;
 }
 
-void OptionsMenu::setWidget(QWidget *widget) {
-    ui->centralLayout->addWidget(widget);
+QLayout* OptionsMenu::newLayout(QWidget * widget) {
+    if (widget->layout())
+        delete widget->layout();
+    widget->setLayout(new QGridLayout);
+    return widget->layout();
+}
+
+void OptionsMenu::accept() {
+    for (MenuWidget *tab : tabs)
+        tab->saveChanges();
+
+    QDialog::accept();
+}
+
+void OptionsMenu::reject() {
+    QDialog::reject();
 }

@@ -22,11 +22,7 @@ void RecipeChooser::init(HeadcookerWindow *hw)
     this->hw = hw;
     ui->setupUi(this);
 
-    QString style = Options::style("recipeChooser");
-
-    if (!style.isEmpty()) {
-        this->setStyleSheet(style);
-    }
+    updateStylesheet();
 
     connect(&buttonToIDMapper, SIGNAL(mapped(QString)), hw, SLOT(clickedID(QString)));
     connect(&previewMapper, SIGNAL(mapped(QString)), this, SLOT(hoverButton(QString)));
@@ -35,6 +31,8 @@ void RecipeChooser::init(HeadcookerWindow *hw)
 
     connect(ui->input, SIGNAL(returnPressed()), this, SLOT(addRecipe()));
     connect(ui->filterEdit, SIGNAL(returnPressed()), this, SLOT(setFilter()));
+
+    connect(Options::ptr(), SIGNAL(updated()), this, SLOT(updateStylesheet()));
 
     ui->filterEdit->setObjectName("inputArea");
     ui->input->setObjectName("inputArea");
@@ -116,5 +114,14 @@ void RecipeChooser::hoverButton(QString id) {
             ui->previewImage->setPixmap(previewPictures[id]);
             curPreviewImg = id;
         }
+    }
+}
+
+void RecipeChooser::updateStylesheet() {
+
+    QString style = Options::style("recipeChooser");
+
+    if (!style.isEmpty()) {
+        this->setStyleSheet(style);
     }
 }

@@ -50,7 +50,8 @@ HEADERS  += frontend/Headcookerwindow.h \
     frontend/ExtendedLineEdit.h \
     backend/Options.h \
     frontend/menu/StyleMenu.h \
-    frontend/menu/OptionsMenu.h
+    frontend/menu/OptionsMenu.h \
+    frontend/menu/MenuWidget.h
 
 FORMS    += frontend/Headcookerwindow.ui \
     frontend/RecipeWidget.ui \

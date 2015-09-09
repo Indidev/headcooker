@@ -3,7 +3,7 @@
 static const QString STYLE_DIR = "style/";
 Options *Options::instance = NULL;
 
-Options::Options()
+Options::Options(QObject* parent) : QObject(parent)
 {
     DataRow row = Database::DB().getOptions();
     curStyle = row.get("CUR_STYLE");
@@ -15,6 +15,11 @@ Options *Options::Instance()
         instance = new Options;
 
     return instance;
+}
+
+void Options::Updated()
+{
+    emit updated();
 }
 
 QString Options::style(QString elementName, QString styleName) {
@@ -56,5 +61,11 @@ QString Options::getCurStyle() {
 void Options::setCurStyle(QString styleName) {
     Instance()->curStyle = styleName;
 
-    //TODO update database...
+    Database::DB().updateOption("CUR_STYLE", styleName);
+    Instance()->Updated();
+}
+
+Options *Options::ptr()
+{
+    return Instance();
 }

@@ -233,6 +233,28 @@ DataRow Database::getOptions()
         return DataRow();
 }
 
+QString Database::getOption(QString key) {
+    return getOptions().get(key);
+}
+
+bool Database::updateOption(QString key, QString value) {
+    QString sql = "UPDATE OPTIONS SET " + key + "='" + value + "';";
+
+    return execSQL(sql);
+}
+
+bool Database::updateOption(QString key, int value) {
+    QString sql = "UPDATE OPTIONS SET " + key + "=" + QString::number(value) + ";";
+
+    return execSQL(sql);
+}
+
+bool Database::updateOption(QString key, float value) {
+    QString sql = "UPDATE OPTIONS SET " + key + "=" + QString::number(value)+ ";";
+
+    return execSQL(sql);
+}
+
 bool Database::saveOptions(DataRow)
 {
 

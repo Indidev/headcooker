@@ -51,6 +51,7 @@ public slots:
     void rightClick(QString tag);
     void leftClick(QString tag);
     void cancelAddTag();
+    void updateStylesheet();
 protected:
     Ui::RecipeWidget *ui;
     Recipe *recipe;
