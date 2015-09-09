@@ -42,9 +42,16 @@ void RecipeWidget::init(HeadcookerWindow *win)
 
     updateStylesheet();
 
+    ui->bodyWidget->setObjectName("body");
+
     ui->instructions->setObjectName("instructions");
     ui->instructions->verticalScrollBar()->setObjectName("scrollbar");
     ui->backButton->setObjectName("backButton");
+    ui->tagWidget->setObjectName("tagBox");
+    ui->ingredientBox->setObjectName("ingredientBox");
+    ui->instructionBox->setObjectName("instructionBox");
+    ui->recipeName->setObjectName("headline");
+    ui->subtitle->setObjectName("subtitle");
 
     connect(ui->backButton, SIGNAL(clicked()), win, SLOT(showRecipeChooser()));
 
@@ -55,6 +62,7 @@ void RecipeWidget::init(HeadcookerWindow *win)
     //Ingredients
     for (DataTypes::IngredientList group : recipe->getIngredientGroups().groups) {
         QGroupBox *ingredientBox = new QGroupBox(group.header);
+        ingredientBox->setObjectName("ingredientTopic");
 
         QGridLayout *layout = new QGridLayout;
         ingredientBox->setLayout(layout);
@@ -67,7 +75,9 @@ void RecipeWidget::init(HeadcookerWindow *win)
                 a = "";
 
             QLabel *amount = new QLabel(a + " " + u);
+            amount->setObjectName("text");
             QLabel *name = new QLabel(ingredient.name + ingredient.usageInfo);
+            name->setObjectName("text");
             layout->addWidget(amount, i, 0, 1, 1, Qt::AlignRight);
             layout->addWidget(name, i, 1, 1, 1, Qt::AlignLeft);
             //cout << amount.toStdString() << " " << name.toStdString() << endl;
@@ -83,11 +93,13 @@ void RecipeWidget::init(HeadcookerWindow *win)
     ui->metaInfoWidget->setLayout(metaInfoLayout);
     for (QPair<QString, QString> metaInfo : recipe->getMetaInfo()) {
         QLabel *name = new QLabel(metaInfo.first);
+        name->setObjectName("metaInfo");
         QFont font = name->font();
         font.setBold(true);
         name->setFont(font);
 
         QLabel *value = new QLabel(metaInfo.second);
+        value->setObjectName("text");
         metaInfoLayout->addWidget(name);
         metaInfoLayout->addWidget(value);
     }

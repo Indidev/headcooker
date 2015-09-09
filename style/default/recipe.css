@@ -1,3 +1,51 @@
+#body {
+	background-color: rgba(255, 255, 255, 70);
+	border-radius: 10;
+	border: 1px solid #90B262;
+}
+
+#text {
+	color: rgba(0, 0, 0, 200);
+}
+
+#subtitle {
+	color: rgba(0, 0, 0, 200);
+}
+
+#metaInfo {
+	color: rgba(0, 0, 0, 200);
+	font-weight: bold;
+}
+
+#headline {
+	color: rgba(0, 0, 0, 200);
+	font-size: 16pt;
+	font-weight: bold;
+}
+
+#ingredientBox {
+	border: none;
+	padding-top: 20px;
+	font-weight: bold;
+}
+
+#ingredientTopic {
+	color: rgba(0, 0, 0, 200);
+	font-weight: bold;
+}
+
+#tagBox {
+	border: none;
+	padding-top: 20px;
+	font-weight: bold;
+}
+
+#instructionBox {
+	border: none;
+	padding-top: 20px;
+	font-weight: bold;
+}
+
 #tag {
 	color: #FFFFFF;
 	background-color: #90B262;
@@ -41,6 +89,7 @@
 }
 
 #instructions {
+	background-color: rgba(0, 0, 0, 5);
 	border: 1px solid #9B9D9E;
 	border-radius: 5;
 }
