@@ -2,14 +2,22 @@
 #define HEADCOOKERWINDOW_H
 
 #include <QMainWindow>
+#include <QDialog>
 #include "RecipeWidget.h"
 #include <sqlite3.h>
 
 #include "../backend/Recipe.h"
 #include "../backend/database/Database.h"
+#include "menu/OptionsMenu.h"
+#include "menu/StyleMenu.h"
 #include "RecipeChooser.h"
 
 #include <unordered_map>
+
+#include <iostream>
+
+using std::cout;
+using std::endl;
 
 namespace Ui {
 class HeadcookerWindow;
@@ -31,6 +39,7 @@ public slots:
     void showRecipeChooser();
     void showRecipeChooser(QString filter);
     void moveWindow(int x, int y);
+    void menuAction(QAction *action);
 protected:
     void testDB();
     void clear();

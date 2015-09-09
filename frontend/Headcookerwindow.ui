@@ -31,6 +31,13 @@
      <height>27</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuStyle_menu">
+    <property name="title">
+     <string>Bearbeiten</string>
+    </property>
+    <addaction name="style_menu_Action"/>
+   </widget>
+   <addaction name="menuStyle_menu"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -41,6 +48,11 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <action name="style_menu_Action">
+   <property name="text">
+    <string>Style Menü</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

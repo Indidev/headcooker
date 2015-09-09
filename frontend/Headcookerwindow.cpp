@@ -10,6 +10,8 @@ HeadcookerWindow::HeadcookerWindow(QWidget *parent) :
     curWidget = new RecipeChooser(this);
     ui->centralWidget->layout()->addWidget(curWidget);
 
+    connect(ui->menuBar, SIGNAL(triggered(QAction*)), this, SLOT(menuAction(QAction*)));
+
     testDB();
 
     //this->setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
@@ -20,13 +22,21 @@ HeadcookerWindow::~HeadcookerWindow()
     delete ui;
 }
 
+void HeadcookerWindow::menuAction(QAction * action) {
+    if (action == ui->style_menu_Action) {
+        OptionsMenu menu(this);
+        menu.setWidget(new StyleMenu);
+        menu.exec();
+    }
+}
+
 void HeadcookerWindow::testDB() {
 }
 
 void HeadcookerWindow::moveWindow(int x, int y) {
     QRect geom = this->geometry();
     this->setGeometry(geom.x() + x, geom.y() + y, geom.width(), geom.height());
-};
+}
 
 void HeadcookerWindow::clickedID(QString id) {
     showRecipe(id.toInt());

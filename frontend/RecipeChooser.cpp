@@ -40,6 +40,7 @@ void RecipeChooser::init(HeadcookerWindow *hw)
     ui->input->setObjectName("inputArea");
     ui->scrollArea->setObjectName("scrollArea");
     ui->scrollArea->verticalScrollBar()->setObjectName("scrollbar");
+
 }
 
 RecipeChooser::~RecipeChooser()

@@ -1,5 +1,6 @@
 #include "Options.h"
 
+static const QString STYLE_DIR = "style/";
 Options *Options::instance = NULL;
 
 Options::Options()
@@ -17,7 +18,7 @@ Options *Options::Instance()
 }
 
 QString Options::style(QString elementName, QString styleName) {
-    QString filepath = "style/";
+    QString filepath = STYLE_DIR;
     if (styleName.isEmpty() || !QFile::exists(filepath + styleName + "/" + elementName + ".css")) {
         filepath += "default";
     } else {
@@ -25,7 +26,7 @@ QString Options::style(QString elementName, QString styleName) {
     }
 
     filepath += "/" + elementName + ".css";
-    cout << filepath.toStdString() << endl;
+    //cout << filepath.toStdString() << endl;
 
     QFile styleFile(filepath);
     QString style;
@@ -37,4 +38,23 @@ QString Options::style(QString elementName, QString styleName) {
     }
 
     return style;
+}
+
+QStringList Options::styles() {
+    QDir styleDir(STYLE_DIR);
+
+    if (styleDir.exists())
+        return styleDir.entryList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
+    else
+        return QStringList();
+}
+
+QString Options::getCurStyle() {
+    return Instance()->curStyle;
+}
+
+void Options::setCurStyle(QString styleName) {
+    Instance()->curStyle = styleName;
+
+    //TODO update database...
 }
