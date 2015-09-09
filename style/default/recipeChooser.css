@@ -1,3 +1,13 @@
+#body {
+	background-color: rgba(255, 255, 255, 70);
+	border-radius: 10;
+	border: 1px solid #90B262;
+}
+
+#text {
+	color: rgba(0, 0, 0, 200);
+}
+
 #recipeItem {
 	color: #FFFFFF;
 	background-color: #90B262;
@@ -21,6 +31,7 @@
 
 #scrollArea {
 	border: none;
+	background-color: transparent;
 }
 
 #scrollbar:vertical {

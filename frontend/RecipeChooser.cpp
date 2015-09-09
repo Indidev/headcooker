@@ -22,8 +22,6 @@ void RecipeChooser::init(HeadcookerWindow *hw)
     this->hw = hw;
     ui->setupUi(this);
 
-    updateStylesheet();
-
     connect(&buttonToIDMapper, SIGNAL(mapped(QString)), hw, SLOT(clickedID(QString)));
     connect(&previewMapper, SIGNAL(mapped(QString)), this, SLOT(hoverButton(QString)));
 
@@ -34,11 +32,15 @@ void RecipeChooser::init(HeadcookerWindow *hw)
 
     connect(Options::ptr(), SIGNAL(updated()), this, SLOT(updateStylesheet()));
 
+    ui->bodyWidget->setObjectName("body");
+    ui->label->setObjectName("text");
+    ui->label_2->setObjectName("text");
     ui->filterEdit->setObjectName("inputArea");
     ui->input->setObjectName("inputArea");
     ui->scrollArea->setObjectName("scrollArea");
     ui->scrollArea->verticalScrollBar()->setObjectName("scrollbar");
 
+    updateStylesheet();
 }
 
 RecipeChooser::~RecipeChooser()
@@ -86,7 +88,9 @@ void RecipeChooser::updateList() {
     if (success) {
         for (DataRow row : rows) {
             ExtendedButton *item = new ExtendedButton(row.get("title"));
+            item->setAutoFillBackground(true);
             item->setObjectName("recipeItem");
+            cout << item->objectName().toStdString() << endl;
 
             ui->itemLayout->addWidget(item);
             QString id = row.get("id");
@@ -123,5 +127,8 @@ void RecipeChooser::updateStylesheet() {
 
     if (!style.isEmpty()) {
         this->setStyleSheet(style);
+        ui->input->setStyleSheet(style);
+        for (QPushButton * w: ui->scrollArea->findChildren<QPushButton*>())
+            w->setStyleSheet(style);
     }
 }
