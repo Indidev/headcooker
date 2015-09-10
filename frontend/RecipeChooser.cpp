@@ -39,6 +39,7 @@ void RecipeChooser::init(HeadcookerWindow *hw)
     ui->input->setObjectName("inputArea");
     ui->scrollArea->setObjectName("scrollArea");
     ui->scrollArea->verticalScrollBar()->setObjectName("scrollbar");
+    ui->previewImage->setObjectName("image");
 
     updateStylesheet();
 }
@@ -100,11 +101,8 @@ void RecipeChooser::updateList() {
 
             QPixmap previewImg(420, 280);
             previewImg.load(row.get("img_path"));
-            QBitmap mask(420, 280);
-            mask.load("img/image_mask.png", "png");
-            previewImg.setMask(mask);
 
-            previewPictures[id] = previewImg.scaledToWidth(210);
+            previewPictures[id] = previewImg.scaled(210, 140);
             previewMapper.setMapping(item, id);
             QObject::connect(item, SIGNAL(hover()), &previewMapper, SLOT(map()));
 
@@ -115,7 +113,10 @@ void RecipeChooser::updateList() {
 void RecipeChooser::hoverButton(QString id) {
     if (previewPictures.contains(id)) {
         if (curPreviewImg != id) {
-            ui->previewImage->setPixmap(previewPictures[id]);
+            QPixmap tmpImage(previewPictures[id]);
+            if (!curMaskPath.isEmpty())
+                tmpImage.setMask(maskImage);
+            ui->previewImage->setPixmap(tmpImage);
             curPreviewImg = id;
         }
     }
@@ -124,7 +125,15 @@ void RecipeChooser::hoverButton(QString id) {
 void RecipeChooser::updateStylesheet() {
 
     QString style = Options::style("recipeChooser");
-    int m = Util::getBodyMargin(style);
+    curMaskPath = Util::extractCSSTag_S(style, "image", "mask");
+
+    if (QFile::exists(curMaskPath)) {
+        maskImage.load(curMaskPath);
+        maskImage = maskImage.scaled(210, 140);
+    } else
+        curMaskPath = "";
+    int m = Util::extractCSSTag_I(style, "body", "margin");
+
     setContentsMargins(m, m, m, m);
 
     this->setStyleSheet(style);

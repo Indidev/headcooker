@@ -40,8 +40,6 @@ void RecipeWidget::init(HeadcookerWindow *win)
 {
     ui->setupUi(this);
 
-    updateStylesheet();
-
     ui->bodyWidget->setObjectName("body");
 
     ui->instructions->setObjectName("instructions");
@@ -104,10 +102,6 @@ void RecipeWidget::init(HeadcookerWindow *win)
         metaInfoLayout->addWidget(value);
     }
 
-    //Picture
-    ui->previewPicture->setPixmap(recipe->getImage());
-
-
     //Tags
     if (ui->tagWidget->layout()) {
         delete ui->tagWidget->layout();
@@ -125,6 +119,8 @@ void RecipeWidget::init(HeadcookerWindow *win)
     connect(&rightClickMapper, SIGNAL(mapped(QString)), this, SLOT(rightClick(QString)));
 
     connect(Options::ptr(), SIGNAL(updated()), this, SLOT(updateStylesheet()));
+
+    updateStylesheet();
 }
 
 void RecipeWidget::addAddTagButton() {
@@ -212,14 +208,14 @@ void RecipeWidget::deleteTag(QString tag) {
                 break;
             }
         }
-
     }
 }
 
 void RecipeWidget::updateStylesheet() {
 
     QString style = Options::style("recipe");
-    int m = Util::getBodyMargin(style);
+    int m = Util::extractCSSTag_I(style, "body", "margin");
+    ui->previewPicture->setPixmap(recipe->getImage(Util::extractCSSTag_S(style, "image", "mask")));
     this->setContentsMargins(m, m, m, m);
 
     this->setStyleSheet(style);

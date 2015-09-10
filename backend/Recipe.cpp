@@ -26,8 +26,7 @@ Recipe::~Recipe()
 
 void Recipe::init() {
     picture = QPixmap(420, 280);
-    mask = QBitmap(420, 280);
-    mask.load("img/image_mask.png", "png");
+    maskImage = QBitmap(420, 280);
 }
 
 QString Recipe::getTitle()
@@ -55,10 +54,17 @@ QList<QString> Recipe::getTags()
     return tags;
 }
 
-QPixmap Recipe::getImage()
+QPixmap Recipe::getImage(QString mask)
 {
     QPixmap pic(picture); //create copy of image
-    pic.setMask(mask);
+
+    if (!mask.isEmpty() && QFile::exists(mask)) {
+        if (mask != curMaskPath) {
+            curMaskPath = mask;
+            maskImage.load(mask);
+        }
+        pic.setMask(maskImage);
+    }
     return pic;
 }
 

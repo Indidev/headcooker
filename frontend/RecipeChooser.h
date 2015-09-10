@@ -42,6 +42,10 @@ protected:
     void init(HeadcookerWindow *hw);
     QString filter;
     QString curPreviewImg;
+
+    QString curMaskPath;
+    QBitmap maskImage;
+
     Ui::RecipeChooser *ui;
     HeadcookerWindow *hw;
 

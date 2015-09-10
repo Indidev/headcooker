@@ -53,8 +53,11 @@ void StyleMenu::updateStylesheet() {
     QString chooserStyle = Options::style("recipeChooser", ui->styleBox->currentText());
     QString recipeStyle = Options::style("recipe", ui->styleBox->currentText());
 
-    int cm = Util::getBodyMargin(chooserStyle);
-    int rm = Util::getBodyMargin(recipeStyle);
+    int cm = Util::extractCSSTag_I(chooserStyle, "body", "margin");
+    int rm = Util::extractCSSTag_I(recipeStyle, "body", "margin");
+
+    QString cMask = Util::extractCSSTag_S(chooserStyle, "image", "mask");
+    QString rMask = Util::extractCSSTag_S(recipeStyle, "image", "mask");
 
     ui->chooserBox->setContentsMargins(cm, cm, cm, cm);
     ui->recipeBox->setContentsMargins(rm, rm, rm, rm);

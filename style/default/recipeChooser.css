@@ -5,6 +5,10 @@
 	margin: 10;
 }
 
+#image {
+	mask: img/image_mask.png;
+}
+
 #text {
 	color: rgba(0, 0, 0, 200);
 }

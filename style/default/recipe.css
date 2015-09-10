@@ -6,6 +6,10 @@
 	margin: 10px;
 }
 
+#image {
+	mask: img/image_mask.png;
+}
+
 #text {
 	color: rgba(0, 0, 0, 200);
 }

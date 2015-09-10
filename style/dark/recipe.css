@@ -6,6 +6,10 @@
 	color: rgba(255, 255, 255, 200);
 }
 
+#image {
+	mask: img/image_mask_dark_style.png;
+}
+
 #subtitle {
 	color: #90B262;
 }
