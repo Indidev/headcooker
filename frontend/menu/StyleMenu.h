@@ -3,6 +3,8 @@
 
 #include <QPushButton>
 #include <QScrollBar>
+#include <QPixmap>
+#include <QBitmap>
 
 #include "MenuWidget.h"
 #include <QWidget>
@@ -25,6 +27,7 @@ public slots:
     void updateStylesheet();
 private:
     Ui::StyleMenu *ui;
+    QPixmap image;
 };
 
 #endif // STYLEMENU_H

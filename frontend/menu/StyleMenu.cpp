@@ -13,6 +13,9 @@ StyleMenu::StyleMenu(QWidget *parent) :
         ui->itemLayout->addWidget(item);
     }
 
+    image = QPixmap(105, 70);
+    image.load("img/styleMenuPreviewImage.jpg");
+
     //set ObjectNames
     ui->chooserBody->setObjectName("body");
     ui->filterInput->setObjectName("inputArea");
@@ -59,6 +62,21 @@ void StyleMenu::updateStylesheet() {
     QString cMask = Util::extractCSSTag_S(chooserStyle, "image", "mask");
     QString rMask = Util::extractCSSTag_S(recipeStyle, "image", "mask");
 
+    QPixmap tmpImg(image);
+    QBitmap mask(105, 70);
+    if (!cMask.isEmpty() && QFile::exists(cMask)) {
+        mask.load(cMask);
+        tmpImg.setMask(mask.scaled(105, 70));
+    }
+    ui->chooserImage->setPixmap(tmpImg);
+
+    tmpImg = QPixmap(image);
+    if (!rMask.isEmpty() && QFile::exists(rMask)) {
+        mask.load(rMask);
+        tmpImg.setMask(mask.scaled(105, 70));
+    }
+    ui->recipeImage->setPixmap(tmpImg);
+
     ui->chooserBox->setContentsMargins(cm, cm, cm, cm);
     ui->recipeBox->setContentsMargins(rm, rm, rm, rm);
 
@@ -68,4 +86,6 @@ void StyleMenu::updateStylesheet() {
     ui->recipeID_Input->setStyleSheet(chooserStyle);
     for (QPushButton * w: ui->recipeArea->findChildren<QPushButton*>())
         w->setStyleSheet(chooserStyle);
+
+
 }
