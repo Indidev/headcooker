@@ -6,7 +6,8 @@
 
 #include "MenuWidget.h"
 #include <QWidget>
-#include "../../backend/Options.h"
+#include "backend/Options.h"
+#include "backend/Util.h"
 
 namespace Ui {
 class StyleMenu;

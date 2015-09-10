@@ -65,6 +65,7 @@ void RecipeChooser::addRecipe() {
     }
     ui->input->setText("");
     updateList();
+    updateStylesheet();
 }
 
 void RecipeChooser::setFilter() {
@@ -126,10 +127,9 @@ void RecipeChooser::updateStylesheet() {
     int m = Util::getBodyMargin(style);
     setContentsMargins(m, m, m, m);
 
-    if (!style.isEmpty()) {
-        this->setStyleSheet(style);
-        ui->input->setStyleSheet(style);
-        for (QPushButton * w: ui->scrollArea->findChildren<QPushButton*>())
-            w->setStyleSheet(style);
-    }
+    this->setStyleSheet(style);
+    ui->input->setStyleSheet(style);
+    for (QPushButton * w: ui->scrollArea->findChildren<QPushButton*>())
+        w->setStyleSheet(style);
+
 }

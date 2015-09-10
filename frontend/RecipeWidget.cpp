@@ -222,7 +222,5 @@ void RecipeWidget::updateStylesheet() {
     int m = Util::getBodyMargin(style);
     this->setContentsMargins(m, m, m, m);
 
-    if (!style.isEmpty()) {
-        this->setStyleSheet(style);
-    }
+    this->setStyleSheet(style);
 }

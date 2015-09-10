@@ -14,11 +14,15 @@ StyleMenu::StyleMenu(QWidget *parent) :
     }
 
     //set ObjectNames
+    ui->chooserBody->setObjectName("body");
     ui->filterInput->setObjectName("inputArea");
     ui->recipeID_Input->setObjectName("inputArea");
     ui->recipeArea->setObjectName("scrollArea");
     ui->recipeArea->verticalScrollBar()->setObjectName("scrollbar");
+    ui->c_label1->setObjectName("text");
+    ui->c_label2->setObjectName("text");
 
+    ui->recipeBody->setObjectName("body");
     ui->instructions->setObjectName("instructions");
     ui->instructions->verticalScrollBar()->setObjectName("scrollbar");
     ui->backButton->setObjectName("backButton");
@@ -46,6 +50,19 @@ void StyleMenu::saveChanges()
 }
 
 void StyleMenu::updateStylesheet() {
-    ui->chooserBox->setStyleSheet(Options::style("recipeChooser", ui->styleBox->currentText()));
-    ui->recipeBox->setStyleSheet(Options::style("recipe", ui->styleBox->currentText()));
+    QString chooserStyle = Options::style("recipeChooser", ui->styleBox->currentText());
+    QString recipeStyle = Options::style("recipe", ui->styleBox->currentText());
+
+    int cm = Util::getBodyMargin(chooserStyle);
+    int rm = Util::getBodyMargin(recipeStyle);
+
+    ui->chooserBox->setContentsMargins(cm, cm, cm, cm);
+    ui->recipeBox->setContentsMargins(rm, rm, rm, rm);
+
+    ui->chooserBox->setStyleSheet(chooserStyle);
+    ui->recipeBox->setStyleSheet(recipeStyle);
+
+    ui->recipeID_Input->setStyleSheet(chooserStyle);
+    for (QPushButton * w: ui->recipeArea->findChildren<QPushButton*>())
+        w->setStyleSheet(chooserStyle);
 }
