@@ -90,7 +90,6 @@ void RecipeChooser::updateList() {
             ExtendedButton *item = new ExtendedButton(row.get("title"));
             item->setAutoFillBackground(true);
             item->setObjectName("recipeItem");
-            cout << item->objectName().toStdString() << endl;
 
             ui->itemLayout->addWidget(item);
             QString id = row.get("id");
@@ -124,6 +123,8 @@ void RecipeChooser::hoverButton(QString id) {
 void RecipeChooser::updateStylesheet() {
 
     QString style = Options::style("recipeChooser");
+    int m = Util::getBodyMargin(style);
+    setContentsMargins(m, m, m, m);
 
     if (!style.isEmpty()) {
         this->setStyleSheet(style);

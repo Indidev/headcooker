@@ -219,6 +219,8 @@ void RecipeWidget::deleteTag(QString tag) {
 void RecipeWidget::updateStylesheet() {
 
     QString style = Options::style("recipe");
+    int m = Util::getBodyMargin(style);
+    this->setContentsMargins(m, m, m, m);
 
     if (!style.isEmpty()) {
         this->setStyleSheet(style);

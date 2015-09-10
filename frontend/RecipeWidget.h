@@ -3,6 +3,7 @@
 
 #include "../backend/Recipe.h"
 #include "../backend/Options.h"
+#include "../backend/Util.h"
 
 #include "FlowLayout.h"
 #include "Headcookerwindow.h"

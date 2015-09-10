@@ -12,6 +12,7 @@
 
 #include "../backend/database/Database.h"
 #include "../backend/database/DataRow.h"
+#include "../backend/Util.h"
 #include "ExtendedButton.h"
 #include "Headcookerwindow.h"
 #include <iostream>

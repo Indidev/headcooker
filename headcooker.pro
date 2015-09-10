@@ -32,7 +32,8 @@ SOURCES += main.cpp\
     frontend/ExtendedLineEdit.cpp \
     backend/Options.cpp \
     frontend/menu/StyleMenu.cpp \
-    frontend/menu/OptionsMenu.cpp
+    frontend/menu/OptionsMenu.cpp \
+    backend/Util.cpp
 
 HEADERS  += frontend/Headcookerwindow.h \
     frontend/RecipeWidget.h \
@@ -51,7 +52,8 @@ HEADERS  += frontend/Headcookerwindow.h \
     backend/Options.h \
     frontend/menu/StyleMenu.h \
     frontend/menu/OptionsMenu.h \
-    frontend/menu/MenuWidget.h
+    frontend/menu/MenuWidget.h \
+    backend/Util.h
 
 FORMS    += frontend/Headcookerwindow.ui \
     frontend/RecipeWidget.ui \
