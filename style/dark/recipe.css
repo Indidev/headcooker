@@ -15,7 +15,7 @@
 }
 
 #metaInfo {
-	color: rgba(255, 255, 255, 200);
+	color: rgba(255, 255, 255, 255);
 	font-weight: bold;
 }
 
@@ -34,7 +34,6 @@
 
 #ingredientTopic {
 	color: rgba(255, 255, 255, 255);
-	color: rgba(0, 0, 0, 200);
 	font-weight: bold;
 }
 
