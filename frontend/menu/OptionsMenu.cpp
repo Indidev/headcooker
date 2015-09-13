@@ -39,3 +39,9 @@ void OptionsMenu::accept() {
 void OptionsMenu::reject() {
     QDialog::reject();
 }
+
+void OptionsMenu::keyPressEvent(QKeyEvent *e) {
+    if (e->key() != Qt::Key_Return) {
+        QDialog::keyPressEvent(e);
+    }
+}

@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QList>
+#include <QKeyEvent>
 
 #include "StyleMenu.h"
 #include "ImportMenu.h"
@@ -28,6 +29,7 @@ private:
 
     QList<MenuWidget *> tabs;
     QLayout *newLayout(QWidget *widget);
+    void keyPressEvent(QKeyEvent *e);
 };
 
 #endif // OPTIONSMENU_H
