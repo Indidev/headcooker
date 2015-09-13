@@ -48,7 +48,7 @@
     <property name="title">
      <string>Bearbeiten</string>
     </property>
-    <addaction name="style_menu_Action"/>
+    <addaction name="option_menu_Action"/>
    </widget>
    <addaction name="menuStyle_menu"/>
   </widget>
@@ -60,9 +60,9 @@
     <bool>false</bool>
    </attribute>
   </widget>
-  <action name="style_menu_Action">
+  <action name="option_menu_Action">
    <property name="text">
-    <string>Style Menü</string>
+    <string>Optionen</string>
    </property>
   </action>
  </widget>

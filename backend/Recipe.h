@@ -21,7 +21,7 @@ class Recipe
 {
     friend class Database;
 public:
-    Recipe(QString id);
+    Recipe(QString id, bool isDummy = false);
     Recipe(int id);
     ~Recipe();
 
@@ -46,6 +46,7 @@ public:
 protected:
 
     bool hasImage;
+    bool isDummy;
 
     int databaseID;
     QString recipeID;

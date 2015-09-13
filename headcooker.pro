@@ -33,7 +33,9 @@ SOURCES += main.cpp\
     backend/Options.cpp \
     frontend/menu/StyleMenu.cpp \
     frontend/menu/OptionsMenu.cpp \
-    backend/Util.cpp
+    backend/Util.cpp \
+    backend/FirefoxParser.cpp \
+    frontend/menu/ImportMenu.cpp
 
 HEADERS  += frontend/Headcookerwindow.h \
     frontend/RecipeWidget.h \
@@ -53,13 +55,16 @@ HEADERS  += frontend/Headcookerwindow.h \
     frontend/menu/StyleMenu.h \
     frontend/menu/OptionsMenu.h \
     frontend/menu/MenuWidget.h \
-    backend/Util.h
+    backend/Util.h \
+    backend/FirefoxParser.h \
+    frontend/menu/ImportMenu.h
 
 FORMS    += frontend/Headcookerwindow.ui \
     frontend/RecipeWidget.ui \
     frontend/RecipeChooser.ui \
     frontend/menu/StyleMenu.ui \
-    frontend/menu/OptionsMenu.ui
+    frontend/menu/OptionsMenu.ui \
+    frontend/menu/ImportMenu.ui
 
 # Define copy command for linux and windows
 QMAKE_COPY = cp -rf

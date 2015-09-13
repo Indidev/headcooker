@@ -69,3 +69,8 @@ Options *Options::ptr()
 {
     return Instance();
 }
+
+void Options::up()
+{
+    Instance()->Updated();
+}

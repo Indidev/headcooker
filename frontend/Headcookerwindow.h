@@ -6,10 +6,11 @@
 #include "RecipeWidget.h"
 #include <sqlite3.h>
 
-#include "../backend/Recipe.h"
-#include "../backend/database/Database.h"
+#include "backend/Recipe.h"
+#include "backend/database/Database.h"
 #include "menu/OptionsMenu.h"
 #include "RecipeChooser.h"
+#include "backend/FirefoxParser.h"
 
 #include <unordered_map>
 
@@ -40,7 +41,7 @@ public slots:
     void moveWindow(int x, int y);
     void menuAction(QAction *action);
 protected:
-    void testDB();
+    void test();
     void clear();
     void setWidget(QWidget *widget);
 

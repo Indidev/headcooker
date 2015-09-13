@@ -33,12 +33,12 @@ public:
     explicit RecipeChooser(HeadcookerWindow *hw, QWidget *parent = 0);
     explicit RecipeChooser(HeadcookerWindow *hw, QString filter, QWidget *parent = 0);
     ~RecipeChooser();
-    void updateList();
 
 public slots:
     void addRecipe();
     void setFilter();
     void hoverButton(QString id);
+    void updateList();
     void updateStylesheet();
     void rightClickRecipe(QString id);
 protected:

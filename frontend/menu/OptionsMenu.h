@@ -5,6 +5,7 @@
 #include <QList>
 
 #include "StyleMenu.h"
+#include "ImportMenu.h"
 
 namespace Ui {
 class OptionsMenu;

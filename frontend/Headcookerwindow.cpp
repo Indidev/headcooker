@@ -12,7 +12,7 @@ HeadcookerWindow::HeadcookerWindow(QWidget *parent) :
 
     connect(ui->menuBar, SIGNAL(triggered(QAction*)), this, SLOT(menuAction(QAction*)));
 
-    testDB();
+    test();
 
     //this->setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
 }
@@ -23,13 +23,16 @@ HeadcookerWindow::~HeadcookerWindow()
 }
 
 void HeadcookerWindow::menuAction(QAction * action) {
-    if (action == ui->style_menu_Action) {
+    if (action == ui->option_menu_Action) {
         OptionsMenu menu(this);
         menu.exec();
     }
 }
 
-void HeadcookerWindow::testDB() {
+void HeadcookerWindow::test() {
+    for (QString url : FirefoxParser::parse("bookmark.json")) {
+        cout << url.toStdString() << endl;
+    }
 }
 
 void HeadcookerWindow::moveWindow(int x, int y) {

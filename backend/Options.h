@@ -22,6 +22,7 @@ public:
     static QString getCurStyle();
     static void setCurStyle(QString styleName);
     static Options *ptr();
+    static void up();
 private:
     explicit Options(QObject* parent = 0);
 

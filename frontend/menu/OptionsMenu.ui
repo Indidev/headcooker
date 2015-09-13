@@ -18,12 +18,23 @@
     <layout class="QGridLayout" name="centralLayout">
      <item row="0" column="0">
       <widget class="QTabWidget" name="tabWidget">
+       <property name="tabPosition">
+        <enum>QTabWidget::North</enum>
+       </property>
+       <property name="tabShape">
+        <enum>QTabWidget::Rounded</enum>
+       </property>
        <property name="currentIndex">
         <number>0</number>
        </property>
        <widget class="QWidget" name="styleTab">
         <attribute name="title">
          <string>Style</string>
+        </attribute>
+       </widget>
+       <widget class="QWidget" name="importTab">
+        <attribute name="title">
+         <string>Importieren</string>
         </attribute>
        </widget>
       </widget>

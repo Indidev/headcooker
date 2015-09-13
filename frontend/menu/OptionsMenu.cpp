@@ -11,6 +11,8 @@ OptionsMenu::OptionsMenu(QWidget *parent) :
     newLayout(ui->styleTab)->addWidget(tmpTab);
     tabs.push_back(tmpTab);
 
+    newLayout(ui->importTab)->addWidget(new ImportMenu);
+
     connect(ui->applyButton, SIGNAL(clicked()), this, SLOT(accept()));
     connect(ui->cancelButton, SIGNAL(clicked()), this, SLOT(reject()));
 }

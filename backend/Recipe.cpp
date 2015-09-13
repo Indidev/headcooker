@@ -1,7 +1,8 @@
 #include "Recipe.h"
 
-Recipe::Recipe(QString id)
+Recipe::Recipe(QString id, bool dummy)
 {
+    this->isDummy = dummy;
     init();
 
     if (isInDatabase(id)) {
@@ -13,6 +14,7 @@ Recipe::Recipe(QString id)
 
 Recipe::Recipe(int id)
 {
+    isDummy = false;
     init();
 
     if (isInDatabase(id))
@@ -21,7 +23,8 @@ Recipe::Recipe(int id)
 
 Recipe::~Recipe()
 {
-    save();
+    if (!isDummy)
+        save();
 }
 
 void Recipe::init() {
@@ -205,7 +208,7 @@ void Recipe::loadFromURL(QString id)
 
         //image
         hasImage = xmlData.getChild("hasImage").getValue() == "true";
-        if (hasImage) {
+        if (hasImage && !isDummy) {
             QString imageID = xmlData.getChild("previewImageId").getValue();
             fetchImage(imageID, curler);
         }

@@ -29,7 +29,7 @@ void RecipeChooser::init(HeadcookerWindow *hw)
     connect(ui->input, SIGNAL(returnPressed()), this, SLOT(addRecipe()));
     connect(ui->filterEdit, SIGNAL(returnPressed()), this, SLOT(setFilter()));
 
-    connect(Options::ptr(), SIGNAL(updated()), this, SLOT(updateStylesheet()));
+    connect(Options::ptr(), SIGNAL(updated()), this, SLOT(updateList()));
 
     ui->bodyWidget->setObjectName("body");
     ui->label->setObjectName("text");
