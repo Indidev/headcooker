@@ -75,6 +75,8 @@ protected:
     bool updateRecipe(const Recipe &recipe);
     bool addRecipe(const Recipe &recipe);
     QString escape(QString input);
+    int count(QString tablename, QString value, QString column = "ID");
+    bool del(QString tablename, QString value, QString column = "ID");
 };
 
 #endif // DATABASE_H

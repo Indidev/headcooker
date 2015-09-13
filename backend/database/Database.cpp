@@ -67,20 +67,14 @@ bool Database::hasRecipe(QString onlineID)
     QString sql = "SELECT * FROM RECIPE WHERE ONLINE_ID = '" + escape(onlineID) + "';";
     QList<DataRow> row;
 
-    if (!execSQL(sql, &row))
-        return false;
-    else
-        return row.size() > 0;
+    return execSQL(sql, &row) && row.size() > 0;
 }
 
 bool Database::hasRecipe(int id) {
     QString sql = "SELECT * FROM RECIPE WHERE ID = " + QString::number(id) + ";";
     QList<DataRow> row;
 
-    if (!execSQL(sql, &row))
-        return false;
-    else
-        return row.size() > 0;
+    return execSQL(sql, &row) && row.size() > 0;
 }
 
 bool Database::saveRecipe(const Recipe &recipe) {
@@ -134,9 +128,59 @@ bool Database::deleteRecipe(const Recipe &recipe) {
     return deleteRecipe(recipe.databaseID);
 }
 
+int Database::count(QString tablename, QString value, QString column) {
+    QString sql = "SELECT COUNT(" + column + ") AS NUM FROM " + tablename + " WHERE " + column + " = " + value + ";";
+    QList<DataRow> row;
+    if (execSQL(sql, &row))
+        return row.size() > 0?row[0].get("NUM").toInt(): -1;
+    else
+        return -1;
+}
+
+bool Database::del(QString tablename, QString value, QString column) {
+    return execSQL("DELETE FROM " + tablename + " WHERE " + column + " = " + value + ";");
+}
+
 bool Database::deleteRecipe(int id) {
-    QString sql = "DELETE FORM RECIPE WHERE ID = " + QString::number(id) + ";";
-    return execSQL(sql);
+    QString id_s = QString::number(id);
+    QString sql = "DELETE FROM RECIPE WHERE ID = " + id_s + ";";
+    if (execSQL(sql)) {
+        //delete tags
+        QList<DataRow> rows;
+        sql = "SELECT TAG_ID FROM RECIPE_TAGS WHERE RECIPE_ID = " + id_s + ";";
+        sql += "DELETE FROM RECIPE_TAGS WHERE RECIPE_ID = " + id_s + ";";
+
+        execSQL(sql, &rows);
+        for (DataRow row : rows) {
+            if (count("RECIPE_TAGS", row.get("TAG_ID"), "TAG_ID") == 0) {
+                del("TAG", row.get("TAG_ID"));
+            }
+        }
+
+        //delete ingredients
+        rows.clear();
+        sql = "SELECT * FROM INGREDIENT_LIST WHERE RECIPE_ID = " + id_s + ";";
+        sql += "DELETE FROM INGREDIENT_LIST WHERE RECIPE_ID = " + id_s + ";";
+
+        execSQL(sql, &rows);
+        for (DataRow row : rows) {
+            if (count("INGREDIENT_LIST", row.get("ING_ID"), "ING_ID") == 0) {
+                del("INGREDIENT", row.get("ING_ID"));
+            }
+            if (count("INGREDIENT_LIST", row.get("GROUP_ID"), "GROUP_ID") == 0) {
+                del("INGREDIENT_GROUP", row.get("GROUP_ID"));
+            }
+            if (count("INGREDIENT_LIST", row.get("UNIT_ID"), "UNIT_ID") == 0) {
+                del("UNIT", row.get("UNIT_ID"));
+            }
+            if (count("INGREDIENT_LIST", row.get("USAGE_ID"), "USAGE_ID") == 0) {
+                del("USAGE_INFO", row.get("USAGE_ID"));
+            }
+        }
+
+        return true;
+    } else
+        return false;
 }
 
 bool Database::addRecipe(const Recipe &recipe) {

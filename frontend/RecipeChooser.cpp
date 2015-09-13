@@ -24,8 +24,7 @@ void RecipeChooser::init(HeadcookerWindow *hw)
 
     connect(&buttonToIDMapper, SIGNAL(mapped(QString)), hw, SLOT(clickedID(QString)));
     connect(&previewMapper, SIGNAL(mapped(QString)), this, SLOT(hoverButton(QString)));
-
-    updateList();
+    connect(&rightClickMapper, SIGNAL(mapped(QString)), this, SLOT(rightClickRecipe(QString)));
 
     connect(ui->input, SIGNAL(returnPressed()), this, SLOT(addRecipe()));
     connect(ui->filterEdit, SIGNAL(returnPressed()), this, SLOT(setFilter()));
@@ -41,7 +40,7 @@ void RecipeChooser::init(HeadcookerWindow *hw)
     ui->scrollArea->verticalScrollBar()->setObjectName("scrollbar");
     ui->previewImage->setObjectName("image");
 
-    updateStylesheet();
+    updateList();
 }
 
 RecipeChooser::~RecipeChooser()
@@ -66,7 +65,6 @@ void RecipeChooser::addRecipe() {
     }
     ui->input->setText("");
     updateList();
-    updateStylesheet();
 }
 
 void RecipeChooser::setFilter() {
@@ -99,6 +97,9 @@ void RecipeChooser::updateList() {
             buttonToIDMapper.setMapping(item, id);
             QObject::connect(item, SIGNAL(leftClicked()), &buttonToIDMapper, SLOT(map()));
 
+            rightClickMapper.setMapping(item, id);
+            QObject::connect(item, SIGNAL(rightClicked()), &rightClickMapper, SLOT(map()));
+
             QPixmap previewImg(420, 280);
             previewImg.load(row.get("img_path"));
 
@@ -108,6 +109,7 @@ void RecipeChooser::updateList() {
 
         }
     }
+    updateStylesheet();
 }
 
 void RecipeChooser::hoverButton(QString id) {
@@ -140,5 +142,20 @@ void RecipeChooser::updateStylesheet() {
     ui->input->setStyleSheet(style);
     for (QPushButton * w: ui->scrollArea->findChildren<QPushButton*>())
         w->setStyleSheet(style);
+}
 
+void RecipeChooser::rightClickRecipe(QString id) {
+    QMenu menu;
+
+    menu.addAction("delete");
+
+    QAction * action = menu.exec(QCursor::pos());
+
+    if (action) {
+        if (action->toolTip() == "delete") {
+            Database::DB().deleteRecipe(id.toInt());
+
+            updateList();
+        }
+    }
 }

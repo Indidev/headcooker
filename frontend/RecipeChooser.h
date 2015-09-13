@@ -9,6 +9,8 @@
 #include <QBitmap>
 #include <QMap>
 #include <QPoint>
+#include <QMenu>
+#include <QCursor>
 
 #include "../backend/database/Database.h"
 #include "../backend/database/DataRow.h"
@@ -38,6 +40,7 @@ public slots:
     void setFilter();
     void hoverButton(QString id);
     void updateStylesheet();
+    void rightClickRecipe(QString id);
 protected:
     void init(HeadcookerWindow *hw);
     QString filter;
@@ -51,6 +54,7 @@ protected:
 
     QSignalMapper buttonToIDMapper;
     QSignalMapper previewMapper;
+    QSignalMapper rightClickMapper;
 
     QMap<QString, QPixmap> previewPictures;
 };
