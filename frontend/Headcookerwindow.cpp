@@ -30,9 +30,6 @@ void HeadcookerWindow::menuAction(QAction * action) {
 }
 
 void HeadcookerWindow::test() {
-    for (QString url : FirefoxParser::parse("bookmark.json")) {
-        cout << url.toStdString() << endl;
-    }
 }
 
 void HeadcookerWindow::moveWindow(int x, int y) {
