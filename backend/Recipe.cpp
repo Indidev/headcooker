@@ -28,8 +28,10 @@ Recipe::~Recipe()
 }
 
 void Recipe::init() {
-    picture = QPixmap(420, 280);
-    maskImage = QBitmap(420, 280);
+    if (!isDummy) {
+        picture = QPixmap(420, 280);
+        maskImage = QBitmap(420, 280);
+    }
 }
 
 QString Recipe::getTitle()
