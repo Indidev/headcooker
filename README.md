@@ -20,7 +20,7 @@ A C++ GUI-based tool for managing chefkoch.de recipes.
 #### libCurl ####
 Before compiling make sure libcurl is installed:
 
-**Linux:** (run as root or via sudo)
+##### Linux: (run as root or via sudo)
 ```
 apt-get install libcurl3
 ```
@@ -32,7 +32,7 @@ I'll check this later
 #### QT5 ####
 HeadCooker depents on QT5 so make sure QT5 is installed:
 
-**Linux:** (run as root or via sudo)
+##### Linux: (run as root or via sudo)
 ```
 apt-get install qt5-default qt5-qmake
 ```
