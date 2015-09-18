@@ -3,16 +3,17 @@ A C++ GUI-based tool for managing chefkoch.de recipes.
 
 ![HeadCooker](http://indidude.de/stuff/headcooker.gif)
 
-## Overview ##
+<!-- [toc] -->
+## Table of Contents
 
- * [Compiling and dependencies](#compiling-and-dependencies)
-   * [Dependencies](#dependencies)
-     * [libCurl](#libcurl)
-     * [QT5](#qt5)
-     * [SQLite3](#sqlite3)
-   * [Compilation](#compilation)
+   * [Compilation and dependencies](#compilation-and-dependencies)
+     * [Dependencies](#dependencies)
+       * [libCurl](#libcurl)
+       * [QT5](#qt5)
+       * [SQLite3](#sqlite3)
+     * [Compilation](#compilation)
 
-
+<!-- [toc] -->
 ## Compilation and dependencies ##
 
 ### Dependencies ###
@@ -21,7 +22,7 @@ A C++ GUI-based tool for managing chefkoch.de recipes.
 Before compiling make sure libcurl is installed:
 
 **Linux:** (run as root or via sudo)
-```
+``` bash
 apt-get install libcurl3
 ```
 
@@ -33,7 +34,7 @@ I'll check this later
 HeadCooker depents on QT5 so make sure QT5 is installed:
 
 **Linux:** (run as root or via sudo)
-```
+``` bash
 apt-get install qt5-default qt5-qmake
 ```
 
@@ -45,7 +46,7 @@ Check http://www.qt.io/download/
 SQLite is required for storing the recipes on your local computer.
 
 **Linux:** (run as root or via sudo)
-```
+``` bash
 apt-get install libsqlite3-dev
 ```
 
@@ -56,7 +57,7 @@ I'll check this later...
 ### Compilation ###
 
 Run following in your HeadCooker directory:
-```
+``` bash
 mkdir build
 cd build
 qmake ..
