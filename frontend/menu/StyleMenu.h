@@ -27,7 +27,7 @@ public slots:
     void updateStylesheet();
 private:
     Ui::StyleMenu *ui;
-    QPixmap image;
+    QImage image;
 };
 
 #endif // STYLEMENU_H

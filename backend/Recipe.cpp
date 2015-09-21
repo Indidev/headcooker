@@ -29,8 +29,8 @@ Recipe::~Recipe()
 
 void Recipe::init() {
     if (!isDummy) {
-        picture = QPixmap(420, 280);
-        maskImage = QBitmap(420, 280);
+        picture = QImage(420, 280, QImage::Format_RGBA8888);
+        maskImage = QImage(420, 280, QImage::Format_RGBA8888);
     }
 }
 
@@ -59,16 +59,17 @@ QList<QString> Recipe::getTags()
     return tags;
 }
 
-QPixmap Recipe::getImage(QString mask)
+QImage Recipe::getImage(QString mask)
 {
-    QPixmap pic(picture); //create copy of image
+    QImage pic(picture); //create copy of image
 
     if (!mask.isEmpty() && QFile::exists(mask)) {
         if (mask != curMaskPath) {
             curMaskPath = mask;
             maskImage.load(mask);
         }
-        pic.setMask(maskImage);
+        //pic.setMask(maskImage);
+        pic.setAlphaChannel(maskImage);
     }
     return pic;
 }

@@ -31,7 +31,7 @@ public:
     QString getInstructions();
     QList<QString> getTags();
 
-    QPixmap getImage(QString mask = "");
+    QImage getImage(QString mask = "");
 
     float getServings();
     float getRating();
@@ -74,9 +74,9 @@ protected:
 
     DataTypes::IngredientGroups ingredientGroups;
 
-    QPixmap picture;
+    QImage picture;
     QString curMaskPath;
-    QBitmap maskImage;
+    QImage maskImage;
 
 
     bool isInDatabase(QString id);

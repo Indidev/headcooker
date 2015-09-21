@@ -100,7 +100,7 @@ void RecipeChooser::updateList() {
             rightClickMapper.setMapping(item, id);
             QObject::connect(item, SIGNAL(rightClicked()), &rightClickMapper, SLOT(map()));
 
-            QPixmap previewImg(420, 280);
+            QImage previewImg(420, 280, QImage::Format_RGBA8888);
             previewImg.load(row.get("img_path"));
 
             previewPictures[id] = previewImg.scaled(210, 140);
@@ -115,10 +115,10 @@ void RecipeChooser::updateList() {
 void RecipeChooser::hoverButton(QString id) {
     if (previewPictures.contains(id)) {
         if (curPreviewImg != id) {
-            QPixmap tmpImage(previewPictures[id]);
+            QImage tmpImage(previewPictures[id]);
             if (!curMaskPath.isEmpty())
-                tmpImage.setMask(maskImage);
-            ui->previewImage->setPixmap(tmpImage);
+                tmpImage.setAlphaChannel(maskImage);
+            ui->previewImage->setPixmap(QPixmap::fromImage(tmpImage));
             curPreviewImg = id;
         }
     }

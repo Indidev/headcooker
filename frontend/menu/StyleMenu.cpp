@@ -13,7 +13,7 @@ StyleMenu::StyleMenu(QWidget *parent) :
         ui->itemLayout->addWidget(item);
     }
 
-    image = QPixmap(105, 70);
+    image = QImage(105, 70, QImage::Format_RGBA8888);
     image.load("img/styleMenuPreviewImage.jpg");
 
     //set ObjectNames
@@ -62,20 +62,20 @@ void StyleMenu::updateStylesheet() {
     QString cMask = Util::extractCSSTag_S(chooserStyle, "image", "mask");
     QString rMask = Util::extractCSSTag_S(recipeStyle, "image", "mask");
 
-    QPixmap tmpImg(image);
-    QBitmap mask(105, 70);
+    QImage tmpImg(image);
+    QImage mask(105, 70, QImage::Format_RGBA8888);
     if (!cMask.isEmpty() && QFile::exists(cMask)) {
         mask.load(cMask);
-        tmpImg.setMask(mask.scaled(105, 70));
+        tmpImg.setAlphaChannel(mask.scaled(105, 70));
     }
-    ui->chooserImage->setPixmap(tmpImg);
+    ui->chooserImage->setPixmap(QPixmap::fromImage(tmpImg));
 
-    tmpImg = QPixmap(image);
+    tmpImg = QImage(image);
     if (!rMask.isEmpty() && QFile::exists(rMask)) {
         mask.load(rMask);
-        tmpImg.setMask(mask.scaled(105, 70));
+        tmpImg.setAlphaChannel(mask.scaled(105, 70));
     }
-    ui->recipeImage->setPixmap(tmpImg);
+    ui->recipeImage->setPixmap(QPixmap::fromImage(tmpImg));
 
     ui->chooserBox->setContentsMargins(cm, cm, cm, cm);
     ui->recipeBox->setContentsMargins(rm, rm, rm, rm);

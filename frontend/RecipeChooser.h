@@ -47,7 +47,7 @@ protected:
     QString curPreviewImg;
 
     QString curMaskPath;
-    QBitmap maskImage;
+    QImage maskImage;
 
     Ui::RecipeChooser *ui;
     HeadcookerWindow *hw;
@@ -56,7 +56,7 @@ protected:
     QSignalMapper previewMapper;
     QSignalMapper rightClickMapper;
 
-    QMap<QString, QPixmap> previewPictures;
+    QMap<QString, QImage> previewPictures;
 };
 
 #endif // RECIPECHOOSER_H

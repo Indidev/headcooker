@@ -215,7 +215,7 @@ void RecipeWidget::updateStylesheet() {
 
     QString style = Options::style("recipe");
     int m = Util::extractCSSTag_I(style, "body", "margin");
-    ui->previewPicture->setPixmap(recipe->getImage(Util::extractCSSTag_S(style, "image", "mask")));
+    ui->previewPicture->setPixmap(QPixmap::fromImage(recipe->getImage(Util::extractCSSTag_S(style, "image", "mask"))));
     this->setContentsMargins(m, m, m, m);
 
     this->setStyleSheet(style);
