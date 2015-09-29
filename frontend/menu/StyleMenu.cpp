@@ -81,14 +81,22 @@ void StyleMenu::updateStylesheet() {
     ui->recipeBox->setContentsMargins(rm, rm, rm, rm);
 
     //rating
-    QColor foreground = Util::extractCSSTag_C(recipeStyle, "rating", "color");
-    QColor background = Util::extractCSSTag_C(recipeStyle, "rating", "background");
-    QString ratingMask = Util::extractCSSTag_S(recipeStyle, "rating", "mask");
+    QColor r_foreground = Util::extractCSSTag_C(recipeStyle, "rating", "color");
+    QColor r_background = Util::extractCSSTag_C(recipeStyle, "rating", "background");
+    QString r_ratingMask = Util::extractCSSTag_S(recipeStyle, "rating", "mask");
 
-    QImage rating = Util::getRatingImg(2.5, ratingMask, foreground, background);
+    QImage rating = Util::getRatingImg(2.5, r_ratingMask, r_foreground, r_background);
     ui->header_spacer->changeSize(rating.width(), rating.height(),QSizePolicy::Maximum);
     ui->ratingLbl->setMaximumWidth(rating.width());
     ui->ratingLbl->setPixmap(QPixmap::fromImage(rating));
+
+    r_foreground = Util::extractCSSTag_C(chooserStyle, "rating", "color");
+    r_background = Util::extractCSSTag_C(chooserStyle, "rating", "background");
+    r_ratingMask = Util::extractCSSTag_S(chooserStyle, "rating", "mask");
+
+    rating = Util::getRatingImg(2.5, r_ratingMask, r_foreground, r_background);
+
+    ui->c_ratingLbl->setPixmap(QPixmap::fromImage(rating));
 
     //set stylesheet
     ui->chooserBox->setStyleSheet(chooserStyle);
