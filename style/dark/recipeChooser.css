@@ -10,6 +10,12 @@
 	mask: img/image_mask_dark_style.png
 }
 
+#rating {
+        mask: img/rating_dark.png;
+        background: rgba(255, 255, 255, 30);
+        color: #5D8812;
+}
+
 #recipeItem {
 	color: #FFFFFF;
 	background-color: #90B262;

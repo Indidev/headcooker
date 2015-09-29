@@ -1,9 +1,5 @@
 #include "RecipeApiParser.h"
 
-#include <QString>
-#include <QList>
-#include <QRegExp>
-
 RecipeApiParser::RecipeApiParser()
 {
 }

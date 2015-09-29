@@ -9,6 +9,12 @@
 	mask: img/image_mask.png;
 }
 
+#rating {
+        mask: img/rating.png;
+        background: #CCCCCC;
+        color: #90B262;
+}
+
 #text {
 	color: rgba(0, 0, 0, 200);
 }

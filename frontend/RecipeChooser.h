@@ -6,7 +6,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QPixmap>
-#include <QBitmap>
+#include <QImage>
 #include <QMap>
 #include <QPoint>
 #include <QMenu>
@@ -57,6 +57,10 @@ protected:
     QSignalMapper rightClickMapper;
 
     QMap<QString, QImage> previewPictures;
+    QMap<QString, float> ratings;
+    QColor ratingColor;
+    QColor ratingBackground;
+    QString ratingMask;
 };
 
 #endif // RECIPECHOOSER_H

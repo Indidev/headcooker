@@ -80,12 +80,21 @@ void StyleMenu::updateStylesheet() {
     ui->chooserBox->setContentsMargins(cm, cm, cm, cm);
     ui->recipeBox->setContentsMargins(rm, rm, rm, rm);
 
+    //rating
+    QColor foreground = Util::extractCSSTag_C(recipeStyle, "rating", "color");
+    QColor background = Util::extractCSSTag_C(recipeStyle, "rating", "background");
+    QString ratingMask = Util::extractCSSTag_S(recipeStyle, "rating", "mask");
+
+    QImage rating = Util::getRatingImg(2.5, ratingMask, foreground, background);
+    ui->header_spacer->changeSize(rating.width(), rating.height(),QSizePolicy::Maximum);
+    ui->ratingLbl->setMaximumWidth(rating.width());
+    ui->ratingLbl->setPixmap(QPixmap::fromImage(rating));
+
+    //set stylesheet
     ui->chooserBox->setStyleSheet(chooserStyle);
     ui->recipeBox->setStyleSheet(recipeStyle);
 
     ui->recipeID_Input->setStyleSheet(chooserStyle);
     for (QPushButton * w: ui->recipeArea->findChildren<QPushButton*>())
         w->setStyleSheet(chooserStyle);
-
-
 }

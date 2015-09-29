@@ -5,8 +5,7 @@
 #include <QString>
 #include <QList>
 #include <QPair>
-#include <QPixmap>
-#include <QBitmap>
+#include <QImage>
 
 //HeadCooker Headers
 #include "Curler.h"

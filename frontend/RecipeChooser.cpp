@@ -104,6 +104,7 @@ void RecipeChooser::updateList() {
             previewImg.load(row.get("img_path"));
 
             previewPictures[id] = previewImg.scaled(210, 140);
+            ratings[id] = row.get("rating").toFloat();
             previewMapper.setMapping(item, id);
             QObject::connect(item, SIGNAL(hover()), &previewMapper, SLOT(map()));
 
@@ -120,6 +121,8 @@ void RecipeChooser::hoverButton(QString id) {
                 tmpImage.setAlphaChannel(maskImage);
             ui->previewImage->setPixmap(QPixmap::fromImage(tmpImage));
             curPreviewImg = id;
+
+            ui->ratingLbl->setPixmap(QPixmap::fromImage(Util::getRatingImg(ratings[id], ratingMask, ratingColor, ratingBackground)));
         }
     }
 }
@@ -137,6 +140,11 @@ void RecipeChooser::updateStylesheet() {
     int m = Util::extractCSSTag_I(style, "body", "margin");
 
     setContentsMargins(m, m, m, m);
+
+    //rating
+    ratingColor = Util::extractCSSTag_C(style, "rating", "color");
+    ratingBackground = Util::extractCSSTag_C(style, "rating", "background");
+    ratingMask = Util::extractCSSTag_S(style, "rating", "mask");
 
     this->setStyleSheet(style);
     ui->input->setStyleSheet(style);

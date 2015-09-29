@@ -218,5 +218,15 @@ void RecipeWidget::updateStylesheet() {
     ui->previewPicture->setPixmap(QPixmap::fromImage(recipe->getImage(Util::extractCSSTag_S(style, "image", "mask"))));
     this->setContentsMargins(m, m, m, m);
 
+    //rating
+    QColor foreground = Util::extractCSSTag_C(style, "rating", "color");
+    QColor background = Util::extractCSSTag_C(style, "rating", "background");
+    QString mask = Util::extractCSSTag_S(style, "rating", "mask");
+
+    QImage rating = Util::getRatingImg(recipe->getRating(), mask, foreground, background);
+    ui->ratingLbl->setMaximumWidth(rating.width());
+    ui->header_spacer->changeSize(rating.width(), rating.height(),QSizePolicy::Maximum);
+    ui->ratingLbl->setPixmap(QPixmap::fromImage(rating));
+
     this->setStyleSheet(style);
 }
