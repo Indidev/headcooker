@@ -53,11 +53,14 @@ public slots:
     void leftClick(QString tag);
     void cancelAddTag();
     void updateStylesheet();
+    void updateIngredients(QString servings);
+
 protected:
     Ui::RecipeWidget *ui;
     Recipe *recipe;
 
     QList<QPushButton*> tags;
+    QList<QGroupBox*> ingredientBoxes;
 
     FlowLayout *tagLayout;
     QPushButton *addTagButton;
@@ -71,6 +74,7 @@ protected:
     void addAddTagButton();
     void deleteTag(QString tag);
 
+    void updateIngredients(float servings = 0.f);
 signals:
     void clickedFilter(QString);
 };

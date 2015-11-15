@@ -164,6 +164,7 @@ void Recipe::loadFromDatabase(DataRow &row) {
     rating = row.get("rating").toFloat();
     kCalories = row.get("kcal").toInt();
     owner = Database::DB().getUserName(row.get("owner_id").toInt());
+    servings = row.get("servings").toFloat();
 
     //load keywords
     tags = Database::DB().getTags(databaseID);

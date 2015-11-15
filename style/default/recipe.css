@@ -58,6 +58,13 @@
 	font-weight: bold;
 }
 
+#inputArea {
+    color: rgba(0, 0, 0, 150);
+    background-color: rgba(0, 0, 0, 5);
+    border: 1px solid #9B9D9E;
+    border-radius: 5px;
+}
+
 #tag {
 	color: #FFFFFF;
 	background-color: #90B262;

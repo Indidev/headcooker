@@ -50,6 +50,8 @@ void RecipeWidget::init(HeadcookerWindow *win)
     ui->instructionBox->setObjectName("instructionBox");
     ui->recipeName->setObjectName("headline");
     ui->subtitle->setObjectName("subtitle");
+    ui->servingsText->setObjectName("metaInfo");
+    ui->servingsEdit->setObjectName("inputArea");
 
     connect(ui->backButton, SIGNAL(clicked()), win, SLOT(showRecipeChooser()));
 
@@ -57,34 +59,11 @@ void RecipeWidget::init(HeadcookerWindow *win)
     ui->subtitle->setText(recipe->getSubtitle());
     ui->instructions->setText(recipe->getInstructions());
 
-    //Ingredients
-    for (DataTypes::IngredientList group : recipe->getIngredientGroups().groups) {
-        QGroupBox *ingredientBox = new QGroupBox(group.header);
-        ingredientBox->setObjectName("ingredientTopic");
-
-        QGridLayout *layout = new QGridLayout;
-        ingredientBox->setLayout(layout);
-        int i = 0;
-        for (DataTypes::Ingredient ingredient : group.ingredients) {
-            QString a = QString::number(ingredient.amount);
-            QString u(ingredient.unit);
-
-            if (a.toFloat() == 0)
-                a = "";
-
-            QLabel *amount = new QLabel(a + " " + u);
-            amount->setObjectName("text");
-            QLabel *name = new QLabel(ingredient.name + ingredient.usageInfo);
-            name->setObjectName("text");
-            layout->addWidget(amount, i, 0, 1, 1, Qt::AlignRight);
-            layout->addWidget(name, i, 1, 1, 1, Qt::AlignLeft);
-            //cout << amount.toStdString() << " " << name.toStdString() << endl;
-            i++;
-        }
-        ui->ingredientsLayout->addWidget(ingredientBox);
-    }
+    updateIngredients();
 
     //Metainformations
+    ui->servingsEdit->setText(QString::number(recipe->getServings()));
+
     if (ui->metaInfoWidget->layout() != NULL)
         delete ui->metaInfoWidget->layout();
     FlowLayout *metaInfoLayout = new FlowLayout;
@@ -113,6 +92,8 @@ void RecipeWidget::init(HeadcookerWindow *win)
        addTag(tag);
     }
 
+    ui->servingsEdit->setValidator(new QDoubleValidator);
+
     addAddTagButton();
 
     connect(&leftClickMapper, SIGNAL(mapped(QString)), this, SLOT(leftClick(QString)));
@@ -120,7 +101,49 @@ void RecipeWidget::init(HeadcookerWindow *win)
 
     connect(Options::ptr(), SIGNAL(updated()), this, SLOT(updateStylesheet()));
 
+    connect(ui->servingsEdit, SIGNAL(textChanged(QString)), this, SLOT(updateIngredients(QString)));
+
     updateStylesheet();
+}
+
+void RecipeWidget::updateIngredients(float servings) {
+    if (servings <= 0) {
+        servings = recipe->getServings();
+    }
+
+    for (QGroupBox* box : ingredientBoxes) {
+        box->setVisible(false);
+        box->deleteLater();
+    }
+    ingredientBoxes.clear();
+
+    //Ingredients
+    for (DataTypes::IngredientList group : recipe->getIngredientGroups().groups) {
+        QGroupBox *ingredientBox = new QGroupBox(group.header);
+        ingredientBoxes.append(ingredientBox);
+        ingredientBox->setObjectName("ingredientTopic");
+
+        QGridLayout *layout = new QGridLayout;
+        ingredientBox->setLayout(layout);
+        int i = 0;
+        for (DataTypes::Ingredient ingredient : group.ingredients) {
+            QString a = QString::number(servings * ingredient.amount / recipe->getServings());
+            QString u(ingredient.unit);
+
+            if (a.toFloat() == 0)
+                a = "";
+
+            QLabel *amount = new QLabel(a + " " + u);
+            amount->setObjectName("text");
+            QLabel *name = new QLabel(ingredient.name + ingredient.usageInfo);
+            name->setObjectName("text");
+            layout->addWidget(amount, i, 0, 1, 1, Qt::AlignRight);
+            layout->addWidget(name, i, 1, 1, 1, Qt::AlignLeft);
+            //cout << amount.toStdString() << " " << name.toStdString() << endl;
+            i++;
+        }
+        ui->ingredientsLayout->addWidget(ingredientBox);
+    }
 }
 
 void RecipeWidget::addAddTagButton() {
@@ -229,4 +252,11 @@ void RecipeWidget::updateStylesheet() {
     ui->ratingLbl->setPixmap(QPixmap::fromImage(rating));
 
     this->setStyleSheet(style);
+}
+
+void RecipeWidget::updateIngredients(QString servings)
+{
+    servings.replace(",", ".");
+    ui->servingsEdit->setText(servings);
+    updateIngredients(servings.toFloat());
 }
