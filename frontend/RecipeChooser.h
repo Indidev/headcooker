@@ -30,8 +30,7 @@ class RecipeChooser : public QWidget
     Q_OBJECT
 
 public:
-    explicit RecipeChooser(HeadcookerWindow *hw, QWidget *parent = 0);
-    explicit RecipeChooser(HeadcookerWindow *hw, QString filter, QWidget *parent = 0);
+    explicit RecipeChooser(HeadcookerWindow *win, QWidget *parent = 0, QString filter = "");
     ~RecipeChooser();
 
 public slots:
@@ -41,8 +40,9 @@ public slots:
     void updateList();
     void updateStylesheet();
     void rightClickRecipe(QString id);
+    void chooseRecipe(QString id);
 protected:
-    void init(HeadcookerWindow *hw);
+    void init(HeadcookerWindow *win);
     QString filter;
     QString curPreviewImg;
 
@@ -50,7 +50,7 @@ protected:
     QImage maskImage;
 
     Ui::RecipeChooser *ui;
-    HeadcookerWindow *hw;
+    HeadcookerWindow *win;
 
     QSignalMapper buttonToIDMapper;
     QSignalMapper previewMapper;

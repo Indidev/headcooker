@@ -39,6 +39,7 @@ Recipe *RecipeWidget::getRecipe()
 void RecipeWidget::init(HeadcookerWindow *win)
 {
     ui->setupUi(this);
+    this->win = win;
 
     ui->bodyWidget->setObjectName("body");
 
@@ -53,7 +54,7 @@ void RecipeWidget::init(HeadcookerWindow *win)
     ui->servingsText->setObjectName("metaInfo");
     ui->servingsEdit->setObjectName("inputArea");
 
-    connect(ui->backButton, SIGNAL(clicked()), win, SLOT(showRecipeChooser()));
+    connect(ui->backButton, SIGNAL(clicked()), this, SLOT(back()));
 
     ui->recipeName->setText(recipe->getTitle());
     ui->subtitle->setText(recipe->getSubtitle());
@@ -218,7 +219,7 @@ void RecipeWidget::rightClick(QString tag) {
 }
 
 void RecipeWidget::leftClick(QString tag) {
-    emit clickedFilter(tag);
+    win->showWidget(new RecipeChooser(win,0, tag));
 }
 
 void RecipeWidget::deleteTag(QString tag) {
@@ -259,4 +260,8 @@ void RecipeWidget::updateIngredients(QString servings)
     servings.replace(",", ".");
     ui->servingsEdit->setText(servings);
     updateIngredients(servings.toFloat());
+}
+
+void RecipeWidget::back() {
+    win->showWidget(new RecipeChooser(win));
 }

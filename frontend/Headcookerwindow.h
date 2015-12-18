@@ -35,15 +35,11 @@ public:
 
     void showRecipe(int id);
 public slots:
-    void clickedID(QString id);
-    void showRecipeChooser();
-    void showRecipeChooser(QString filter);
     void moveWindow(int x, int y);
     void menuAction(QAction *action);
+    void showWidget(QWidget *widget);
 protected:
     void test();
-    void clear();
-    void setWidget(QWidget *widget);
 
 private:
     Ui::HeadcookerWindow *ui;

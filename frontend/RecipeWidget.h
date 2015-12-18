@@ -55,9 +55,11 @@ public slots:
     void updateStylesheet();
     void updateIngredients(QString servings);
 
+    void back();
 protected:
     Ui::RecipeWidget *ui;
     Recipe *recipe;
+    HeadcookerWindow *win;
 
     QList<QPushButton*> tags;
     QList<QGroupBox*> ingredientBoxes;
@@ -75,8 +77,7 @@ protected:
     void deleteTag(QString tag);
 
     void updateIngredients(float servings = 0.f);
-signals:
-    void clickedFilter(QString);
+
 };
 
 #endif // RECIPEWIDGET_H

@@ -1,28 +1,21 @@
 #include "RecipeChooser.h"
 #include "ui_RecipeChooser.h"
 
-RecipeChooser::RecipeChooser(HeadcookerWindow *hw, QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::RecipeChooser)
-{
-    init(hw);
-}
-
-RecipeChooser::RecipeChooser(HeadcookerWindow *hw, QString filter, QWidget *parent) :
+RecipeChooser::RecipeChooser(HeadcookerWindow *win, QWidget *parent, QString filter) :
     QWidget(parent),
     ui(new Ui::RecipeChooser)
 {
     this->filter = filter;
-    init(hw);
+    init(win);
     ui->filterEdit->setText(filter);
 }
 
-void RecipeChooser::init(HeadcookerWindow *hw)
+void RecipeChooser::init(HeadcookerWindow *win)
 {
-    this->hw = hw;
+    this->win = win;
     ui->setupUi(this);
 
-    connect(&buttonToIDMapper, SIGNAL(mapped(QString)), hw, SLOT(clickedID(QString)));
+    connect(&buttonToIDMapper, SIGNAL(mapped(QString)), this, SLOT(chooseRecipe(QString)));
     connect(&previewMapper, SIGNAL(mapped(QString)), this, SLOT(hoverButton(QString)));
     connect(&rightClickMapper, SIGNAL(mapped(QString)), this, SLOT(rightClickRecipe(QString)));
 
@@ -166,4 +159,8 @@ void RecipeChooser::rightClickRecipe(QString id) {
             updateList();
         }
     }
+}
+
+void RecipeChooser::chooseRecipe(QString id) {
+    win->showWidget(new RecipeWidget(id.toInt(), win));
 }
