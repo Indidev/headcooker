@@ -210,6 +210,17 @@ void Recipe::loadFromURL(QString id)
             tags.append(tag);
         }
 
+        //fix tags if concatenated using "or (oder)" or "and (und)"
+        for (int i = 1; i < tags.size() - 1; i++) {
+            if ((tags[i] == "und" || tags[i] == "oder")
+                    && tags[i - 1].startsWith("(")
+                    && tags[i + 1].endsWith(")")) {
+                tags[i - 1].remove(0, 1);
+                tags[i + 1].chop(1);
+                tags.removeAt(i);
+            }
+        }
+
         //image
         hasImage = xmlData.getChild("hasImage").getValue() == "true";
         if (hasImage && !isDummy) {

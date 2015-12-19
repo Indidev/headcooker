@@ -143,7 +143,7 @@ void RecipeApiParser::unEscapeXML(QString &xml)
     xml.replace("\\n", "\n", Qt::CaseInsensitive);
     xml.replace("\\\"", "<quote>");
 
-    Util::unescapeUnicode(sml);
+    Util::unescapeUnicode(xml);
 }
 
 QString RecipeApiParser::escape(QString xml)
