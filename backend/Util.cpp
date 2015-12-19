@@ -93,3 +93,40 @@ QImage Util::getRatingImg(float rating, QString ratingMask, QColor color, QColor
 
     return ratingImg;
 }
+
+void Util::unescapeUnicode(QString &str) {
+    int index;
+    char* tmpStr = (char *) malloc(5 * sizeof(char));
+
+    while ((index = str.indexOf("\\u")) >= 0) {
+
+        int u_1 = str.mid(index + 2, 2).toInt(0, 16);
+        int u_2 = str.mid(index + 4, 2).toInt(0, 16);
+
+        int offset = 0;
+
+        //Thanks for this part goes to Jan Düpmeier (https://github.com/jduepmeier)
+        if (u_1 == 0x00 && u_2 <= 0x7F) {
+            tmpStr[offset] = u_2;
+        } else if (u_1 >= 0 && u_1 <= 0x07 && u_2 >= 0x80) {
+            tmpStr[offset] = 0xC0;
+            tmpStr[offset] |= (u_1 & 0x07) << 2 | (0xC0 & u_2) >> 6;
+            offset++;
+            tmpStr[offset] = 0x80;
+            tmpStr[offset] |= u_2 & 0x3F;
+        } else if (u_1 >= 0x80) {
+            tmpStr[offset] = 0xE0;
+            tmpStr[offset] |= (u_1 & 0xF0) >> 4;
+            offset++;
+            tmpStr[offset] = 0x80;
+            tmpStr[offset] |= (u_1 & 0x0F) << 2 | (u_2 & 0xC0) >> 6;
+            offset++;
+            tmpStr[offset] = 0x80;
+            tmpStr[offset] |= u_2 & 0x3F;
+        }
+        tmpStr[offset + 1] = '\0';
+
+        str.replace(index, 6, QString::fromUtf8(tmpStr));
+    }
+    free(tmpStr);
+}

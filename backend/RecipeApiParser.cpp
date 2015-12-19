@@ -141,18 +141,9 @@ void RecipeApiParser::unEscapeXML(QString &xml)
     xml.replace("\\/", "/", Qt::CaseInsensitive);
     xml.replace("\\r\\n", "\n", Qt::CaseInsensitive);
     xml.replace("\\n", "\n", Qt::CaseInsensitive);
-    xml.replace("\\u00fc", QString::fromUtf8("ü"), Qt::CaseInsensitive);
-    xml.replace("\\u00dc", QString::fromUtf8("Ü"), Qt::CaseInsensitive);
-    xml.replace("\\u00f6", QString::fromUtf8("ö"), Qt::CaseInsensitive);
-    xml.replace("\\u00d6", QString::fromUtf8("Ö"), Qt::CaseInsensitive);
-    xml.replace("\\u00e4", QString::fromUtf8("ä"), Qt::CaseInsensitive);
-    xml.replace("\\u00c4", QString::fromUtf8("Ä"), Qt::CaseInsensitive);
-    xml.replace("\\u00df", QString::fromUtf8("ß"), Qt::CaseInsensitive);
-    xml.replace("\\u00b0", QString::fromUtf8("°"), Qt::CaseInsensitive);
-    xml.replace("\\u00e9", QString::fromUtf8("é"), Qt::CaseInsensitive);
     xml.replace("\\\"", "<quote>");
-    xml.replace("\\u2013", "–");
-    xml.replace("\\u00e0", QString::fromUtf8("à"), Qt::CaseInsensitive);
+
+    Util::unescapeUnicode(sml);
 }
 
 QString RecipeApiParser::escape(QString xml)

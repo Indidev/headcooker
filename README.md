@@ -12,6 +12,8 @@ A C++ GUI-based tool for managing chefkoch.de recipes.
        * [QT5](#qt5)
        * [SQLite3](#sqlite3)
      * [Compilation](#compilation)
+   * [Credits](#credits)
+     * [Unicode Parsing](#unicode-parsing)
 
 <!-- [toc] -->
 ## Compilation and dependencies ##
@@ -65,3 +67,8 @@ make
 ```
 
 You can now run HeadCooker via ```./headcooker``` in your build directory
+
+## Credits ##
+
+### Unicode Parsing ###
+This credit goes to [Jan Düpmeier](https://github.com/jduepmeier) for part of his project ["easy json"](https://github.com/jduepmeier/easy_json), thanks dude.

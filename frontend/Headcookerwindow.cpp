@@ -5,10 +5,11 @@ HeadcookerWindow::HeadcookerWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::HeadcookerWindow)
 {
+    curWidget == NULL;
     ui->setupUi(this);
 
-    curWidget = new RecipeChooser(this);
-    ui->centralWidget->layout()->addWidget(curWidget);
+    showWidget(new RecipeChooser(this));
+    //ui->centralWidget->layout()->addWidget(curWidget);
 
     connect(ui->menuBar, SIGNAL(triggered(QAction*)), this, SLOT(menuAction(QAction*)));
 

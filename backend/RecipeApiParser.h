@@ -2,6 +2,7 @@
 #define RECIPEAPIPARSER_H
 
 #include "xml/XMLTree.h"
+#include "Util.h"
 #include <QString>
 #include <QList>
 #include <QRegExp>
