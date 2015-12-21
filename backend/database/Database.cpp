@@ -354,6 +354,60 @@ bool Database::recipesContaining(QString needle, QList<DataRow> &rows) {
     return execSQL(sql, &rows);
 }
 
+bool Database::recipesContaining(QStringList needles, QList<DataRow> &rows, bool useAnd) {
+
+    QList<QList<DataRow>> allRows;
+
+    for (QString needle : needles) {
+        QList<DataRow> tmpRows;
+        recipesContaining(needle, tmpRows);
+        allRows.append(tmpRows);
+    }
+
+    if (allRows.size() > 0) {
+        if (useAnd) {
+            rows = allRows[0];
+
+            for (int i = 1; i < allRows.size(); i++) {
+                for (int j = 0; j < rows.size(); j++) {
+                    if (!allRows[i].contains(rows[j])) {
+                        rows.removeAt(j);
+                        j--;
+                    }
+                }
+            }
+        } else { //TODO Test this!
+            while (!allRows.isEmpty()) {
+                rows.append(getSmallesName(allRows));
+            }
+        }
+    }
+
+    return allRows.size() > 0;
+}
+
+DataRow Database::getSmallesName(QList<QList<DataRow>> &allRows) {
+    if (allRows.isEmpty())
+        return DataRow();
+
+    DataRow smallest = allRows[0][0];
+
+    for (int i = 1; i < allRows.size(); i++) {
+        if (allRows[i][0].get("Name") < smallest.get("Name")) {
+            smallest = allRows[i][0];
+        }
+    }
+
+    for (int i = 0; i < allRows.size(); i++) {
+        allRows[i].removeAll(smallest);
+        if (allRows[i].isEmpty()) {
+            allRows.removeAt(i);
+            i--;
+        }
+    }
+    return smallest;
+}
+
 QList<QString> Database::getTags(int recipeID) {
     QString sql = "SELECT NAME " \
             "FROM RECIPE_TAGS " \

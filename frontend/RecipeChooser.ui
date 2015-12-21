@@ -48,7 +48,11 @@
          </widget>
         </item>
         <item>
-         <widget class="QLineEdit" name="filterEdit"/>
+         <layout class="QGridLayout" name="filterInput">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+         </layout>
         </item>
         <item>
          <spacer name="horizontalSpacer">
@@ -90,7 +94,7 @@
              <x>0</x>
              <y>0</y>
              <width>809</width>
-             <height>464</height>
+             <height>476</height>
             </rect>
            </property>
            <property name="styleSheet">

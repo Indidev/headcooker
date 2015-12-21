@@ -12,6 +12,7 @@ public:
     void add(QString key, int value);
     void add(QString key, float value);
     QString get(QString key);
+    bool operator==(DataRow const& rhs);
 
 protected:
     struct Pair {

@@ -11,7 +11,8 @@ public:
     ExtendedLineEdit(QWidget *parent = 0);
     ExtendedLineEdit(const QString &text, QWidget *parent = 0);
 
-signals:
+protected:
+    void backspace();
 
 public slots:
 
@@ -20,6 +21,7 @@ private slots:
 
 signals:
     void escPressed();
+    void backSpacePressed();
 };
 
 #endif // EXTENDEDLINEEDIT_H

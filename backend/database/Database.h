@@ -49,6 +49,7 @@ public:
     DataTypes::IngredientGroups getIngredients(int recipeID);
     bool listOfRecipes(QList<DataRow> &row);
     bool recipesContaining(QString needle, QList<DataRow> &rows);
+    bool recipesContaining(QStringList needles, QList<DataRow> &rows, bool useAnd = true);
     bool deleteRecipe(const Recipe &recipe);
     bool deleteRecipe(int id);
     QString getOption(QString key);
@@ -77,6 +78,7 @@ protected:
     QString escape(QString input);
     int count(QString tablename, QString value, QString column = "ID");
     bool del(QString tablename, QString value, QString column = "ID");
+    DataRow getSmallesName(QList<QList<DataRow> > &allRows);
 };
 
 #endif // DATABASE_H

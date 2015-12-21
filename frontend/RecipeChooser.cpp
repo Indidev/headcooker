@@ -5,9 +5,9 @@ RecipeChooser::RecipeChooser(HeadcookerWindow *win, QWidget *parent, QString fil
     QWidget(parent),
     ui(new Ui::RecipeChooser)
 {
-    this->filter = filter;
+    this->filter.append(filter);
     init(win);
-    ui->filterEdit->setText(filter);
+    filterInput->setTag(filter);
 }
 
 void RecipeChooser::init(HeadcookerWindow *win)
@@ -15,19 +15,23 @@ void RecipeChooser::init(HeadcookerWindow *win)
     this->win = win;
     ui->setupUi(this);
 
+    filterInput = new MultiTagInput();
+    ui->filterInput->addWidget(filterInput);
+
     connect(&buttonToIDMapper, SIGNAL(mapped(QString)), this, SLOT(chooseRecipe(QString)));
     connect(&previewMapper, SIGNAL(mapped(QString)), this, SLOT(hoverButton(QString)));
     connect(&rightClickMapper, SIGNAL(mapped(QString)), this, SLOT(rightClickRecipe(QString)));
 
     connect(ui->input, SIGNAL(returnPressed()), this, SLOT(addRecipe()));
-    connect(ui->filterEdit, SIGNAL(returnPressed()), this, SLOT(setFilter()));
+    connect(filterInput, SIGNAL(tagsChanged()), this, SLOT(setFilter()));
 
     connect(Options::ptr(), SIGNAL(updated()), this, SLOT(updateList()));
 
     ui->bodyWidget->setObjectName("body");
     ui->label->setObjectName("text");
     ui->label_2->setObjectName("text");
-    ui->filterEdit->setObjectName("inputArea");
+    filterInput->setObjectName("inputArea");
+    //ui->filterEdit->setObjectName("inputArea");
     ui->input->setObjectName("inputArea");
     ui->scrollArea->setObjectName("scrollArea");
     ui->scrollArea->verticalScrollBar()->setObjectName("scrollbar");
@@ -61,7 +65,7 @@ void RecipeChooser::addRecipe() {
 }
 
 void RecipeChooser::setFilter() {
-    filter = ui->filterEdit->text();
+    filter = filterInput->getTags();
     updateList();
 }
 
@@ -104,6 +108,7 @@ void RecipeChooser::updateList() {
         }
     }
     updateStylesheet();
+    filterInput->focus();
 }
 
 void RecipeChooser::hoverButton(QString id) {

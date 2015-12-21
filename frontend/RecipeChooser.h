@@ -12,9 +12,10 @@
 #include <QMenu>
 #include <QCursor>
 
-#include "../backend/database/Database.h"
-#include "../backend/database/DataRow.h"
-#include "../backend/Util.h"
+#include "backend/database/Database.h"
+#include "backend/database/DataRow.h"
+#include "backend/Util.h"
+#include "frontend/MultiTagInput.h"
 #include "ExtendedButton.h"
 #include "Headcookerwindow.h"
 #include <iostream>
@@ -43,7 +44,8 @@ public slots:
     void chooseRecipe(QString id);
 protected:
     void init(HeadcookerWindow *win);
-    QString filter;
+    QStringList filter;
+    MultiTagInput *filterInput;
     QString curPreviewImg;
 
     QString curMaskPath;

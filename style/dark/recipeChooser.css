@@ -29,6 +29,26 @@
 	background-color: #B2B2B2;
 }
 
+#filterTag {
+	background-color: #90B262;
+	border-radius: 7;
+	margin: 2;
+}
+
+#filterTag_text {
+	color: #FFFFFF;
+	padding-left: 5;
+	font-weight: bold;
+}
+
+#filterTag_button {
+	color: #FFFFFF;
+	border: none;
+	font-weight: bold;	
+	padding-right: 5;
+	border-left: 1px solid rgba(0, 0, 0, 20);
+}
+
 #inputArea {
 	border: 1px solid #9B9D9E;
 	background-color: rgba(255, 255, 255, 20);

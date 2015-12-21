@@ -11,9 +11,14 @@ ExtendedLineEdit::ExtendedLineEdit(const QString &text, QWidget *parent) : QLine
 
 void ExtendedLineEdit::keyPressEvent(QKeyEvent *event)
 {
-    QLineEdit::keyPressEvent(event);
+
+    if (event->key() == Qt::Key_Backspace) {
+        emit backSpacePressed();
+    }
 
     if (event->key() == Qt::Key_Escape) {
         emit escPressed();
     }
+
+    QLineEdit::keyPressEvent(event);
 }
