@@ -383,7 +383,7 @@ bool Database::recipesContaining(QStringList needles, QList<DataRow> &rows, bool
         }
     }
 
-    return allRows.size() > 0;
+    return rows.size() > 0;
 }
 
 DataRow Database::getSmallesName(QList<QList<DataRow>> &allRows) {
@@ -393,7 +393,7 @@ DataRow Database::getSmallesName(QList<QList<DataRow>> &allRows) {
     DataRow smallest = allRows[0][0];
 
     for (int i = 1; i < allRows.size(); i++) {
-        if (allRows[i][0].get("Name") < smallest.get("Name")) {
+        if (allRows[i][0].get("title") < smallest.get("title")) {
             smallest = allRows[i][0];
         }
     }
@@ -405,6 +405,7 @@ DataRow Database::getSmallesName(QList<QList<DataRow>> &allRows) {
             i--;
         }
     }
+
     return smallest;
 }
 
