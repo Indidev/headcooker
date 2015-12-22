@@ -16,6 +16,7 @@
 #include "backend/database/DataRow.h"
 #include "backend/Util.h"
 #include "frontend/MultiTagInput.h"
+#include "frontend/CheckBoxBar.h"
 #include "ExtendedButton.h"
 #include "Headcookerwindow.h"
 #include <iostream>
@@ -42,6 +43,8 @@ public slots:
     void updateStylesheet();
     void rightClickRecipe(QString id);
     void chooseRecipe(QString id);
+    void changedFilterType(QString type);
+
 protected:
     void init(HeadcookerWindow *win);
     QStringList filter;
@@ -63,6 +66,7 @@ protected:
     QColor ratingColor;
     QColor ratingBackground;
     QString ratingMask;
+    bool andFilter;
 };
 
 #endif // RECIPECHOOSER_H

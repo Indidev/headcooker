@@ -36,7 +36,8 @@ SOURCES += main.cpp\
     backend/Util.cpp \
     backend/FirefoxParser.cpp \
     frontend/menu/ImportMenu.cpp \
-    frontend/MultiTagInput.cpp
+    frontend/MultiTagInput.cpp \
+    frontend/CheckBoxBar.cpp
 
 HEADERS  += frontend/Headcookerwindow.h \
     frontend/RecipeWidget.h \
@@ -59,7 +60,8 @@ HEADERS  += frontend/Headcookerwindow.h \
     backend/Util.h \
     backend/FirefoxParser.h \
     frontend/menu/ImportMenu.h \
-    frontend/MultiTagInput.h
+    frontend/MultiTagInput.h \
+    frontend/CheckBoxBar.h
 
 FORMS    += frontend/Headcookerwindow.ui \
     frontend/RecipeWidget.ui \
@@ -67,7 +69,8 @@ FORMS    += frontend/Headcookerwindow.ui \
     frontend/menu/StyleMenu.ui \
     frontend/menu/OptionsMenu.ui \
     frontend/menu/ImportMenu.ui \
-    frontend/MultiTagInput.ui
+    frontend/MultiTagInput.ui \
+    frontend/CheckBoxBar.ui
 
 # Define copy command for linux and windows
 QMAKE_COPY = cp -rf

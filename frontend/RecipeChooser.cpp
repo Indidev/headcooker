@@ -14,10 +14,20 @@ void RecipeChooser::init(HeadcookerWindow *win)
 {
     this->win = win;
     ui->setupUi(this);
+    andFilter = true;
+    filter.clear();
 
     filterInput = new MultiTagInput();
     ui->filterInput->addWidget(filterInput);
 
+    QStringList options;
+    options.append("Und");
+    options.append(("Oder"));
+
+    CheckBoxBar *cbb = new CheckBoxBar(options);
+    ui->checkBoxSpace->addWidget(cbb);
+
+    connect(cbb, SIGNAL(optionChanged(QString)), this, SLOT(changedFilterType(QString)));
     connect(&buttonToIDMapper, SIGNAL(mapped(QString)), this, SLOT(chooseRecipe(QString)));
     connect(&previewMapper, SIGNAL(mapped(QString)), this, SLOT(hoverButton(QString)));
     connect(&rightClickMapper, SIGNAL(mapped(QString)), this, SLOT(rightClickRecipe(QString)));
@@ -79,9 +89,10 @@ void RecipeChooser::updateList() {
 
     //ui->itemLayout
     QList<DataRow> rows;
+
     bool success = filter.isEmpty()
             ?Database::DB().listOfRecipes(rows)
-            :Database::DB().recipesContaining(filter, rows);
+            :Database::DB().recipesContaining(filter, rows, andFilter);
     if (success) {
         for (DataRow row : rows) {
             ExtendedButton *item = new ExtendedButton(row.get("title"));
@@ -168,4 +179,11 @@ void RecipeChooser::rightClickRecipe(QString id) {
 
 void RecipeChooser::chooseRecipe(QString id) {
     win->showWidget(new RecipeWidget(id.toInt(), win));
+}
+
+void RecipeChooser::changedFilterType(QString type)
+{
+    andFilter = type.toLower() == "und";
+
+    updateList();
 }
