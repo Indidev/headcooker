@@ -360,12 +360,16 @@ bool Database::recipesContaining(QStringList needles, QList<DataRow> &rows, bool
 
     for (QString needle : needles) {
         QList<DataRow> tmpRows;
-        recipesContaining(needle, tmpRows);
-        allRows.append(tmpRows);
+        if (recipesContaining(needle, tmpRows))
+            if (tmpRows.size() > 0)
+                allRows.append(tmpRows);
     }
 
     if (allRows.size() > 0) {
         if (useAnd) {
+            if (allRows.size() != needles.size())
+                return false;
+
             rows = allRows[0];
 
             for (int i = 1; i < allRows.size(); i++) {
