@@ -37,7 +37,7 @@ public:
 
 public slots:
     void addRecipe();
-    void setFilter();
+    void applyFilter();
     void hoverButton(QString id);
     void updateList();
     void updateStylesheet();

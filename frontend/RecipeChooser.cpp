@@ -8,6 +8,7 @@ RecipeChooser::RecipeChooser(HeadcookerWindow *win, QWidget *parent, QString fil
     this->filter.append(filter);
     init(win);
     filterInput->setTag(filter);
+    applyFilter();
 }
 
 void RecipeChooser::init(HeadcookerWindow *win)
@@ -33,7 +34,7 @@ void RecipeChooser::init(HeadcookerWindow *win)
     connect(&rightClickMapper, SIGNAL(mapped(QString)), this, SLOT(rightClickRecipe(QString)));
 
     connect(ui->input, SIGNAL(returnPressed()), this, SLOT(addRecipe()));
-    connect(filterInput, SIGNAL(tagsChanged()), this, SLOT(setFilter()));
+    connect(filterInput, SIGNAL(tagsChanged()), this, SLOT(applyFilter()));
 
     connect(Options::ptr(), SIGNAL(updated()), this, SLOT(updateList()));
 
@@ -74,7 +75,7 @@ void RecipeChooser::addRecipe() {
     updateList();
 }
 
-void RecipeChooser::setFilter() {
+void RecipeChooser::applyFilter() {
     filter = filterInput->getTags();
     updateList();
 }

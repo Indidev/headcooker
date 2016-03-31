@@ -22,7 +22,7 @@ MultiTagInput::~MultiTagInput()
 }
 
 void MultiTagInput::setTag(QString tag) {
-    if (tag.trimmed() != "" && !tags.contains(tag)) {
+    if (tag.trimmed() != "" && !tags.contains(tag, Qt::CaseInsensitive)) {
         tags.append(tag);
         refresh();
     }
@@ -37,7 +37,7 @@ void MultiTagInput::setTags(QStringList tags) {
 void MultiTagInput::addTag() {
     QString tag = input->text();
 
-    if (tag.trimmed() != "" && !tags.contains(tag)) {
+    if (tag.trimmed() != "" && !tags.contains(tag, Qt::CaseInsensitive)) {
         tags.append(tag);
         refresh();
         input->setFocus();
