@@ -14,7 +14,7 @@
 using std::cerr;
 using std::endl;
 
-static const QString DB_PATH = "test.db";
+static const QString DB_PATH = "database.db";
 
 class Recipe;
 struct Ingredient;
